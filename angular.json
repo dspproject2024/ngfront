@@ -35,9 +35,15 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "src/assets/css/global.css",
+              "src/assets/css/contact.css"
             ],
-            "scripts": [],
+            "scripts": [
+              "src/assets/js/index.js",
+              "src/assets/js/confirmation.js",
+              "src/assets/js/cookie.js"
+            ],
             "server": "src/main.server.ts",
             "prerender": true,
             "ssr": {
@@ -106,5 +112,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "d6e94362-5b0b-490b-ab4e-08a6064d65f7"
   }
 }

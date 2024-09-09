@@ -1,0 +1,21 @@
+<!-- category-list.component.html -->
+<div class="layout-249">
+  <div class="section-title16">
+    <div class="subheading">Filtrer</div>
+    <div class="content50">
+      <b class="short-heading-here6">Catégories de logements</b>
+      <div class="lorem-ipsum-dolor12">
+        Explorez notre large sélection de logements uniques et alternatifs, en harmonie avec la nature.
+      </div>
+    </div>
+  </div>
+  <div class="search">
+    <input class="searchInput" type="text" placeholder="Rechercher une catégorie">
+    <button class="styleprimary-smallfalse-da14 btn-primary">Rechercher</button>
+  </div>
+  <div class="content51">
+    <div class="row6">
+      <app-cat-item *ngFor="let category of categories" [category]="category"></app-cat-item>
+    </div>
+  </div>
+</div>
