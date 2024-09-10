@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import {jwtDecode} from 'jwt-decode'; // Correct import for jwtDecode
-import { GetApiService } from './get-api.service'; // Correct import for GetApiService
+import { GetApiService } from './get-api.service';
+import {User} from "../models/user.model"; // Correct import for GetApiService
 
 @Injectable({
   providedIn: 'root',
@@ -17,8 +18,12 @@ export class AuthService {
   }
 
   // Register method
-  register(user: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/users`, user);
+  register(user: User): Observable<any> {
+    // Set Content-Type to application/ld+json
+    const headers = new HttpHeaders({ 'Content-Type': 'application/ld+json' });
+
+    // Convert the user object to JSON-LD format and send the request
+    return this.http.post(`${this.apiUrl}/users`, JSON.stringify(user), { headers });
   }
 
   // Login method that saves JWT token

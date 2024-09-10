@@ -1,0 +1,107 @@
+/* Ensure the body and html take up full height */
+
+/* Register container now takes the full available height */
+.register-container {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  flex-direction: column;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading and paragraph styles */
+h2 {
+  text-align: center;
+  color: #000; /* Black */
+  margin-bottom: 10px;
+}
+
+p {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: #666;
+}
+
+/* Form labels and input fields */
+label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #000; /* Black */
+  display: block;
+}
+
+input {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  width: 100%;
+}
+
+/* Button styles */
+button {
+  padding: 12px;
+  background-color: #11CF73; /* Primary color (Green) */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+}
+
+button:hover {
+  background-color: #DB9E00; /* Secondary color (Orange) */
+}
+
+button:disabled {
+  background-color: #ccc; /* Disabled button color */
+  cursor: not-allowed;
+}
+
+/* Error messages */
+.error {
+  color: #DB9E00; /* Secondary color (Orange) */
+  font-size: 14px;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+  .register-container {
+    padding: 15px;
+    max-width: 90%;
+  }
+
+  input {
+    font-size: 14px;
+  }
+
+  button {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .register-container {
+    padding: 10px;
+    max-width: 100%;
+  }
+
+  input {
+    font-size: 14px;
+  }
+
+  button {
+    font-size: 14px;
+  }
+}

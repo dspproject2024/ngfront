@@ -71,6 +71,9 @@ import { ContactHeaderComponent } from './components/content/contact/contact-hea
 import { AppartDetailsComponent } from './components/content/appart-details/appart-details.component';
 import { AppartDetailsContentComponent } from './components/content/appart-details/appart-details-content/appart-details-content.component';
 import { AppartDetailsContactComponent } from './components/content/appart-details/appart-details-contact/appart-details-contact.component';
+import { RegisterComponent } from './components/content/register/register.component';
+import { RegisterFormComponent } from './components/content/register/register-form/register-form.component';
+import { RegisterTitleComponent } from './components/content/register/register-title/register-title.component';
 
 
 @NgModule({
@@ -141,6 +144,9 @@ import { AppartDetailsContactComponent } from './components/content/appart-detai
     AppartDetailsComponent,
     AppartDetailsContentComponent,
     AppartDetailsContactComponent,
+    RegisterComponent,
+    RegisterFormComponent,
+    RegisterTitleComponent,
 
   ],
   imports: [

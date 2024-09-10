@@ -18,6 +18,7 @@ import {LoginComponent} from "./components/content/login/login.component";
 import {ViewOwnerAppartComponent} from "./components/content/view-owner-appart/view-owner-appart.component";
 import {ContactComponent} from "./components/content/contact/contact.component";
 import {AppartDetailsComponent} from "./components/content/appart-details/appart-details.component";
+import {RegisterComponent} from "./components/content/register/register.component";
 
 let routes: Routes;
 routes = [
@@ -37,6 +38,7 @@ routes = [
   {path: 'view-owner-appart', component: ViewOwnerAppartComponent},
   {path: 'contact', component: ContactComponent},
   {path: 'appart-details', component: AppartDetailsComponent},
+  {path: 'register', component: RegisterComponent},
  // {path: '', redirectTo: '/HomeComponent', pathMatch: 'full'}
   // other routes...
 ];
