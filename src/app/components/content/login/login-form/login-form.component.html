@@ -1,4 +1,4 @@
-<!-- src/app/components/auth/login/login.component.html -->
+<!-- src/app/components/auth/login-form/login-form.component.html -->
 <div class="login-container">
   <form (ngSubmit)="onSubmit()">
     <label for="email">Email:</label>
@@ -11,19 +11,19 @@
       required
     />
 
-    <label for="password">Mot de passe:</label>
+    <label for="password">Password:</label>
     <input
       type="password"
       id="password"
       [(ngModel)]="credentials.password"
       name="password"
-      placeholder="Mot de passe"
+      placeholder="Password"
       required
     />
 
-    <button type="submit">Se connecter</button>
-  </form>
+    <button type="submit">Login</button>
 
-  <!-- Message d'erreur si les identifiants sont incorrects -->
-  <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+    <!-- Error Message Display -->
+    <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+  </form>
 </div>
