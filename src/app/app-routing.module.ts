@@ -19,6 +19,7 @@ import {ViewOwnerAppartComponent} from "./components/content/view-owner-appart/v
 import {ContactComponent} from "./components/content/contact/contact.component";
 import {AppartDetailsComponent} from "./components/content/appart-details/appart-details.component";
 import {RegisterComponent} from "./components/content/register/register.component";
+import {DashboardAdminComponent} from "./components/content/dashboard/dashboard-admin/dashboard-admin.component";
 
 let routes: Routes;
 routes = [
@@ -26,6 +27,7 @@ routes = [
   {path: 'apparts', component: AppartementsComponent},
   {path: 'cat', component: CategoriesComponent},
   {path: 'admin', component: AdministrateurComponent},
+  {path: 'dashboard-admin', component: DashboardAdminComponent},
   {path: 'add-appart', component: AddAppartComponent},
   {path: 'cgu', component: CguComponent},
   {path: 'cgv', component: CgvComponent},

@@ -1,0 +1,53 @@
+<!-- src/app/components/admin-dashboard/admin-dashboard.component.html -->
+
+<div class="dashboard-container">
+  <h2>User Management</h2>
+
+  <!-- User List -->
+  <table class="user-table">
+    <thead>
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Email</th>
+      <th>Phone Number</th>
+      <th>Roles</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let user of users">
+      <td>{{ user.firstName }}</td>
+      <td>{{ user.lastName }}</td>
+      <td>{{ user.email }}</td>
+      <td>{{ user.phoneNumber }}</td>
+      <td>{{ user.roles.join(', ') }}</td>
+      <td>
+        <button (click)="editUser(user)">Edit</button>
+        <button (click)="deleteUser(user.id!)">Delete</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <!-- Create / Edit User Form -->
+  <div *ngIf="editingUser">
+    <h3>{{ editMode ? 'Edit User' : 'Create User' }}</h3>
+    <form (ngSubmit)="saveUser()">
+      <label>First Name:</label>
+      <input type="text" [(ngModel)]="editingUser.firstName" name="firstName" required>
+
+      <label>Last Name:</label>
+      <input type="text" [(ngModel)]="editingUser.lastName" name="lastName" required>
+
+      <label>Email:</label>
+      <input type="email" [(ngModel)]="editingUser.email" name="email" required>
+
+      <label>Roles:</label>
+      <input type="text" [(ngModel)]="editingUser.roles" name="roles" required>
+
+      <button type="submit">{{ editMode ? 'Update' : 'Create' }}</button>
+      <button type="button" (click)="cancelEdit()">Cancel</button>
+    </form>
+  </div>
+</div>

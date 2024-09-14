@@ -74,6 +74,8 @@ import { AppartDetailsContactComponent } from './components/content/appart-detai
 import { RegisterComponent } from './components/content/register/register.component';
 import { RegisterFormComponent } from './components/content/register/register-form/register-form.component';
 import { RegisterTitleComponent } from './components/content/register/register-title/register-title.component';
+import { DashboardAdminComponent } from './components/content/dashboard/dashboard-admin/dashboard-admin.component';
+import { DashboardAdminUserComponent } from './components/content/dashboard/dashboard-admin/dashboard-admin-user/dashboard-admin-user.component' ;
 
 
 @NgModule({
@@ -147,6 +149,8 @@ import { RegisterTitleComponent } from './components/content/register/register-t
     RegisterComponent,
     RegisterFormComponent,
     RegisterTitleComponent,
+    DashboardAdminComponent,
+    DashboardAdminUserComponent,
 
   ],
   imports: [
