@@ -206,6 +206,11 @@
   font-weight: 600;
   opacity: 0;
 }
+.subheading8-name{
+  position: relative;
+  line-height: 150%;
+  font-weight: 600
+}
 .content110 {
   align-self: stretch;
   display: flex;
