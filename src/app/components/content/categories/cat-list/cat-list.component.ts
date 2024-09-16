@@ -9,6 +9,7 @@ import { Category } from '../../../../models/category.model'; // Import the mode
 })
 export class CatListComponent implements OnInit {
   categories: Category[] = []; // Use the Category model
+  filteredThreeCategories: Category[] = []; // Store the first three categories
 
   constructor(private categoryService: CategoryService) {}
 
@@ -16,16 +17,22 @@ export class CatListComponent implements OnInit {
     this.fetchCategories();
   }
 
+  // Fetch all categories
   fetchCategories(): void {
-    // Use the service to fetch categories
     this.categoryService.getCategories().subscribe(
       (data: any) => {
         // Assuming the API returns categories in 'hydra:member'
         this.categories = data['hydra:member'] || [];
+        this.filteredThreeCategory(); // Filter the first three categories after fetching
       },
       (error) => {
         console.error('Error fetching categories:', error);
       }
     );
+  }
+
+  // Filter and return the first three categories
+  filteredThreeCategory(): void {
+    this.filteredThreeCategories = this.categories.slice(0, 3);
   }
 }

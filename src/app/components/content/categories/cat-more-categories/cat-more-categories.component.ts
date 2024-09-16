@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CategoryService } from '../../../../services/category.service'; // Import the service
+import { Category } from '../../../../models/category.model'; // Import the model
 
 @Component({
   selector: 'app-cat-more-categories',
@@ -6,27 +8,24 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./cat-more-categories.component.css']
 })
 export class CatMoreCategoriesComponent implements OnInit {
-  moreCategories = [
-    {
-      name: 'Bateaux',
-      description: 'Des appartements incroyables situés dans de magnifiques bateaux, offrant une expérience de vie unique au fil de l\'eau.',
-      imageUrl: '../../assets/images/placeholder-image18@2x.png'
-    },
-    {
-      name: 'Yourtes',
-      description: 'Découvrez notre vaste sélection de yourtes uniques, spacieuses et confortables, conçues pour une expérience de séjour inoubliable au plus près de la nature.',
-      imageUrl: '../../assets/images/placeholder-image19@2x.png'
-    },
-    {
-      name: 'Vans',
-      description: 'Vivez une expérience unique en séjournant dans un van aménagé avec tout le confort nécessaire pour profiter pleinement de vos aventures en plein air et n\'importe où.',
-      imageUrl: '../../assets/images/placeholder-image20@2x.png'
-    }
-  ];
+  moreCategories: Category[] = []; // To store more categories dynamically
 
-  constructor() { }
+  constructor(private categoryService: CategoryService) {}
 
   ngOnInit(): void {
+    this.fetchMoreCategories();
+  }
+
+  // Fetch all categories and store the remaining ones as "more categories"
+  fetchMoreCategories(): void {
+    this.categoryService.getCategories().subscribe(
+      (data: any) => {
+        const categories = data['hydra:member'] || [];
+        this.moreCategories = categories.slice(3, 6); // Get the categories after the first three
+      },
+      (error) => {
+        console.error('Error fetching categories:', error);
+      }
+    );
   }
 }
-
