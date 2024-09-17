@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {HomeComponent} from "./components/content/home/home.component";
-import {AppartementsComponent} from "./components/content/appartements/appartements.component";
 import {CategoriesComponent} from "./components/content/categories/categories.component";
 import {AdministrateurComponent} from "./components/content/administrateur/administrateur.component";
 import {AddAppartComponent} from "./components/content/add-appart/add-appart.component";
@@ -17,14 +16,14 @@ import {AboutComponent} from "./components/content/about/about.component";
 import {LoginComponent} from "./components/content/login/login.component";
 import {ViewOwnerAppartComponent} from "./components/content/view-owner-appart/view-owner-appart.component";
 import {ContactComponent} from "./components/content/contact/contact.component";
-import {AppartDetailsComponent} from "./components/content/appart-details/appart-details.component";
 import {RegisterComponent} from "./components/content/register/register.component";
 import {DashboardAdminComponent} from "./components/content/dashboard/dashboard-admin/dashboard-admin.component";
+import {AppartementsComponent} from "./components/content/appartements/appartements.component";
+import {AppartByIdComponent} from "./components/content/appartements/appart-by-id/appart-by-id.component";
 
 let routes: Routes;
 routes = [
   {path: '', component: HomeComponent},
-  {path: 'apparts', component: AppartementsComponent},
   {path: 'cat', component: CategoriesComponent},
   {path: 'admin', component: AdministrateurComponent},
   {path: 'dashboard-admin', component: DashboardAdminComponent},
@@ -39,8 +38,10 @@ routes = [
   {path: 'login', component: LoginComponent},
   {path: 'view-owner-appart', component: ViewOwnerAppartComponent},
   {path: 'contact', component: ContactComponent},
-  {path: 'appart-details', component: AppartDetailsComponent},
   {path: 'register', component: RegisterComponent},
+  {path: 'list-appart', component: AppartementsComponent},
+  { path: 'id-appart/:id', component: AppartByIdComponent },
+
  // {path: '', redirectTo: '/HomeComponent', pathMatch: 'full'}
   // other routes...
 ];

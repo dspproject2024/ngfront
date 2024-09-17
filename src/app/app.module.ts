@@ -15,12 +15,6 @@ import { HomeCategoriesComponent } from './components/content/home/home-categori
 import { HomeTestimonialsComponent } from './components/content/home/home-testimonials/home-testimonials.component';
 import { HomeNewsletterComponent } from './components/content/home/home-newsletter/home-newsletter.component';
 import { HomeCookieConsentComponent } from './components/content/home/home-cookie-consent/home-cookie-consent.component';
-import { AppartementsComponent } from './components/content/appartements/appartements.component';
-import { AppartHeaderComponent } from './components/content/appartements/appart-header/appart-header.component';
-import { AppartAppartListComponent } from './components/content/appartements/appart-appart-list/appart-appart-list.component';
-import { AppartFilterComponent } from './components/content/appartements/appart-filter/appart-filter.component';
-import { AppartStatsComponent } from './components/content/appartements/appart-stats/appart-stats.component';
-import { AppartCallToActionComponent } from './components/content/appartements/appart-call-to-action/appart-call-to-action.component';
 import { CategoriesComponent } from './components/content/categories/categories.component';
 import { CatHeaderComponent } from './components/content/categories/cat-header/cat-header.component';
 import { CatListComponent } from './components/content/categories/cat-list/cat-list.component';
@@ -30,9 +24,6 @@ import { AdministrateurComponent } from './components/content/administrateur/adm
 import { AdminProfileDropdownComponent } from './components/content/administrateur/admin-profile-dropdown/admin-profile-dropdown.component';
 import { AdminDashboardHeaderComponent } from './components/content/administrateur/admin-dashboard-header/admin-dashboard-header.component';
 import { AdminFeatureSectionComponent } from './components/content/administrateur/admin-feature-section/admin-feature-section.component';
-import { AppartAppartItemComponent } from './components/content/appartements/appart-appart-item/appart-appart-item.component';
-import { AppartCatListComponent } from './components/content/appartements/appart-cat-list/appart-cat-list.component';
-import { AppartCatItemComponent } from './components/content/appartements/appart-cat-item/appart-cat-item.component';
 import { AddAppartComponent } from './components/content/add-appart/add-appart.component';
 import { AddAppartFormComponent } from './components/content/add-appart/add-appart-form/add-appart-form.component';
 import { AddAppartHeaderComponent } from './components/content/add-appart/add-appart-header/add-appart-header.component';
@@ -68,14 +59,17 @@ import { ContactFormComponent } from './components/content/contact/contact-form/
 import { ContactInfoComponent } from './components/content/contact/contact-info/contact-info.component';
 import { ContactGoogleMapComponent } from './components/content/contact/contact-google-map/contact-google-map.component';
 import { ContactHeaderComponent } from './components/content/contact/contact-header/contact-header.component';
-import { AppartDetailsComponent } from './components/content/appart-details/appart-details.component';
-import { AppartDetailsContentComponent } from './components/content/appart-details/appart-details-content/appart-details-content.component';
-import { AppartDetailsContactComponent } from './components/content/appart-details/appart-details-contact/appart-details-contact.component';
 import { RegisterComponent } from './components/content/register/register.component';
 import { RegisterFormComponent } from './components/content/register/register-form/register-form.component';
 import { RegisterTitleComponent } from './components/content/register/register-title/register-title.component';
 import { DashboardAdminComponent } from './components/content/dashboard/dashboard-admin/dashboard-admin.component';
-import { DashboardAdminUserComponent } from './components/content/dashboard/dashboard-admin/dashboard-admin-user/dashboard-admin-user.component' ;
+import { DashboardAdminUserComponent } from './components/content/dashboard/dashboard-admin/dashboard-admin-user/dashboard-admin-user.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { AppartementsComponent } from './components/content/appartements/appartements.component';
+import { AppartListComponent } from './components/content/appartements/appart-list/appart-list.component';
+import { CtaSectionComponent } from './components/content/appartements/cta-section/cta-section.component';
+import { AppartHeaderComponent } from './components/content/appartements/appart-header/appart-header.component';
+import { AppartByIdComponent } from './components/content/appartements/appart-by-id/appart-by-id.component';
 
 
 @NgModule({
@@ -90,12 +84,6 @@ import { DashboardAdminUserComponent } from './components/content/dashboard/dash
     HomeTestimonialsComponent,
     HomeNewsletterComponent,
     HomeCookieConsentComponent,
-    AppartementsComponent,
-    AppartHeaderComponent,
-    AppartAppartListComponent,
-    AppartFilterComponent,
-    AppartStatsComponent,
-    AppartCallToActionComponent,
     CategoriesComponent,
     CatHeaderComponent,
     CatListComponent,
@@ -105,9 +93,6 @@ import { DashboardAdminUserComponent } from './components/content/dashboard/dash
     AdminProfileDropdownComponent,
     AdminDashboardHeaderComponent,
     AdminFeatureSectionComponent,
-    AppartAppartItemComponent,
-    AppartCatListComponent,
-    AppartCatItemComponent,
     AddAppartComponent,
     AddAppartFormComponent,
     AddAppartHeaderComponent,
@@ -143,14 +128,19 @@ import { DashboardAdminUserComponent } from './components/content/dashboard/dash
     ContactInfoComponent,
     ContactGoogleMapComponent,
     ContactHeaderComponent,
-    AppartDetailsComponent,
-    AppartDetailsContentComponent,
-    AppartDetailsContactComponent,
     RegisterComponent,
     RegisterFormComponent,
     RegisterTitleComponent,
     DashboardAdminComponent,
     DashboardAdminUserComponent,
+
+    ProfileComponent,
+      AppartementsComponent,
+      AppartListComponent,
+      CtaSectionComponent,
+      AppartHeaderComponent,
+      AppartByIdComponent,
+
 
   ],
   imports: [

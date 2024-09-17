@@ -1,0 +1,17 @@
+<!-- habitat-list.component.html -->
+<div class="habitat-list">
+  <div class="habitat-card" *ngFor="let habitat of habitats">
+    <img [src]="habitat.images[0]?.url || 'assets/images/placeholder-image16@2x.png'" alt="Habitat Image" class="habitat-image">
+    <div class="habitat-details">
+      <h2>{{ habitat.title }}</h2>
+      <p><strong>City:</strong> {{ habitat.city }}</p>
+      <p><strong>Price Per Night:</strong> {{ habitat.pricePerNight }}€</p>
+      <p><strong>Max Guests:</strong> {{ habitat.maxGuests }}</p>
+    </div>
+    <div class="habitat-buttons">
+      <button class="btn btn-reserver">Réserver</button>
+      <button class="btn btn-voir" (click)="viewHabitat(habitat.id)">Voir +</button>
+      <button class="btn btn-commenter">Commenter</button>
+    </div>
+  </div>
+</div>
