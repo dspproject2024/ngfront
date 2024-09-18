@@ -20,6 +20,10 @@ import {RegisterComponent} from "./components/content/register/register.componen
 import {DashboardAdminComponent} from "./components/content/dashboard/dashboard-admin/dashboard-admin.component";
 import {AppartementsComponent} from "./components/content/appartements/appartements.component";
 import {AppartByIdComponent} from "./components/content/appartements/appart-by-id/appart-by-id.component";
+import {CommentsComponent} from "./components/content/comments/comments.component";
+import {
+  CommentDetailAppartComponent
+} from "./components/content/comments/comment-detail-appart/comment-detail-appart.component";
 
 let routes: Routes;
 routes = [
@@ -34,13 +38,15 @@ routes = [
   {path: 'mentions', component: MentionLegalesComponent},
   {path: 'politique', component: PrivacyPolicyComponent},
   {path: 'cookies', component: CookiesPolicyComponent},
-    {path: 'about', component: AboutComponent},
+  {path: 'about', component: AboutComponent},
   {path: 'login', component: LoginComponent},
   {path: 'view-owner-appart', component: ViewOwnerAppartComponent},
   {path: 'contact', component: ContactComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'list-appart', component: AppartementsComponent},
   { path: 'id-appart/:id', component: AppartByIdComponent },
+  {path: 'comments/:id', component: CommentsComponent},
+  {path: 'comments-details/:id', component: CommentDetailAppartComponent},
 
  // {path: '', redirectTo: '/HomeComponent', pathMatch: 'full'}
   // other routes...

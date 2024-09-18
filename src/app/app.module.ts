@@ -70,6 +70,11 @@ import { AppartListComponent } from './components/content/appartements/appart-li
 import { CtaSectionComponent } from './components/content/appartements/cta-section/cta-section.component';
 import { AppartHeaderComponent } from './components/content/appartements/appart-header/appart-header.component';
 import { AppartByIdComponent } from './components/content/appartements/appart-by-id/appart-by-id.component';
+import { CommentsComponent } from './components/content/comments/comments.component';
+import { CommentsFormComponent } from './components/content/comments/comments-form/comments-form.component';
+import { CommentsListComponent } from './components/content/comments/comments-list/comments-list.component';
+import { CommentComponent } from './components/content/comments/comment/comment.component';
+import { CommentDetailAppartComponent } from './components/content/comments/comment-detail-appart/comment-detail-appart.component';
 
 
 @NgModule({
@@ -140,6 +145,11 @@ import { AppartByIdComponent } from './components/content/appartements/appart-by
       CtaSectionComponent,
       AppartHeaderComponent,
       AppartByIdComponent,
+      CommentsComponent,
+      CommentsFormComponent,
+      CommentsListComponent,
+      CommentComponent,
+      CommentDetailAppartComponent,
 
 
   ],

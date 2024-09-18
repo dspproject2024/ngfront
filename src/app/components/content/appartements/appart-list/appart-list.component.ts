@@ -37,4 +37,9 @@ export class AppartListComponent implements OnInit {
 
     this.router.navigate(['/id-appart',habitatId]);
   }
+
+  viewComments(habitatId: number): void {
+
+    this.router.navigate(['/comments',habitatId]);
+  }
 }
