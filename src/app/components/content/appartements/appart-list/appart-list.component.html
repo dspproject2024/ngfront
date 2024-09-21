@@ -9,7 +9,7 @@
       <p><strong>Max Guests:</strong> {{ habitat.maxGuests }}</p>
     </div>
     <div class="habitat-buttons">
-      <button class="btn btn-reserver">Réserver</button>
+      <button class="btn btn-reserver" (click)="startCheckout(habitat.title,habitat.pricePerNight)" [disabled]="loading">Réserver {{ loading ? "Loading..." : "Start Stripe Checkout" }}</button>
       <button class="btn btn-voir" (click)="viewHabitat(habitat.id)">Voir +</button>
       <button class="btn btn-commenter" (click)="viewComments(habitat.id)">Commenter</button>
     </div>

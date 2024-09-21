@@ -75,6 +75,9 @@ import { CommentsFormComponent } from './components/content/comments/comments-fo
 import { CommentsListComponent } from './components/content/comments/comments-list/comments-list.component';
 import { CommentComponent } from './components/content/comments/comment/comment.component';
 import { CommentDetailAppartComponent } from './components/content/comments/comment-detail-appart/comment-detail-appart.component';
+import { StripeCheckoutComponent } from './components/stripe-checkout/stripe-checkout.component';
+import { SuccessComponent } from './components/success/success.component';
+import { CancelComponent } from './components/cancel/cancel.component';
 
 
 @NgModule({
@@ -150,6 +153,9 @@ import { CommentDetailAppartComponent } from './components/content/comments/comm
       CommentsListComponent,
       CommentComponent,
       CommentDetailAppartComponent,
+      StripeCheckoutComponent,
+      SuccessComponent,
+      CancelComponent,
 
 
   ],

@@ -24,6 +24,9 @@ import {CommentsComponent} from "./components/content/comments/comments.componen
 import {
   CommentDetailAppartComponent
 } from "./components/content/comments/comment-detail-appart/comment-detail-appart.component";
+import {StripeCheckoutComponent} from "./components/stripe-checkout/stripe-checkout.component";
+import {SuccessComponent} from "./components/success/success.component";
+import {CancelComponent} from "./components/cancel/cancel.component";
 
 let routes: Routes;
 routes = [
@@ -47,6 +50,9 @@ routes = [
   { path: 'id-appart/:id', component: AppartByIdComponent },
   {path: 'comments/:id', component: CommentsComponent},
   {path: 'comments-details/:id', component: CommentDetailAppartComponent},
+  { path: 'checkout', component: StripeCheckoutComponent },
+  { path: 'success', component: SuccessComponent },
+  { path: 'cancel', component: CancelComponent },
 
  // {path: '', redirectTo: '/HomeComponent', pathMatch: 'full'}
   // other routes...
