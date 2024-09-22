@@ -1,7 +1,7 @@
 <!-- habitat-list.component.html -->
 <div class="habitat-list">
   <div class="habitat-card" *ngFor="let habitat of habitats" (click)="viewHabitat(habitat.id)">
-    <img [src]="habitat.images[0]?.url || 'assets/images/placeholder-image-1@2x.png'" alt="Habitat Image" class="habitat-image">
+    <img [src]="habitat.images[0]?.url || 'assets/images/placeholder-image7@2x.png'" alt="Habitat Image" class="habitat-image">
     <div class="habitat-details">
       <h2>{{ habitat.title }}</h2>
       <p><span class="features">Ville:</span> {{ habitat.city }}</p>
@@ -9,9 +9,9 @@
       <p><span class="features">Maximum de personne :</span> {{ habitat.maxGuests }}</p>
     </div>
     <div class="habitat-buttons">
-      <button class="btn btn-primary styleprimary-smallfalse-da14">Réserver</button>
+      <button class="btn btn-primary styleprimary-smallfalse-da14" (click)="startCheckout(habitat.title,habitat.pricePerNight)" [disabled]="loading">Réserver</button>
       <button class="btn btn-primary styleprimary-smallfalse-da14" (click)="viewHabitat(habitat.id)">Voir +</button>
-      <button class="btn btn-commenter btn-secondary" (click)="viewComments(habitat.id)">Commenter</button>
+      <button class="btn btn-commenter" (click)="viewComments(habitat.id)">Commenter</button>
     </div>
   </div>
 </div>

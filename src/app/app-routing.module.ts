@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { AuthGuard } from './auth.guard';  // Assure-toi d'importer le guard
 import { RouterModule, Routes } from '@angular/router';
 import {HomeComponent} from "./components/content/home/home.component";
 import {CategoriesComponent} from "./components/content/categories/categories.component";
@@ -24,26 +25,38 @@ import {CommentsComponent} from "./components/content/comments/comments.componen
 import {
   CommentDetailAppartComponent
 } from "./components/content/comments/comment-detail-appart/comment-detail-appart.component";
+import {StripeCheckoutComponent} from "./components/stripe-checkout/stripe-checkout.component";
+import {SuccessComponent} from "./components/success/success.component";
+import {CancelComponent} from "./components/cancel/cancel.component";
+import {
+  DashboardAdminStatusComponent
+} from "./components/content/dashboard/dashboard-admin/dashboard-admin-status/dashboard-admin-status.component";
+import {ReservationListComponent} from "./components/content/reservation/reservation-list/reservation-list.component";
+import {
+  ReservationDetailsComponent
+} from "./components/content/reservation/reservation-details/reservation-details.component";
+import {ReservationFormComponent} from "./components/content/reservation/reservation-form/reservation-form.component";
 import { DashboardAdminRoleComponent } from './components/content/dashboard/dashboard-admin/dashboard-admin-role/dashboard-admin-role.component';
 import { OurServicesComponent } from './components/content/our-services/our-services.component';
+import { ErrorPageComponent } from './components/content/error-page/error-page.component';
 
 let routes: Routes;
 routes = [
   {path: '', component: HomeComponent},
   {path: 'cat', component: CategoriesComponent},
-  {path: 'admin', component: AdministrateurComponent},
-  {path: 'dashboard-admin', component: DashboardAdminComponent},
-  {path: 'dashboard-admin-role', component: DashboardAdminRoleComponent},
+  {path: 'admin', component: AdministrateurComponent,  canActivate: [AuthGuard]},
+  {path: 'dashboard-admin', component: DashboardAdminComponent,  canActivate: [AuthGuard]},
+  {path: 'dashboard-admin-role', component: DashboardAdminRoleComponent,  canActivate: [AuthGuard]},
   {path: 'add-appart', component: AddAppartComponent},
   {path: 'cgu', component: CguComponent},
   {path: 'cgv', component: CgvComponent},
-  {path: 'success', component: ReservationConfirmationComponent},
+  {path: 'success', component: ReservationConfirmationComponent,  canActivate: [AuthGuard]},
   {path: 'mentions', component: MentionLegalesComponent},
   {path: 'politique', component: PrivacyPolicyComponent},
   {path: 'cookies', component: CookiesPolicyComponent},
   {path: 'about', component: AboutComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'view-owner-appart', component: ViewOwnerAppartComponent},
+  {path: 'view-owner-appart', component: ViewOwnerAppartComponent,  canActivate: [AuthGuard]},
   {path: 'contact', component: ContactComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'list-appart', component: AppartementsComponent},
@@ -51,6 +64,15 @@ routes = [
   { path: 'id-appart/:id', component: AppartByIdComponent },
   {path: 'comments/:id', component: CommentsComponent},
   {path: 'comments-details/:id', component: CommentDetailAppartComponent},
+  { path: 'checkout', component: StripeCheckoutComponent, canActivate: [AuthGuard] },
+  { path: 'success', component: SuccessComponent,  canActivate: [AuthGuard] },
+  { path: 'cancel', component: CancelComponent,  canActivate: [AuthGuard] },
+  { path: 'statuses', component: DashboardAdminStatusComponent,  canActivate: [AuthGuard] },
+  { path: 'reservations', component: ReservationListComponent,  canActivate: [AuthGuard] },
+  { path: 'reservation/:id', component: ReservationDetailsComponent,  canActivate: [AuthGuard] },
+  { path: 'edit-reservation/:id', component: ReservationFormComponent,  canActivate: [AuthGuard] },
+  { path: 'create-reservation', component: ReservationFormComponent,  canActivate: [AuthGuard] },
+  { path: 'error-page', component: ErrorPageComponent },
 
  // {path: '', redirectTo: '/HomeComponent', pathMatch: 'full'}
   // other routes...

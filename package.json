@@ -20,11 +20,13 @@
     "@angular/platform-browser-dynamic": "^17.0.0",
     "@angular/platform-server": "^17.0.0",
     "@angular/router": "^17.3.12",
+    "@angular/service-worker": "^17.0.0",
     "@angular/ssr": "^17.0.8",
     "express": "^4.18.2",
     "http": "^0.0.1-security",
     "jwt-decode": "^4.0.0",
     "ngfront": "file:",
+    "pwa": "^1.9.7",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.2"

@@ -1,0 +1,7 @@
+<!-- src/app/components/stripe-checkout/stripe-checkout.component.html -->
+<div class="stripe-checkout-container">
+  <button (click)="startCheckout()" [disabled]="loading">
+    {{ loading ? 'Loading...' : 'Start Stripe Checkout' }}
+  </button>
+  <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+</div>

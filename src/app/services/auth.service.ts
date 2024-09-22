@@ -2,10 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-// Correction de l'import pour jwtDecode
-import {jwtDecode} from 'jwt-decode';  
+import { jwtDecode } from 'jwt-decode';  
 import { GetApiService } from './get-api.service';
-import { User } from '../models/user.model';  // Assurez-vous que le modèle User est correct
+import { User } from '../models/user.model';  
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +13,6 @@ export class AuthService {
   private apiUrl: string;
 
   constructor(private http: HttpClient, private getApi: GetApiService) {
-    // Obtention de l'URL de l'API depuis GetApiService
     this.apiUrl = this.getApi.getApi();
   }
 
@@ -34,6 +32,11 @@ export class AuthService {
     );
   }
 
+  // Récupérer le token depuis le localStorage
+  getToken(): string | null {
+    return localStorage.getItem('token');
+  }
+
   // Méthode pour vérifier si l'utilisateur est connecté (basée sur le JWT)
   isLoggedIn(): boolean {
     return this.isAuthenticated();
@@ -46,7 +49,7 @@ export class AuthService {
 
   // Méthode pour vérifier si l'utilisateur est authentifié (basée sur le JWT)
   isAuthenticated(): boolean {
-    const token = localStorage.getItem('token');
+    const token = this.getToken();
     if (!token) {
       return false; // Si pas de token, l'utilisateur n'est pas authentifié
     }
@@ -59,14 +62,13 @@ export class AuthService {
       // Retourne true si le token n'est pas expiré
       return decodedToken.exp > currentTime;
     } catch (error) {
-      // Si le décodage échoue, retourne false
-      return false;
+      return false; // Si le décodage échoue, retourne false
     }
   }
 
   // Méthode pour décoder le token
   getDecodedToken() {
-    const token = localStorage.getItem('token');
+    const token = this.getToken();
     if (token) {
       return jwtDecode(token);  // Utilisation de jwtDecode pour décoder le token
     }

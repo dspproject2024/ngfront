@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
@@ -75,11 +75,21 @@ import { CommentsFormComponent } from './components/content/comments/comments-fo
 import { CommentsListComponent } from './components/content/comments/comments-list/comments-list.component';
 import { CommentComponent } from './components/content/comments/comment/comment.component';
 import { CommentDetailAppartComponent } from './components/content/comments/comment-detail-appart/comment-detail-appart.component';
+import { StripeCheckoutComponent } from './components/stripe-checkout/stripe-checkout.component';
+import { SuccessComponent } from './components/success/success.component';
+import { CancelComponent } from './components/cancel/cancel.component';
+import { DashboardAdminStatusComponent } from './components/content/dashboard/dashboard-admin/dashboard-admin-status/dashboard-admin-status.component';
+import { ReservationComponent } from './components/content/reservation/reservation.component';
+import { ReservationListComponent } from './components/content/reservation/reservation-list/reservation-list.component';
+import { ReservationFormComponent } from './components/content/reservation/reservation-form/reservation-form.component';
+import { ReservationDetailsComponent } from './components/content/reservation/reservation-details/reservation-details.component';
 import { DashboardAdminRoleComponent } from './components/content/dashboard/dashboard-admin/dashboard-admin-role/dashboard-admin-role.component';
 import { DashboardAdminRoleFormComponent } from './components/content/dashboard/dashboard-admin/dashboard-admin-role-form/dashboard-admin-role-form.component';
 import { DashboardAdminRoleDetailComponent } from './components/content/dashboard/dashboard-admin/dashboard-admin-role-detail/dashboard-admin-role-detail.component';
 import { DashboardAdminRoleListComponent } from './components/content/dashboard/dashboard-admin/dashboard-admin-role-list/dashboard-admin-role-list.component';
 import { OurServicesComponent } from './components/content/our-services/our-services.component';
+import { ErrorPageComponent } from './components/content/error-page/error-page.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 
 @NgModule({
@@ -160,6 +170,15 @@ import { OurServicesComponent } from './components/content/our-services/our-serv
       DashboardAdminRoleDetailComponent,
       DashboardAdminRoleListComponent,
       OurServicesComponent,
+      StripeCheckoutComponent,
+      SuccessComponent,
+      CancelComponent,
+      DashboardAdminStatusComponent,
+      ReservationComponent,
+      ReservationListComponent,
+      ReservationFormComponent,
+      ReservationDetailsComponent,
+      ErrorPageComponent,
 
 
   ],
@@ -168,7 +187,13 @@ import { OurServicesComponent } from './components/content/our-services/our-serv
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   providers: [
     provideClientHydration(),
