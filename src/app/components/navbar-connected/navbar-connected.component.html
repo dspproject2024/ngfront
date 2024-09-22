@@ -1,7 +1,6 @@
-<!-- navbar.component.html -->
 <div class="navbar-36">
   <div class="container19">
-    <!--Burger menu-->
+    <!-- Burger menu -->
     <button type="button" class="header__nav-toggler">
       <span class="line l1"></span>
       <span class="line l2"></span>
@@ -10,18 +9,24 @@
     <div class="column25">
       <div class="column26 column61">
         <div class="link-one6"><a routerLink="/">Accueil</a></div>
-        <div class="link-one6"><a routerLink="/apparts">Appartements</a></div>
+        <div class="link-one6"><a routerLink="/list-appart">Appartements</a></div>
         <div class="nav-link-dropdown6">
           <div class="link-one6"><a routerLink="/cat">Categories</a></div>
         </div>
-        <div class="link-one15"><a routerLink="/about">Découvrir nos services</a></div>
+        <div class="link-one15"><a routerLink="/our-services">Découvrir nos services</a></div>
       </div>
     </div>
     <div>
       <a href="index.html"><img class="color-dark9" alt="logo_atypikHouse" src="../../assets/images/logo.jpeg" width="80px" height="80px" /></a>
     </div>
     <div class="column27">
-      <img class="iconamoonprofile-duotone2" alt="icon_profil" src="../../assets/images/iconamoonprofileduotone.svg" id="profilIcon" />
+      <!-- Ajout de l'événement click sur l'icône de profil -->
+      <img class="iconamoonprofile-duotone2" alt="icon_profil" src="../../assets/images/iconamoonprofileduotone.svg" id="profilIcon" (click)="toggleProfilePopup()" />
     </div>
   </div>
+</div>
+
+<!-- Ajout du composant profil sous forme de popup -->
+<div *ngIf="showProfilePopup" class="profile-popup">
+  <app-profile></app-profile>
 </div>

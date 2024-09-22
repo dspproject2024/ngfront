@@ -1,32 +1,43 @@
 /* Ensure the body and html take up full height */
-
+body, html {
+  font-family: Poppins;
+}
 /* Register container now takes the full available height */
 .register-container {
-  width: 100%;
-  max-width: 400px;
+  height: 100vh;
   display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
+  justify-content: center;
+  align-items: center;
   flex-direction: column;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #fff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.connection {
+  color: #f3af02;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.logo {
+  width: 40px;
+  position: relative;
+  margin: 20px 0 0 10px;
 }
 
 /* Heading and paragraph styles */
 h2 {
+  font-weight: 700;
+  font-size: 3rem;
+  color: whitesmoke;
+  position: top;
+  font-family: Poppins;
   text-align: center;
-  color: #000; /* Black */
-  margin-bottom: 10px;
 }
 
 p {
   text-align: center;
   margin-bottom: 20px;
   font-size: 14px;
-  color: #666;
+  color: whitesmoke;
 }
 
 /* Form labels and input fields */
@@ -37,7 +48,7 @@ label {
   display: block;
 }
 
-input {
+input, select {
   padding: 10px;
   margin-bottom: 15px;
   border: 1px solid #ccc;
@@ -46,34 +57,67 @@ input {
   width: 100%;
 }
 
-/* Button styles */
+form {
+  width: 100%;
+  max-width: 700px; /* Adjust this value to control the form width */
+  height: auto;
+  padding: 20px;
+  background-color: transparent;
+  border: 1px solid #ccc;
+  border-radius: 14px;
+  border: 1px solid whitesmoke;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: space-evenly;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: whitesmoke;
+  background: transparent;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #ccc;
+  border-radius: 14px;
+  font-size: 16px;
+  background: transparent;
+  outline: none;
+  font-family: Poppins;
+}
+
+input::placeholder {
+  color: whitesmoke;
+}
+
 button {
+  width: 100%;
   padding: 12px;
-  background-color: #11CF73; /* Primary color (Green) */
+  background-color: #11CF73; /* Main Color (Green) */
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 14px;
   font-size: 16px;
   cursor: pointer;
-  width: 100%;
 }
 
 button:hover {
-  background-color: #DB9E00; /* Secondary color (Orange) */
+  background-color: rgba(17, 207, 115, 0.8); /* Secondary Color (Orange) */
 }
 
-button:disabled {
-  background-color: #ccc; /* Disabled button color */
-  cursor: not-allowed;
-}
-
-/* Error messages */
 .error {
-  color: #DB9E00; /* Secondary color (Orange) */
+  font-weight: bold;
+  color: #fa5151;
   font-size: 14px;
-  margin-bottom: 10px;
-  text-align: left;
+  margin-top: 10px;
 }
+
 
 /* Media queries for responsiveness */
 @media (max-width: 768px) {

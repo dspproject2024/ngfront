@@ -90,7 +90,7 @@
 .short-heading-here {
   align-self: stretch;
   position: relative;
-  line-height: 120%;
+  line-height: 90%;
 }
 .lorem-ipsum-dolor {
   align-self: stretch;
@@ -316,7 +316,7 @@
   text-align: left;
   font-size: var(--text-regular-link-size);
   color: var(--text-primary);
-  font-family: var(--text-medium-semi-bold);
+  font-family: Poppins;
 }
 
 /*Modifications*/

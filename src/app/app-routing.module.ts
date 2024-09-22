@@ -24,6 +24,8 @@ import {CommentsComponent} from "./components/content/comments/comments.componen
 import {
   CommentDetailAppartComponent
 } from "./components/content/comments/comment-detail-appart/comment-detail-appart.component";
+import { DashboardAdminRoleComponent } from './components/content/dashboard/dashboard-admin/dashboard-admin-role/dashboard-admin-role.component';
+import { OurServicesComponent } from './components/content/our-services/our-services.component';
 
 let routes: Routes;
 routes = [
@@ -31,6 +33,7 @@ routes = [
   {path: 'cat', component: CategoriesComponent},
   {path: 'admin', component: AdministrateurComponent},
   {path: 'dashboard-admin', component: DashboardAdminComponent},
+  {path: 'dashboard-admin-role', component: DashboardAdminRoleComponent},
   {path: 'add-appart', component: AddAppartComponent},
   {path: 'cgu', component: CguComponent},
   {path: 'cgv', component: CgvComponent},
@@ -44,6 +47,7 @@ routes = [
   {path: 'contact', component: ContactComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'list-appart', component: AppartementsComponent},
+  {path: 'our-services', component: OurServicesComponent},
   { path: 'id-appart/:id', component: AppartByIdComponent },
   {path: 'comments/:id', component: CommentsComponent},
   {path: 'comments-details/:id', component: CommentDetailAppartComponent},

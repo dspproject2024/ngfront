@@ -14,8 +14,9 @@ export class HabitatService {
 
   // Fetch all habitats
   getHabitats(): Observable<Habitat[]> {
-    return this.http.get<Habitat[]>(this.apiUrl);
+    return this.http.get<Habitat[]>(this.apiUrl)  ;
   }
+  
 
   // Fetch a habitat by ID
   getHabitatById(id: number): Observable<Habitat> {

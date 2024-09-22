@@ -75,6 +75,11 @@ import { CommentsFormComponent } from './components/content/comments/comments-fo
 import { CommentsListComponent } from './components/content/comments/comments-list/comments-list.component';
 import { CommentComponent } from './components/content/comments/comment/comment.component';
 import { CommentDetailAppartComponent } from './components/content/comments/comment-detail-appart/comment-detail-appart.component';
+import { DashboardAdminRoleComponent } from './components/content/dashboard/dashboard-admin/dashboard-admin-role/dashboard-admin-role.component';
+import { DashboardAdminRoleFormComponent } from './components/content/dashboard/dashboard-admin/dashboard-admin-role-form/dashboard-admin-role-form.component';
+import { DashboardAdminRoleDetailComponent } from './components/content/dashboard/dashboard-admin/dashboard-admin-role-detail/dashboard-admin-role-detail.component';
+import { DashboardAdminRoleListComponent } from './components/content/dashboard/dashboard-admin/dashboard-admin-role-list/dashboard-admin-role-list.component';
+import { OurServicesComponent } from './components/content/our-services/our-services.component';
 
 
 @NgModule({
@@ -150,6 +155,11 @@ import { CommentDetailAppartComponent } from './components/content/comments/comm
       CommentsListComponent,
       CommentComponent,
       CommentDetailAppartComponent,
+      DashboardAdminRoleComponent,
+      DashboardAdminRoleFormComponent,
+      DashboardAdminRoleDetailComponent,
+      DashboardAdminRoleListComponent,
+      OurServicesComponent,
 
 
   ],

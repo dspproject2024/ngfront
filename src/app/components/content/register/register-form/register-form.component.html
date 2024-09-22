@@ -1,106 +1,128 @@
 <!-- src/app/components/auth/register-form/register-form.component.html -->
+<a routerLink="/"><img src="../../../../../assets/images/back-arrow-direction-down-right-left-up-svgrepo-com.svg" alt="backIcon"  height="80px" class="logo"></a>
 <div class="register-container">
-  <h2>Inscrivez-vous</h2>
-  <p>Connectez-vous ou inscrivez-vous en tant que propriétaire ou locataire</p>
+  <div class="head">
+    <h2>Inscrivez-vous</h2>
+    <p><a routerLink="/login" class="connection">Connectez-vous</a> ou inscrivez-vous en tant que propriétaire ou locataire</p>
+  </div>
 
   <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
     <!-- First Name -->
-    <label for="firstName">First Name:</label>
+    <label for="firstName">Prénom</label>
     <input
       type="text"
       id="firstName"
       [(ngModel)]="user.firstName"
       name="firstName"
-      placeholder="Enter your first name"
+      placeholder="Entez votre prénom"
       required
       #firstName="ngModel"
     />
     <div *ngIf="firstName.invalid && firstName.touched" class="error">
-      First name is required
+      Veuillez insérer votre prénom.
     </div>
 
     <!-- Last Name -->
-    <label for="lastName">Last Name:</label>
+    <label for="lastName">Nom</label>
     <input
       type="text"
       id="lastName"
       [(ngModel)]="user.lastName"
       name="lastName"
-      placeholder="Enter your last name"
+      placeholder="Entez votre nom"
       required
       #lastName="ngModel"
     />
     <div *ngIf="lastName.invalid && lastName.touched" class="error">
-      Last name is required
+      Veuillez insérer votre nom.
     </div>
 
     <!-- Email -->
-    <label for="email">Email:</label>
+    <label for="email">Email</label>
     <input
       type="email"
       id="email"
       [(ngModel)]="user.email"
       name="email"
-      placeholder="Enter your email"
-      required
+      placeholder="Entez votre email"
       email
       #email="ngModel"
     />
     <div *ngIf="email.invalid && email.touched" class="error">
-      Valid email is required
+      L'Email n'est pas valide.
     </div>
 
     <!-- Phone Number -->
-    <label for="phoneNumber">Phone Number:</label>
+    <label for="phoneNumber">Numéro de téléphone</label>
     <input
       type="text"
       id="phoneNumber"
       [(ngModel)]="user.phoneNumber"
       name="phoneNumber"
-      placeholder="Enter your phone number"
+      placeholder="Entez votre numéro de téléphone"
       required
       #phoneNumber="ngModel"
     />
     <div *ngIf="phoneNumber.invalid && phoneNumber.touched" class="error">
-      Phone number is required
+      Veuillez saisir un numéro de téléphone valide.
     </div>
 
+
     <!-- Password -->
-    <label for="password">Password:</label>
+    <label for="password">Mot de passe</label>
     <input
       type="password"
       id="password"
       [(ngModel)]="user.password"
       name="password"
-      placeholder="Enter your password"
+      placeholder="Entrez votre mot de passe"
       required
       minlength="6"
       #password="ngModel"
     />
     <div *ngIf="password.invalid && password.touched" class="error">
-      Password must be at least 6 characters long
+      PLe mot de passe doit contenir au moins 6 carractères.
     </div>
 
     <!-- Confirm Password -->
-    <label for="reTypePassword">Confirm Password:</label>
+    <label for="reTypePassword">Confirmer mot de passe</label>
     <input
       type="password"
       id="reTypePassword"
       [(ngModel)]="user.reTypePassword"
       name="reTypePassword"
-      placeholder="Confirm your password"
+      placeholder="Confirmez votre mot de passe"
       required
       #reTypePassword="ngModel"
     />
     <div *ngIf="reTypePassword.invalid && reTypePassword.touched" class="error">
-      Confirm password is required
+      Veuillez confirmer votre mot de passe.
     </div>
     <div *ngIf="user.password !== user.reTypePassword && reTypePassword.touched" class="error">
-      Passwords do not match
+      Les mots de passe ne sont pas conformes.
     </div>
 
+        <!-- role -->
+        <label for="phoneNumber">Je suis </label>
+        <select class="typedefault6" name="type" id="type">
+          <option class=" iconfalse1" value="user">locataire</option>
+          <option class=" iconfalse1" value="owner">propriétaire</option>
+        </select>
+        <!-- <input
+          type="select"
+          id="phoneNumber"
+          [(ngModel)]="user.phoneNumber"
+          name="phoneNumber"
+          placeholder="Entez votre numéro de téléphone"
+          required
+          #phoneNumber="ngModel"
+        />
+        <div *ngIf="phoneNumber.invalid && phoneNumber.touched" class="error">
+          Veuillez saisir un numéro de téléphone valide.
+        </div> -->
+
     <!-- Submit Button -->
-    <button type="submit" [disabled]="registerForm.invalid">Register</button>
+    <button type="submit" [disabled]="registerForm.invalid">S'inscire</button>
 
     <!-- Error Message Display -->
     <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>

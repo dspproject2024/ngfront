@@ -1,10 +1,8 @@
-/*Animation de réservation*/
-// Fonction pour démarrer l'animation de confettis
 function startConfetti() {
   const duration = 5 * 1000; // 5 secondes
   const end = Date.now() + duration;
-
   const canvas = document.getElementById("confetti-canvas");
+
   const myConfetti = confetti.create(canvas, {
     resize: true,
     useWorker: true,
@@ -30,6 +28,4 @@ function startConfetti() {
   })();
 }
 
-console.log("Salut");
-// Démarrer les confettis après que la page ait été complètement chargée
 window.addEventListener("load", startConfetti);

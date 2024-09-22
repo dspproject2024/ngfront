@@ -7,6 +7,9 @@ html, body {
   box-sizing: border-box;
   line-height: normal;
 }
+/*Polices*/
+
+
 
 /*links*/
 a, a:link, a:visited, a:focus, a:active {
@@ -226,8 +229,8 @@ a:hover {
 
 :root {
   /* fonts */
-  --text-medium-semi-bold: Roboto;
-  --single-line-body-base: Inter;
+  --text-medium-semi-bold: CovesLight;
+  --single-line-body-base: Poppins;
 
   /* font sizes */
   --text-regular-link-size: 0.889rem;

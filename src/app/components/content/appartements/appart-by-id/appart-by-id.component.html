@@ -1,73 +1,67 @@
-
-<!-- habitat-list.component.html -->
-<div class="bg-gray-100 dark:bg-gray-800 py-8" *ngIf="habitat">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex flex-col md:flex-row -mx-4">
+<div class="habitat-container" *ngIf="habitat">
+  <div class="habitat-wrapper">
+    <div class="habitat-flex-container">
 
       <!-- Main Image and Buttons -->
-      <div class="md:flex-1 px-4">
-        <div class="h-[460px] rounded-lg bg-gray-300 dark:bg-gray-700 mb-4">
-          <img class="w-full h-full object-cover" [src]="habitat.images[0]?.url || 'assets/images/placeholder-image16@2x.png'" alt="Habitat Image">
+      <div class="habitat-main-image-container">
+        <a routerLink="/list-appart"><img src="../../../../../../assets/images/back-arrow-direction-down-right-left-up-svgrepo-com_Black.svg"  height="80px" class="logo"></a>
+        <div class="habitat-image">
+          <img class="habitat-img" [src]="habitat.images[currentImageIndex]?.url || 'assets/images/placeholder-image16@2x.png'" alt="Habitat Image">
         </div>
-        <div class="flex -mx-2 mb-4">
-          <div class="w-1/2 px-2">
-            <button class="w-full bg-green-600 dark:bg-green-700 text-white py-2 px-4 rounded-full font-bold hover:bg-green-500">Réserver</button>
+        <div class="carousel-navigation">
+          <button class="carousel-button prev" (click)="previousImage()">&#10094;</button>
+          <button class="carousel-button next" (click)="nextImage()">&#10095;</button>
+        </div>
+        <div class="habitat-buttons">
+          <div class="button-container">
+            <button class="btn-primary styleprimary-smallfalse-da14">Réserver</button>
           </div>
-          <div class="w-1/2 px-2">
-            <button class="w-full bg-yellow-600 dark:bg-yellow-700 text-white py-2 px-4 rounded-full font-bold hover:bg-yellow-500">Commenter</button>
+          <div class="button-container">
+            <button class="btn-commenter btn-secondary">Commenter</button>
           </div>
-          <div class="w-1/2 px-2">
-            <button class="w-full bg-green-600 dark:bg-green-700 text-white py-2 px-4 rounded-full font-bold hover:bg-green-500">Contacter</button>
-          </div>
-          <div class="w-1/2 px-2">
-            <button class="w-full bg-yellow-600 dark:bg-yellow-700 text-white py-2 px-4 rounded-full font-bold hover:bg-yellow-500">Retourner</button>
+          <div class="button-container">
+            <button class="btn-commenter btn-secondary">Contacter</button>
           </div>
         </div>
       </div>
 
       <!-- Habitat Details -->
-      <div class="md:flex-1 px-4">
-        <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">{{ habitat.title }}</h2>
-        <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">{{ habitat.description }}</p>
-        <div class="flex mb-4">
-          <div class="mr-4">
-            <span class="font-bold text-gray-700 dark:text-gray-300">Prix par nuitée:</span>
-            <span class="text-gray-600 dark:text-gray-300">{{ habitat.pricePerNight }}€</span>
+      <div class="habitat-details-container">
+        <h2 class="habitat-title">{{ habitat.title }}</h2>
+        <p class="habitat-description">{{ habitat.description }}</p>
+        <div class="habitat-details">
+          <div class="habitat-price">
+            <span class="habitat-price-label">Prix/nuit: </span>
+            <span class="habitat-price-value">{{ habitat.pricePerNight }}€</span>
           </div>
-          <div>
-            <span class="font-bold text-gray-700 dark:text-gray-300">Max Personnes:</span>
-            <span class="text-gray-600 dark:text-gray-300">{{ habitat.maxGuests }}</span>
+          <div class="habitat-max-guests">
+            <span class="habitat-max-guests-label">Max Personnes: </span>
+            <span class="habitat-max-guests-value">{{ habitat.maxGuests }}</span>
           </div>
-
         </div>
 
         <!-- Additional Details -->
-        <div class="mb-4">
-          <span class="font-bold text-gray-700 dark:text-gray-300">Accessoires:</span>
-          <p class="text-gray-600 dark:text-gray-300 text-sm">{{ habitat.amenities.join(', ') }}</p>
-        </div>
-        <div class="mb-4">
-          <span class="font-bold text-gray-700 dark:text-gray-300">Disponibilité:</span>
-          <p class="text-gray-600 dark:text-gray-300 text-sm">{{ habitat.availability }}</p>
-        </div>
-
-        <!-- Location -->
-        <div class="mb-4">
-          <span class="font-bold text-gray-700 dark:text-gray-300">Ville:</span>
-          <p class="text-gray-600 dark:text-gray-300 text-sm">{{ habitat.city }}</p>
-        </div>
-        <div class="mb-4">
-          <span class="font-bold text-gray-700 dark:text-gray-300">Pays:</span>
-          <p class="text-gray-600 dark:text-gray-300 text-sm">{{ habitat.country }}</p>
-        </div>
-
-        <!-- Additional Images -->
-        <div class="grid grid-cols-2 gap-4 mt-6">
-          <img class="w-full h-64 object-cover rounded-lg" [src]="habitat.images[1]?.url || 'assets/images/placeholder-image16@2x.png'" alt="Additional Image 1">
-          <img class="w-full h-64 object-cover rounded-lg" [src]="habitat.images[2]?.url || 'assets/images/placeholder-image16@2x.png'" alt="Additional Image 2">
-        </div>
+         <div class="detailAditionnel">
+           <div class="habitat-amenities">
+             <span class="habitat-amenities-label">Accessoires: </span>
+             <p class="habitat-amenities-list">{{ habitat.amenities.join(', ') }}</p>
+           </div>
+           <div class="habitat-availability">
+             <span class="habitat-availability-label">Disponibilité: </span>
+             <span class="habitat-availability-value">{{ habitat.availability }}</span>
+           </div>
+   
+           <!-- Location -->
+           <div class="habitat-location">
+             <span class="habitat-location-label">Ville:</span>
+             <p class="habitat-location-value">{{ habitat.city }}</p>
+           </div>
+           <div class="habitat-country">
+             <span class="habitat-country-label">Pays:</span>
+             <p class="habitat-country-value">{{ habitat.country }}</p>
+           </div>
+         </div>
       </div>
     </div>
   </div>
 </div>
-

@@ -1,34 +1,51 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { HabitatService } from '../../../../services/habitat.service'; // Make sure this path is correct
-import { Habitat } from '../../../../models/habitat.model'; // Assuming the model is in this path
+import { ActivatedRoute } from '@angular/router';
+import { HabitatService } from '../../../../services/habitat.service';
+import { Habitat } from '../../../../models/habitat.model';
 
 @Component({
   selector: 'app-appart-by-id',
   templateUrl: './appart-by-id.component.html',
-  styleUrl: './appart-by-id.component.css'
+  styleUrls: ['./appart-by-id.component.css']
 })
 export class AppartByIdComponent implements OnInit {
-  habitat: Habitat | null = null; // To store the fetched habitat
+  habitat: Habitat | null = null;
+  currentImageIndex: number = 0;  // Index de l'image actuelle
 
   constructor(private habitatService: HabitatService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-this.getByIdHabitat();
+    this.getByIdHabitat();
   }
 
-  getByIdHabitat():void {
-    // Get the habitat ID from the route parameters
+  getByIdHabitat(): void {
     const habitatId = Number(this.route.snapshot.paramMap.get('id'));
 
-    // Fetch the habitat by ID
     this.habitatService.getHabitatById(habitatId).subscribe(
       (data: Habitat) => {
         this.habitat = data;
+        console.log('Images récupérées:', this.habitat?.images);  // Affiche la liste des images récupérées
+        if (!this.habitat?.images || this.habitat.images.length === 0) {
+          console.warn('Aucune image récupérée ou images mal formées.');
+        }
       },
       (error) => {
-        console.error('Error fetching habitat:', error);
+        console.error('Erreur lors de la récupération de l\'habitat:', error);
       }
     );
+  }
+
+  nextImage(): void {
+    if (this.habitat?.images && this.habitat.images.length > 0) {
+      this.currentImageIndex = (this.currentImageIndex + 1) % this.habitat.images.length;
+    }
+    console.log('Image suivante, index:', this.currentImageIndex);
+  }
+
+  previousImage(): void {
+    if (this.habitat?.images && this.habitat.images.length > 0) {
+      this.currentImageIndex = (this.currentImageIndex - 1 + this.habitat.images.length) % this.habitat.images.length;
+    }
+    console.log('Image précédente, index:', this.currentImageIndex);
   }
 }

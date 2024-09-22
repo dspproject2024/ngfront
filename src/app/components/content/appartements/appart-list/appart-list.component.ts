@@ -24,14 +24,17 @@ export class AppartListComponent implements OnInit {
     this.habitatService.getHabitats().subscribe(
       (data: any) => {
         // Assuming the API returns habitats in 'hydra:member'
-        this.habitats = data['hydra:member'] || [];
-      //  this.filteredThreeHabitats = this.habitats.slice(0, 3); // Filter the first three habitats after fetching
+        this.habitats = (data['hydra:member'] || []).sort((a:Habitat, b:Habitat) => b.id - a.id);  // Tri décroissant par id
+        console.log('Habitats triés par id (desc):', this.habitats);
       },
       (error) => {
         console.error('Error fetching habitats:', error);
       }
     );
   }
+  
+  
+  
 
   viewHabitat(habitatId: number): void {
 

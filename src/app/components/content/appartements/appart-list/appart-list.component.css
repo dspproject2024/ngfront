@@ -11,9 +11,10 @@
 
 .habitat-card {
   background-color: #fff;
-  border: 2px solid #11CF73; /* Main color for border */
-  border-radius: 8px;
+  border: none; /* Main color for border */
+  border-radius: 24px;
   width: 30%;
+  height: auto;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s;
 }
@@ -24,33 +25,33 @@
 
 .habitat-image {
   width: 100%;
-  height: 200px;
+  height: 50%;
   object-fit: cover;
-  border-bottom: 3px solid #DB9E00; /* Secondary color for image border */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px 8px 0 0;
 }
 
 .habitat-details {
   padding: 15px;
-  text-align: center;
+  display: flex;
+  flex-flow : column wrap;
+  gap: 5px;
+  justify-content: space-evenly;
 }
 
 .habitat-details h2 {
   font-size: 1.5rem;
-  color: #464646; /* Text color for title */
   margin-bottom: 10px;
+  text-align: justify;
+  line-height: 90%;
 }
 
 .habitat-details p {
   font-size: 1rem;
-  color: #AA3939; /* Updated text color for paragraph */
   font-weight: bold; /* Added bold font weight */
   margin: 5px 0;
 }
 
-.habitat-details p strong {
-  color: #000000; /* Text color for labels */
-}
 
 /* Button styles */
 .habitat-buttons {
@@ -60,42 +61,70 @@
 }
 
 .btn {
-  padding: 10px 15px;
-  border: none;
-  border-radius: 5px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.btn-reserver {
-  background-color: #11CF73; /* Main color for "Réserver" button */
-  color: #fff;
-}
-
-.btn-voir {
-  background-color: #DB9E00; /* Secondary color for "Voir +" button */
-  color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .btn-commenter {
-  background-color: #464646; /* Dark color for "Commenter" button */
-  color: #fff;
+  width: auto;
+  border-radius: var(--br-31xl);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-xs) var(--padding-5xl);
+  box-sizing: border-box;
+  color: var(--text-primary);
+  border: 1px solid rgba(0, 0, 0, 0.527);
+  position: relative;
+  line-height: 150%;
 }
 
-/* Hover effects for buttons */
-.btn:hover {
-  opacity: 0.9;
+.btn-commenter:hover {
+  cursor: pointer;
+  background-color: rgba(247, 246, 246, 0.993);
+  transition: ease-in-out, 0.3s;
+}
+
+
+@media (max-width: 1200px) {
+  .habitat-list {
+    width: 100%;
+    flex-flow: row wrap;
+  }
+  .habitat-card {
+    height: 100%;
+    
+  }
+  .habitat-buttons {
+    flex-flow: column-reverse wrap;
+    justify-content: space-evenly;
+    gap: 10px;
+  }
+  .habitat-image {
+    height: 60%;
+  }
+
 }
 
 @media (max-width: 768px) {
+  .habitat-list {
+    width: 98%;
+  }
   .habitat-card {
-    width: 48%;
+    width: 98%;
+  }
+  .habitat-image {
+    height: 60%;
   }
 }
 
 @media (max-width: 480px) {
-  .habitat-card {
+  .habitat-list {
     width: 100%;
   }
+  .habitat-card {
+    width: 100%;
+    height: 100%;
+  }
+
 }
