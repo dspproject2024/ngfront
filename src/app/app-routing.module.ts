@@ -27,6 +27,14 @@ import {
 import {StripeCheckoutComponent} from "./components/stripe-checkout/stripe-checkout.component";
 import {SuccessComponent} from "./components/success/success.component";
 import {CancelComponent} from "./components/cancel/cancel.component";
+import {
+  DashboardAdminStatusComponent
+} from "./components/content/dashboard/dashboard-admin/dashboard-admin-status/dashboard-admin-status.component";
+import {ReservationListComponent} from "./components/content/reservation/reservation-list/reservation-list.component";
+import {
+  ReservationDetailsComponent
+} from "./components/content/reservation/reservation-details/reservation-details.component";
+import {ReservationFormComponent} from "./components/content/reservation/reservation-form/reservation-form.component";
 
 let routes: Routes;
 routes = [
@@ -53,6 +61,11 @@ routes = [
   { path: 'checkout', component: StripeCheckoutComponent },
   { path: 'success', component: SuccessComponent },
   { path: 'cancel', component: CancelComponent },
+  { path: 'statuses', component: DashboardAdminStatusComponent },
+  { path: 'reservations', component: ReservationListComponent },
+  { path: 'reservation/:id', component: ReservationDetailsComponent },
+  { path: 'edit-reservation/:id', component: ReservationFormComponent },
+  { path: 'create-reservation', component: ReservationFormComponent },
 
  // {path: '', redirectTo: '/HomeComponent', pathMatch: 'full'}
   // other routes...

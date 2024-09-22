@@ -78,6 +78,11 @@ import { CommentDetailAppartComponent } from './components/content/comments/comm
 import { StripeCheckoutComponent } from './components/stripe-checkout/stripe-checkout.component';
 import { SuccessComponent } from './components/success/success.component';
 import { CancelComponent } from './components/cancel/cancel.component';
+import { DashboardAdminStatusComponent } from './components/content/dashboard/dashboard-admin/dashboard-admin-status/dashboard-admin-status.component';
+import { ReservationComponent } from './components/content/reservation/reservation.component';
+import { ReservationListComponent } from './components/content/reservation/reservation-list/reservation-list.component';
+import { ReservationFormComponent } from './components/content/reservation/reservation-form/reservation-form.component';
+import { ReservationDetailsComponent } from './components/content/reservation/reservation-details/reservation-details.component';
 
 
 @NgModule({
@@ -156,6 +161,11 @@ import { CancelComponent } from './components/cancel/cancel.component';
       StripeCheckoutComponent,
       SuccessComponent,
       CancelComponent,
+      DashboardAdminStatusComponent,
+      ReservationComponent,
+      ReservationListComponent,
+      ReservationFormComponent,
+      ReservationDetailsComponent,
 
 
   ],
