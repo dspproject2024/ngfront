@@ -9,6 +9,10 @@
   background-color: #f4f4f4;
 }
 
+.input-margin {
+  margin-top: 25px;
+}
+
 .habitat-card {
   background-color: #fff;
   border: none; /* Main color for border */
@@ -93,7 +97,7 @@
   }
   .habitat-card {
     height: 100%;
-    
+
   }
   .habitat-buttons {
     flex-flow: column-reverse wrap;

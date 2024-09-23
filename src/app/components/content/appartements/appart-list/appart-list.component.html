@@ -1,15 +1,26 @@
 <!-- habitat-list.component.html -->
+<div class="input-margin"></div>
+<div class="search">
+  <!-- Enregistre la saisie et applique le filtre automatiquement -->
+  <input class="searchInput" type="text" [(ngModel)]="searchTerm" (input)="onSearch()" placeholder="Rechercher un appartement">
+</div>
+<div class="input-margin"></div>
 <div class="habitat-list">
-  <div class="habitat-card" *ngFor="let habitat of habitats" (click)="viewHabitat(habitat.id)">
-    <img 
-    [src]="habitat.firstImageUrl || 'assets/images/placeholder-image7@2x.png'" 
-    alt="Habitat Image" 
+  <div class="habitat-card" *ngFor="let habitat of filteredHabitats" (click)="viewHabitat(habitat.id)">
+    <img
+    [src]="habitat.images[1] || 'assets/images/placeholder-image7@2x.png'"
+    alt="Habitat Image"
     class="habitat-image">
     <div class="habitat-details">
       <h2>{{ habitat.title }}</h2>
       <p><span class="features">Ville:</span> {{ habitat.city }}</p>
-      <p><span class="features">Prix/nuit:</span> {{ habitat.pricePerNight }}€</p>
-      <p><span class="features">Maximum de personne :</span> {{ habitat.maxGuests }}</p>
+      <p><span class="features">Prix:</span> {{ habitat.pricePerNight }}€</p>
+      <p>
+        <span class="features">Période :</span>
+        {{ habitat.startDate | date:'shortDate':'fr' }} - {{ habitat.endDate | date:'shortDate':'fr' }}
+        | Personne max : {{ habitat.maxGuests }}
+      </p>
+
     </div>
     <div class="habitat-buttons">
       <button class="btn btn-primary styleprimary-smallfalse-da14" (click)="startCheckout(habitat.title,habitat.pricePerNight)" [disabled]="loading">Réserver</button>

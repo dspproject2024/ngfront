@@ -16,4 +16,6 @@ export interface Habitat {
   owner: any;
   category: Category | string;
   images: { url: string }[];  // URL for images (can hold multiple images)
+  startDate:Date,
+  endDate:Date
 }

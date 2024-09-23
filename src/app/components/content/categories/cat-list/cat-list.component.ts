@@ -8,8 +8,9 @@ import { Category } from '../../../../models/category.model'; // Import the mode
   styleUrls: ['./cat-list.component.css']
 })
 export class CatListComponent implements OnInit {
-  categories: Category[] = []; // Use the Category model
-  filteredThreeCategories: Category[] = []; // Store the first three categories
+  categories: Category[] = []; // All categories fetched from the service
+  filteredThreeCategories: Category[] = []; // Filtered categories to display
+  searchTerm: string = ''; // To store the search input
 
   constructor(private categoryService: CategoryService) {}
 
@@ -35,4 +36,16 @@ export class CatListComponent implements OnInit {
   filteredThreeCategory(): void {
     this.filteredThreeCategories = this.categories.slice(0, 3);
   }
+
+  // Function to filter the categories as user types in the search box
+  onSearch(): void {
+    const searchTermLower = this.searchTerm.toLowerCase();
+    const filteredCategories = this.categories.filter((category) =>
+      category.title.toLowerCase().includes(searchTermLower) ||
+      (category.description && category.description.toLowerCase().includes(searchTermLower)) // Vérifie si la description existe
+    );
+    this.filteredThreeCategories = filteredCategories.slice(0, 3); // Limite à 3 résultats
+  }
+
+
 }
