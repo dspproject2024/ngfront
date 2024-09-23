@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HabitatService } from '../../../../services/habitat.service';
-import { Habitat } from '../../../../models/habitat.model';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-appart-by-id',
@@ -9,12 +9,18 @@ import { Habitat } from '../../../../models/habitat.model';
   styleUrls: ['./appart-by-id.component.css']
 })
 export class AppartByIdComponent implements OnInit {
-  habitat: Habitat | null = null;
-  currentImageIndex: number = 0;  // Index de l'image actuelle
+  habitat: any;
+  images: string[] = [];  // Tableau pour stocker les URLs des images
+  currentImageIndex = 0;
 
-  constructor(private habitatService: HabitatService, private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    private habitatService: HabitatService,
+    private http: HttpClient
+  ) { }
 
   ngOnInit(): void {
+    this.currentImageIndex = 0; // Initialiser l'index à 0
     this.getByIdHabitat();
   }
 
@@ -22,29 +28,53 @@ export class AppartByIdComponent implements OnInit {
     const habitatId = Number(this.route.snapshot.paramMap.get('id'));
 
     this.habitatService.getHabitatById(habitatId).subscribe(
-      (data: Habitat) => {
+      (data: any) => {
         this.habitat = data;
-        console.log('Images récupérées:', this.habitat?.images);  // Affiche la liste des images récupérées
-        if (!this.habitat?.images || this.habitat.images.length === 0) {
+        console.log('Habitat récupéré:', this.habitat);
+
+        // Charger les images de l'habitat
+        if (this.habitat.images && this.habitat.images.length > 0) {
+          this.habitat.images.forEach((imageId: string) => {
+            const imageApiUrl = `https://localhost:8000${imageId}`;
+            console.log('Appel API pour récupérer l\'image:', imageApiUrl); // Vérifier l'URL API
+
+            this.http.get<any>(imageApiUrl).subscribe(
+              (response) => {
+                let imageUrl = response.url;
+
+                // Vérifier si l'URL commence déjà par "http"
+                if (!imageUrl.startsWith('http')) {
+                  imageUrl = `https://localhost:8000${response.url}`;
+                }
+
+                this.images.push(imageUrl);
+                console.log('Image URL ajoutée:', imageUrl); // Vérifie chaque URL d'image ajoutée
+              },
+              (error) => {
+                console.error('Erreur lors du chargement de l\'image:', error);
+              }
+            );
+          });
+        } else {
           console.warn('Aucune image récupérée ou images mal formées.');
         }
       },
-      (error) => {
+      (error: any) => {
         console.error('Erreur lors de la récupération de l\'habitat:', error);
       }
     );
   }
 
   nextImage(): void {
-    if (this.habitat?.images && this.habitat.images.length > 0) {
-      this.currentImageIndex = (this.currentImageIndex + 1) % this.habitat.images.length;
+    if (this.images.length > 0) {
+      this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
     }
     console.log('Image suivante, index:', this.currentImageIndex);
   }
 
   previousImage(): void {
-    if (this.habitat?.images && this.habitat.images.length > 0) {
-      this.currentImageIndex = (this.currentImageIndex - 1 + this.habitat.images.length) % this.habitat.images.length;
+    if (this.images.length > 0) {
+      this.currentImageIndex = (this.currentImageIndex - 1 + this.images.length) % this.images.length;
     }
     console.log('Image précédente, index:', this.currentImageIndex);
   }

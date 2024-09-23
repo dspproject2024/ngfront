@@ -26,11 +26,11 @@ export class LoginFormComponent {
     this.authService.login(this.credentials).subscribe(
       (response) => {
         // If login is successful, navigate to the '/admin' route (or another route as needed)
-        this.router.navigate(['/admin']);
+        this.router.navigate(['/']);
       },
       (error) => {
         // If there's an error (e.g., invalid credentials), set an error message
-        this.errorMessage = 'Invalid credentials, please try again.';
+        this.errorMessage = 'Informations de connexion invalides.';
       }
     );
   }

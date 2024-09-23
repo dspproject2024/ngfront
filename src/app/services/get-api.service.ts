@@ -7,6 +7,7 @@ export class GetApiService {
 
   // API URL for your backend
   private apiUrl = 'https://localhost:8000/api'; // Using HTTP for local development
+  //private apiUrl = 'https://134.209.112.10:8000/api'; // Using HTTP for local development
 
   constructor() { }
 

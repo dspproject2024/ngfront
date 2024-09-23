@@ -4,9 +4,13 @@
 
       <!-- Main Image and Buttons -->
       <div class="habitat-main-image-container">
-        <a routerLink="/list-appart"><img src="../../../../../../assets/images/back-arrow-direction-down-right-left-up-svgrepo-com_Black.svg"  height="80px" class="logo"></a>
+        <a routerLink="/list-appart">
+          <img src="../../../../../../assets/images/back-arrow-direction-down-right-left-up-svgrepo-com_Black.svg" height="80px" class="logo">
+        </a>
         <div class="habitat-image">
-          <img class="habitat-img" [src]="habitat.images[currentImageIndex]?.url || 'assets/images/placeholder-image16@2x.png'" alt="Habitat Image">
+          <img class="habitat-img" 
+               [src]="images[currentImageIndex] || 'assets/images/placeholder-image7@2x.png'" 
+               alt="Habitat Image">
         </div>
         <div class="carousel-navigation">
           <button class="carousel-button prev" (click)="previousImage()">&#10094;</button>
@@ -44,7 +48,7 @@
          <div class="detailAditionnel">
            <div class="habitat-amenities">
              <span class="habitat-amenities-label">Accessoires: </span>
-             <p class="habitat-amenities-list">{{ habitat.amenities.join(', ') }}</p>
+             <span   class="habitat-amenities-list"> {{ habitat.amenities.join(', ') }} </span>
            </div>
            <div class="habitat-availability">
              <span class="habitat-availability-label">Disponibilité: </span>
@@ -54,11 +58,11 @@
            <!-- Location -->
            <div class="habitat-location">
              <span class="habitat-location-label">Ville:</span>
-             <p class="habitat-location-value">{{ habitat.city }}</p>
+             <span class="habitat-location-value"> {{ habitat.city }} </span>
            </div>
            <div class="habitat-country">
              <span class="habitat-country-label">Pays:</span>
-             <p class="habitat-country-value">{{ habitat.country }}</p>
+             <span class="habitat-country-value"> {{ habitat.country }} </span>
            </div>
          </div>
       </div>

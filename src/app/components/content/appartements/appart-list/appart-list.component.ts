@@ -3,6 +3,7 @@ import { HabitatService } from '../../../../services/habitat.service';
 import { Habitat } from '../../../../models/habitat.model';
 import { Router } from '@angular/router';
 import { StripeService } from '../../../../services/stripe.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-appart-list',
@@ -10,20 +11,68 @@ import { StripeService } from '../../../../services/stripe.service';
   styleUrls: ['./appart-list.component.css'] // Fixes: Corrected 'styleUrl' to 'styleUrls'
 })
 export class AppartListComponent implements OnInit {
-  habitats: Habitat[] = []; // All habitats
+  habitats: any[] = []; // All habitats
   filteredThreeHabitats: Habitat[] = []; // Store the first three habitats
   loading = false;
   errorMessage: string | null = null;
 
+
   constructor(
     private habitatService: HabitatService,
     private router: Router,
-    private stripeService: StripeService
+    private stripeService: StripeService, 
+    private http: HttpClient
   ) {}
 
   ngOnInit(): void {
     this.fetchHabitats();
+    this.habitatService.getHabitats().subscribe((data: any) => {
+      this.habitats = data['hydra:member'];
+    
+      // Trier les habitats par date de création (descendant) et limiter à 6
+      this.habitats.sort((a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+      this.habitats = this.habitats.slice(0, 6);  // Limiter à 6 éléments
+    
+      console.log('Habitats chargés (limités à 6 derniers ajoutés):', this.habitats);
+    
+      // Parcours des habitats pour gérer les images
+      this.habitats.forEach(habitat => {
+        if (habitat.images && habitat.images.length > 0) {
+          let imageApiUrl = habitat.images[0];  // Utilisez l'URL de la première image directement
+    
+          // Vérifier si l'URL contient déjà "https://localhost:8000"
+          if (!imageApiUrl.startsWith('http')) {
+            imageApiUrl = `https://localhost:8000${imageApiUrl}`; // Ajouter le domaine si nécessaire
+          }
+    
+          console.log('Image API URL:', imageApiUrl);  // Vérifier l'URL de l'image API
+    
+          // Faire la requête pour récupérer les détails de l'image
+          this.http.get<any>(imageApiUrl).subscribe(
+            (response) => {
+              // Utiliser l'URL de l'image depuis la réponse
+              habitat.firstImageUrl = response.url.startsWith('http') ? response.url : `https://localhost:8000${response.url}`;
+              console.log('Image URL:', habitat.firstImageUrl);
+            },
+            (error) => {
+              console.error('Erreur lors du chargement de l\'image:', error);
+              habitat.firstImageUrl = 'assets/images/placeholder-image7@2x.png';  // Image par défaut en cas d'erreur
+            }
+          );
+        } else {
+          // Image par défaut si aucune image n'est associée à l'habitat
+          habitat.firstImageUrl = 'assets/images/placeholder-image7@2x.png';
+        }
+      });
+    }, (error) => {
+      console.error('Erreur lors de la récupération des habitats:', error);
+    });
+    
   }
+    // Méthode pour charger l'URL de l'image depuis l'API
+    loadImageUrl(imageApiUrl: string) {
+      return this.http.get<any>('https://localhost:8000' + imageApiUrl);
+    }
 
   // Fetch all habitats
   fetchHabitats(): void {
@@ -31,7 +80,7 @@ export class AppartListComponent implements OnInit {
       (data: any) => {
         // Assuming the API returns habitats in 'hydra:member'
         this.habitats = (data['hydra:member'] || []).sort((a:Habitat, b:Habitat) => b.id - a.id);  // Tri décroissant par id
-        console.log('Habitats triés par id (desc):', this.habitats);
+        /*console.log('Habitats triés par id (desc):', this.habitats);*/
       },
       (error) => {
         console.error('Error fetching habitats:', error);
@@ -88,4 +137,5 @@ export class AppartListComponent implements OnInit {
       }
     );
   }
+
 }

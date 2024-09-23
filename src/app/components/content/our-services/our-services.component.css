@@ -2,11 +2,22 @@
 @import url('../../../../assets/css/home.css');
 @import url('../../../../assets/css/list-des-appartements.css');
 
-body, html {
+html, body, app-root {
+    width: 100%;
+    height: 100%;
     margin: 0;
     padding: 0;
-    box-sizing: content-box;
     font-family: Poppins;
+}
+
+body {
+    overflow-x: hidden; /* Empêche le défilement horizontal */
+}
+
+app-root {
+    display: block;
+    width: 100%;
+    height: 100%;
 }
 
 .banner {
@@ -14,7 +25,7 @@ body, html {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: top;
-    width: 100vw;
+    width: 100%;
     height: 500px;
     color: whitesmoke;
     display: flex;
@@ -40,32 +51,84 @@ h1 {
     font-size: 3rem;
     font-weight: 500;
 }
-
+/* Base styles for large screens (desktops) */
 .container {
     width: 100%;
-    margin: 80px;
-    padding: 10px;
+    padding: 20px;
     display: flex;
-    gap: 10px;
+    flex-direction: row;
     justify-content: space-between;
+    align-items: center;
 }
 
-h2 {
-    line-height: 100%;
-    font-size: 2rem;
-    font-weight: 500;
+.image {
+    width: 50%;
+    padding: 10px;
 }
 
-img {
-    width: 600px;
-    height: 400px;
+.text {
+    width: 50%;
+    padding: 10px;
 }
 
-.btn-consult {
-    align-self: flex-start;
-    margin-top: 70px;
+@media (max-width: 1200px) {
+    /* For screens smaller than 1200px (large tablets) */
+    .container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .image, .text {
+        width: 100%;
+    }
 }
-.btn-post {
-    align-self: flex-end;
-    margin-top: 70px;
+
+@media (max-width: 768px) {
+    /* For screens smaller than 768px (small tablets) */
+    .container {
+        padding: 10px;
+    }
+
+    .banner {
+        width: 100%;
+    }
+
+    .image, .text {
+        width: 100%;
+        padding: 5px;
+    }
+
+    .text {
+        font-size: 16px;
+    }
+
+    .banner {
+        width: 100%;
+        background-position: center;
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* For screens smaller than 480px (mobile devices) */
+    .container {
+        flex-direction: column;
+        padding: 5px;
+    }
+
+    .image, .text {
+        width: 100%;
+        padding: 5px;
+    }
+
+    .text {
+        font-size: 14px;
+        text-align: center;
+    }
+
+    /* Ensure images do not overflow */
+    img {
+        max-width: 100%;
+        height: auto;
+    }
 }

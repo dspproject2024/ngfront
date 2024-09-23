@@ -16,6 +16,9 @@ export class HabitatService {
   getHabitats(): Observable<Habitat[]> {
     return this.http.get<Habitat[]>(this.apiUrl)  ;
   }
+  // getHabitats(): Observable<any> {
+  //   return this.http.get(`${this.apiUrl}/habitats?order[createdAt]=desc&limit=6`);
+  // }
   
 
   // Fetch a habitat by ID
@@ -23,4 +26,10 @@ export class HabitatService {
     const url = `${this.apiUrl}/${id}`;
     return this.http.get<Habitat>(url);
   }
+
+     // Nouvelle méthode pour récupérer une image via son @id
+     getImage(imageId: string): Observable<any> {
+      return this.http.get(`${this.apiUrl}${imageId}`);
+    }
+  
 }

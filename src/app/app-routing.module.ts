@@ -47,7 +47,7 @@ routes = [
   {path: 'admin', component: AdministrateurComponent,  canActivate: [AuthGuard]},
   {path: 'dashboard-admin', component: DashboardAdminComponent,  canActivate: [AuthGuard]},
   {path: 'dashboard-admin-role', component: DashboardAdminRoleComponent,  canActivate: [AuthGuard]},
-  {path: 'add-appart', component: AddAppartComponent},
+  {path: 'add-appart', component: AddAppartComponent,  canActivate: [AuthGuard]},
   {path: 'cgu', component: CguComponent},
   {path: 'cgv', component: CgvComponent},
   {path: 'success', component: ReservationConfirmationComponent,  canActivate: [AuthGuard]},

@@ -10,3 +10,9 @@
     z-index: 2000;  /* S'assurer que le popup est au-dessus de tout */
   }
   
+  @media (max-width: 768px) {
+    app-root {
+      width: 100%;
+      margin: 0;
+    }
+  }

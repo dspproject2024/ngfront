@@ -25,7 +25,7 @@ import { AdminProfileDropdownComponent } from './components/content/administrate
 import { AdminDashboardHeaderComponent } from './components/content/administrateur/admin-dashboard-header/admin-dashboard-header.component';
 import { AdminFeatureSectionComponent } from './components/content/administrateur/admin-feature-section/admin-feature-section.component';
 import { AddAppartComponent } from './components/content/add-appart/add-appart.component';
-import { AddAppartFormComponent } from './components/content/add-appart/add-appart-form/add-appart-form.component';
+import { AddHabitatFormComponent } from './components/content/add-appart/add-appart-form/add-appart-form.component';
 import { AddAppartHeaderComponent } from './components/content/add-appart/add-appart-header/add-appart-header.component';
 import { AddAppartProfileDropdownComponent } from './components/content/add-appart/add-appart-profile-dropdown/add-appart-profile-dropdown.component';
 import { AddAppartNavbarConnectedComponent } from './components/content/add-appart/add-appart-navbar-connected/add-appart-navbar-connected.component';
@@ -114,7 +114,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     AdminDashboardHeaderComponent,
     AdminFeatureSectionComponent,
     AddAppartComponent,
-    AddAppartFormComponent,
+    AddAppartComponent,
+    AddHabitatFormComponent,
     AddAppartHeaderComponent,
     AddAppartProfileDropdownComponent,
     AddAppartNavbarConnectedComponent,

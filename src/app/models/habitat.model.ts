@@ -1,3 +1,4 @@
+import {Category} from '../models/category.model';
 export interface Habitat {
   id: number;
   title: string;
@@ -13,6 +14,6 @@ export interface Habitat {
   createdAt: string;
   updatedAt: string;
   owner: any;
-  category: any;
+  category: Category | string;
   images: { url: string }[];  // URL for images (can hold multiple images)
 }
