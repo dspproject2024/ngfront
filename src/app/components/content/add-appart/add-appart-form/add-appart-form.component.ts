@@ -30,8 +30,11 @@ export class AddHabitatFormComponent {
     id: 0,
     createdAt: '',
     updatedAt: '',
-    owner: undefined
+    owner: undefined, 
+    startDate: new Date(),
+    endDate: new Date(),
   };
+  
   showPopup = false; // Variable pour gérer l'affichage du popup
   categories: Category[] = [];  // Pour stocker la liste des catégories
   selectedFiles: File[] = [];  // Pour stocker les fichiers sélectionnés

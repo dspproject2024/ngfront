@@ -1,4 +1,10 @@
 <!-- habitat-list.component.html -->
+<div class="input-margin"></div>
+<div class="search">
+  <!-- Enregistre la saisie et applique le filtre automatiquement -->
+  <input class="searchInput" type="text" [(ngModel)]="searchTerm" (input)="onSearch()" placeholder="Rechercher un appartement">
+</div>
+<div class="input-margin"></div>
 <div class="habitat-list">
   <div class="habitat-card" *ngFor="let habitat of habitats" (click)="viewHabitat(habitat.id)">
     <img 

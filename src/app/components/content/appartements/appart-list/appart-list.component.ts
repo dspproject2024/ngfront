@@ -15,6 +15,9 @@ export class AppartListComponent implements OnInit {
   filteredThreeHabitats: Habitat[] = []; // Store the first three habitats
   loading = false;
   errorMessage: string | null = null;
+  filteredHabitats: Habitat[] = []; // Filtered habitats
+  searchTerm: string = ''; // Variable to hold the search term
+
 
 
   constructor(
@@ -79,14 +82,16 @@ export class AppartListComponent implements OnInit {
     this.habitatService.getHabitats().subscribe(
       (data: any) => {
         // Assuming the API returns habitats in 'hydra:member'
-        this.habitats = (data['hydra:member'] || []).sort((a:Habitat, b:Habitat) => b.id - a.id);  // Tri décroissant par id
-        /*console.log('Habitats triés par id (desc):', this.habitats);*/
+        const habitats = data['hydra:member'] || [];
+        this.habitats = habitats.sort((a: Habitat, b: Habitat) => b.id - a.id);  // Tri décroissant par id
+        this.filteredHabitats = [...this.habitats]; // Initialize filtered habitats
       },
       (error) => {
         console.error('Error fetching habitats:', error);
       }
     );
   }
+  
   
   // View habitat details
   viewHabitat(habitatId: number): void {
@@ -135,6 +140,19 @@ export class AppartListComponent implements OnInit {
         this.errorMessage = 'Error creating checkout session. Please try again later.';
         console.error('Error:', error);
       }
+    );
+  }
+
+  onSearch(): void {
+    const searchTermLower = this.searchTerm.toLowerCase();
+
+    this.filteredHabitats = this.habitats.filter(habitat =>
+      habitat.title.toLowerCase().includes(searchTermLower) ||
+      (habitat.description && habitat.description.toLowerCase().includes(searchTermLower)) ||
+      (habitat.pricePerNight && habitat.pricePerNight.toString().toLowerCase().includes(searchTermLower)) ||
+      (habitat.city && habitat.city.toString().toLowerCase().includes(searchTermLower)) ||
+      (habitat.country && habitat.country.toString().toLowerCase().includes(searchTermLower))
+     // (habitat.startDate && this.formatDate(habitat.startDate).startsWith(searchTermLower)) // Convert startDate to a formatted string
     );
   }
 

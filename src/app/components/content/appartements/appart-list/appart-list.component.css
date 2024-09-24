@@ -1,5 +1,9 @@
 /* habitat-list.component.css */
 
+.input-margin {
+  margin-top: 25px;
+}
+
 .habitat-list {
   display: flex;
   flex-wrap: wrap;
