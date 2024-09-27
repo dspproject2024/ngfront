@@ -8,7 +8,7 @@ import { Habitat } from '../models/habitat.model';  // Assuming you have a Habit
   providedIn: 'root'
 })
 export class HabitatService {
-  private apiUrl = 'https://localhost:8000/api/habitats';  // Replace with your actual API URL
+  private apiUrl = 'https://dsp-devo22b-jg-sr-ml-my.net/api/habitats';  // Replace with your actual API URL
 
   constructor(private http: HttpClient) {}
 
@@ -19,7 +19,7 @@ export class HabitatService {
   // getHabitats(): Observable<any> {
   //   return this.http.get(`${this.apiUrl}/habitats?order[createdAt]=desc&limit=6`);
   // }
-  
+
 
   // Fetch a habitat by ID
   getHabitatById(id: number): Observable<Habitat> {
@@ -31,5 +31,5 @@ export class HabitatService {
      getImage(imageId: string): Observable<any> {
       return this.http.get(`${this.apiUrl}${imageId}`);
     }
-  
+
 }
