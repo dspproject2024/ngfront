@@ -11,6 +11,7 @@
   justify-content: center;
   align-items: center;
   gap: 10px;
+  
 }
 
 .logo {
@@ -105,12 +106,45 @@ button:hover {
     padding: 15px;
     max-width: 90%;
   }
+  .container {
+    margin: 0 auto;
+    width: 80%;
+    align-items: center;
+  }
+  img {
+    height: 300px;
+    width: 300px;
+  }
+
 }
 
 @media (max-width: 480px) {
+  app-login-form {
+    overflow-x: hidden;
+    display: flex;
+    align-items: center;
+  }
+  .container {
+    width: 100%;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 2%;
+    margin: 0 auto;
+  }
+
   form {
     padding: 10px;
-    max-width: 100%;
+    width: 80%;
+    margin: 0;
+    align-self:flex-start ;
+  }
+
+  .heading {
+    font-size: 2rem;
+  }
+  
+  h1 {
+    margin-top: 50px;
   }
 
   input {
@@ -120,4 +154,14 @@ button:hover {
   button {
     font-size: 14px;
   }
+
+  .logo {
+    width: 25px;
+    height: auto;
+  }
+
+  app-login-form {
+    width: 100%;
+  }
+
 }

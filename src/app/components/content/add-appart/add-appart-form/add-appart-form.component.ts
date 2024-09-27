@@ -30,9 +30,9 @@ export class AddHabitatFormComponent {
     id: 0,
     createdAt: '',
     updatedAt: '',
-    owner: undefined, 
-    startDate: new Date(),
-    endDate: new Date(),
+    owner: undefined,
+    startDate:new Date(),
+    endDate:new Date()
   };
   
   showPopup = false; // Variable pour gérer l'affichage du popup
@@ -65,7 +65,7 @@ export class AddHabitatFormComponent {
       console.log(this.selectedFiles);  // Vérification
     }
   }
-  
+
   uploadImages(habitatId: number): void {
     const formData = new FormData();
 
@@ -88,7 +88,7 @@ export class AddHabitatFormComponent {
       console.error('Erreur lors de l\'upload des images', error);
     });
   }
-  
+
   // Soumettre le formulaire pour créer l'habitat
   onSubmit() {
     // Étape 1 : Créer l'habitat
@@ -103,9 +103,11 @@ export class AddHabitatFormComponent {
       maxGuests: this.habitat.maxGuests,
       amenities: Array.isArray(this.habitat.amenities) ? this.habitat.amenities : [this.habitat.amenities],
       availability: Array.isArray(this.habitat.availability) ? this.habitat.availability : [this.habitat.availability],
-      category: typeof this.habitat.category === 'string' 
-        ? this.habitat.category 
+      category: typeof this.habitat.category === 'string'
+        ? this.habitat.category
         : this.habitat.category['@id'],
+      startDate: this.habitat.startDate,  // Ajout de startDate
+      endDate: this.habitat.endDate,      // Ajout de endDate
       images: []  // On ajoutera les images plus tard
     };
 
@@ -119,7 +121,7 @@ export class AddHabitatFormComponent {
       console.error('Erreur lors de l\'ajout de l\'habitat', error);
     });
   }
-  
+
   closePopup() {
     this.showPopup = false; // Fermer le popup
   }

@@ -74,4 +74,12 @@ export class AuthService {
     }
     return null;
   }
+  getUserRoles(): string[] {
+    const token = this.getToken();
+    if (token) {
+      const decodedToken: any = jwtDecode(token); // Décode le token pour obtenir ses informations
+      return decodedToken.roles || []; // Retourne les rôles de l'utilisateur ou un tableau vide
+    }
+    return [];
+  }
 }

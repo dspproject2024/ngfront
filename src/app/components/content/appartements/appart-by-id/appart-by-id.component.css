@@ -10,7 +10,7 @@
   }
   
   .habitat-wrapper {
-    max-width: 72rem;
+    max-width: 900px;
     margin: 0 auto;
     padding: 0 1rem;
   }
@@ -20,10 +20,15 @@
     flex-direction: column;
   }
   
+  a {
+    width: 30px;
+  }
+
   @media (min-width: 768px) {
     .habitat-flex-container {
-      flex-direction: row;
+      flex-direction: column wrap;
     }
+
   }
   
   .habitat-main-image-container {
@@ -120,7 +125,7 @@
   
   .habitat-details-container {
     flex: 1;
-    padding: 0 1rem;
+    padding: 0 2rem;
     display: flex;
     flex-flow: column wrap;
     
@@ -132,11 +137,11 @@
     margin: 4rem 0px 3rem 0rem;
   }
   
-.detailAditionnel {
-    display: flex;
-    flex-flow: column wrap;
-    gap: 5px;
-}
+  .detailAditionnel {
+      display: flex;
+      flex-flow: column wrap;
+      gap: 5px;
+  }
 
   .habitat-description {
     color: #4b5563;
@@ -151,21 +156,21 @@
   display: flex;
   justify-content: space-between;
   transform: translateY(-50%);
-}
+  }
 
-.carousel-button {
-  background-color: rgba(46, 45, 45, 0.5);
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  font-size: 1.5rem;
-  border-radius: 50%;
-}
+  .carousel-button {
+    background-color: rgba(46, 45, 45, 0.5);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-size: 1.5rem;
+    border-radius: 50%;
+  }
 
-.carousel-button:hover {
-  background-color: rgba(0, 0, 0, 0.8);
-}
+  .carousel-button:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
 
 .logo {
     width: 40px;
@@ -176,4 +181,24 @@
     justify-content: center;
     margin-left: 20px;
     color: black;
+  }
+
+  @media (max-width: 480px) {
+    .habitat-container {
+      flex-flow: column wrap;
+      width: 98%;
+    }
+
+    .habitat-buttons {
+      flex-flow: column wrap;
+      gap: 5px;
+      width: 100%;
+      align-items: center;
+    }
+
+    .btn, .button-container {
+      width: 100%;
+    }
+
+
   }

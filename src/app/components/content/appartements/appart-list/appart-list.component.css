@@ -13,12 +13,16 @@
   background-color: #f4f4f4;
 }
 
+.input-margin {
+  margin-top: 25px;
+}
+
 .habitat-card {
   background-color: #fff;
   border: none; /* Main color for border */
   border-radius: 24px;
   width: 30%;
-  height: 550px;
+  height: 600px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s;
 }
@@ -60,8 +64,9 @@
 /* Button styles */
 .habitat-buttons {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   padding: 15px;
+  align-self: flex-start;
 }
 
 .btn {
@@ -89,21 +94,29 @@
   transition: ease-in-out, 0.3s;
 }
 
+.searchInput {
+  margin-right: 3%;
+  width: 300px;
+}
+
 
 @media (max-width: 1200px) {
   .habitat-list {
     width: 100%;
     flex-flow: row wrap;
   }
+
   .habitat-card {
     height: 100%;
-    
+
   }
+  
   .habitat-buttons {
     flex-flow: column-reverse wrap;
     justify-content: space-evenly;
     gap: 10px;
   }
+
   .habitat-image {
     height: 60%;
   }
@@ -118,7 +131,7 @@
     width: 98%;
   }
   .habitat-image {
-    height: 60%;
+    height: 20%;
   }
 }
 

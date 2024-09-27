@@ -8,6 +8,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class NavbarMainComponent implements OnInit {
   isLoggedIn: boolean = false;
+  isMenuActive = false;
 
   constructor(private authService: AuthService) {}
 
@@ -21,5 +22,13 @@ export class NavbarMainComponent implements OnInit {
     this.authService.logout();
     this.isLoggedIn = false;
     window.location.href = '/login'; // Redirection après la déconnexion
+  }
+
+  toggleMenu() {
+    this.isMenuActive = !this.isMenuActive;
+  }
+
+  closeMenu() {
+    this.isMenuActive = false;
   }
 }

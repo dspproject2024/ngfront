@@ -62,6 +62,14 @@
             <input id="pays" type="text" class="typedefault12" [(ngModel)]="habitat.country" name="country" rows="4" required>
           </div>
           <div class="input13">
+            <label for="startDate" class="name">Date de début</label>
+            <input type="date" id="startDate" class="typedefault12" [(ngModel)]="habitat.startDate" name="startDate" required />
+          </div>
+          <div class="input13">
+            <label for="endDate" class="name">Date de fin</label>
+            <input type="date" id="endDate" class="typedefault12" [(ngModel)]="habitat.endDate" name="endDate" required />
+          </div>
+          <div class="input13">
             <label for="description" class="name">Description</label>
             <textarea id="description" class="text-area typedefault12" [(ngModel)]="habitat.description" name="description" rows="4" placeholder="Dites-nous tout ce qu'on doit savoir sur cet appart atypique !"></textarea>
           </div>

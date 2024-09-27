@@ -39,6 +39,7 @@ import {ReservationFormComponent} from "./components/content/reservation/reserva
 import { DashboardAdminRoleComponent } from './components/content/dashboard/dashboard-admin/dashboard-admin-role/dashboard-admin-role.component';
 import { OurServicesComponent } from './components/content/our-services/our-services.component';
 import { ErrorPageComponent } from './components/content/error-page/error-page.component';
+import { UnauthorisedComponent } from './components/content/unauthorised/unauthorised.component';
 
 let routes: Routes;
 routes = [
@@ -47,7 +48,7 @@ routes = [
   {path: 'admin', component: AdministrateurComponent,  canActivate: [AuthGuard]},
   {path: 'dashboard-admin', component: DashboardAdminComponent,  canActivate: [AuthGuard]},
   {path: 'dashboard-admin-role', component: DashboardAdminRoleComponent,  canActivate: [AuthGuard]},
-  {path: 'add-appart', component: AddAppartComponent,  canActivate: [AuthGuard]},
+  {path: 'add-appart', component: AddAppartComponent,  canActivate: [AuthGuard], data: { roles: ['ROLE_ADMIN', 'ROLE_OWNER'] }},
   {path: 'cgu', component: CguComponent},
   {path: 'cgv', component: CgvComponent},
   {path: 'success', component: ReservationConfirmationComponent,  canActivate: [AuthGuard]},
@@ -73,6 +74,8 @@ routes = [
   { path: 'edit-reservation/:id', component: ReservationFormComponent,  canActivate: [AuthGuard] },
   { path: 'create-reservation', component: ReservationFormComponent,  canActivate: [AuthGuard] },
   { path: 'error-page', component: ErrorPageComponent },
+  { path: 'unauthorized', component: UnauthorisedComponent },
+
 
  // {path: '', redirectTo: '/HomeComponent', pathMatch: 'full'}
   // other routes...

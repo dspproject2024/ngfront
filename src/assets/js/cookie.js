@@ -1,37 +1,37 @@
 console.log("Bonjour");
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("DOM chargé");
+  // console.log("DOM chargé");
 
   // Vérifier la présence de l'élément popup
   const consentPopup = document.getElementById("cookie-consent-popup");
   if (!consentPopup) {
-    console.error("L'élément #cookie-consent-popup est introuvable.");
+    // console.error("L'élément #cookie-consent-popup est introuvable.");
     return; // Arrêter l'exécution si l'élément n'existe pas
   }
-  console.log("Popup trouvé :", consentPopup);
+  // console.log("Popup trouvé :", consentPopup);
 
   // Vérifier si le consentement a déjà été donné
   const consentGiven = localStorage.getItem("cookieConsent");
-  console.log("Consentement donné :", consentGiven);
+  // console.log("Consentement donné :", consentGiven);
 
   // Afficher le popup si aucun consentement n'a encore été donné
   if (!consentGiven) {
     console.log("Aucun consentement trouvé, affichage du popup.");
     consentPopup.style.display = "block";
   } else {
-    console.log("Consentement déjà donné, pas d'affichage du popup.");
+    // console.log("Consentement déjà donné, pas d'affichage du popup.");
   }
 
   // Gérer l'acceptation des cookies
   const acceptButton = document.getElementById("accept-cookies");
   if (acceptButton) {
     acceptButton.addEventListener("click", function () {
-      console.log("Cookies acceptés");
+      // console.log("Cookies acceptés");
       localStorage.setItem("cookieConsent", "accepted");
       consentPopup.style.display = "none"; // Masquer le popup
     });
   } else {
-    console.error("Bouton Accepter introuvable.");
+    // console.error("Bouton Accepter introuvable.");
   }
 
   // Gérer le refus des cookies

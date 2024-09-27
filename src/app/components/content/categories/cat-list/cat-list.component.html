@@ -10,8 +10,8 @@
     </div>
   </div>
   <div class="search">
-    <input class="searchInput" type="text" placeholder="Rechercher une catégorie">
-    <button class="styleprimary-smallfalse-da14 btn-primary">Rechercher</button>
+    <!-- Enregistre la saisie et applique le filtre automatiquement -->
+    <input class="searchInput" type="text" [(ngModel)]="searchTerm" (input)="onSearch()" placeholder="Rechercher une catégorie">
   </div>
   <div class="content51">
     <div class="row6">

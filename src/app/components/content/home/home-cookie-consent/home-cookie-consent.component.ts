@@ -8,7 +8,7 @@ import { Component, AfterViewInit } from '@angular/core';
 export class HomeCookieConsentComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
-    console.log('Vue initialisée et DOM prêt');
+    // console.log('Vue initialisée et DOM prêt');
     this.setupCookieConsent();
   }
 
@@ -21,20 +21,20 @@ export class HomeCookieConsentComponent implements AfterViewInit {
       return; // Arrêter l'exécution si l'élément n'existe pas
     }
 
-    console.log("Popup trouvé :", consentPopup);
+    // console.log("Popup trouvé :", consentPopup);
 
     const consentGiven = localStorage.getItem("cookieConsent");
-    console.log("Consentement donné :", consentGiven);
+    // console.log("Consentement donné :", consentGiven);
 
     if (!consentGiven) {
       console.log("Aucun consentement trouvé, affichage du popup.");
       consentPopup.style.display = "block";
     } else {
-      console.log("Consentement déjà donné, pas d'affichage du popup.");
+      // console.log("Consentement déjà donné, pas d'affichage du popup.");
     }
 
     document.getElementById("accept-cookies")?.addEventListener("click", function () {
-      console.log("Cookies acceptés");
+      // console.log("Cookies acceptés");
       localStorage.setItem("cookieConsent", "accepted");
       consentPopup.style.display = "none";
     });

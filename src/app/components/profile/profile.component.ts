@@ -4,7 +4,7 @@ import {jwtDecode} from 'jwt-decode';  // Import direct de jwt-decode
 
 // Interface pour représenter le payload du JWT
 interface DecodedToken {
-  name: string;  // Ou 'username', selon ce qui est stocké dans ton token
+  username: string;  // Ou 'username', selon ce qui est stocké dans ton token
   email: string;
   exp: number;
 }
@@ -15,7 +15,7 @@ interface DecodedToken {
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  userName: string = 'Utilisateur';  // Variable pour stocker le nom de l'utilisateur
+  userName: string = '';  // Variable pour stocker le nom de l'utilisateur
 
   constructor(private router: Router) {}
 
@@ -26,8 +26,9 @@ export class ProfileComponent implements OnInit {
     // Décoder le token si disponible
     if (token) {
       const decodedToken: DecodedToken = jwtDecode<DecodedToken>(token);
-      if (decodedToken && decodedToken.name) {
-        this.userName = decodedToken.name;  // Assigner le nom d'utilisateur
+      console.log(decodedToken);
+      if (decodedToken && decodedToken.username) {
+        this.userName = decodedToken.username;  // Assigner le nom d'utilisateur
       }
     }
   }

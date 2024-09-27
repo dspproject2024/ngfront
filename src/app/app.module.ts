@@ -1,6 +1,11 @@
 import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+
+registerLocaleData(localeFr, 'fr');
+
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { provideHttpClient, withFetch } from '@angular/common/http';
@@ -90,6 +95,8 @@ import { DashboardAdminRoleListComponent } from './components/content/dashboard/
 import { OurServicesComponent } from './components/content/our-services/our-services.component';
 import { ErrorPageComponent } from './components/content/error-page/error-page.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { UnauthorisedComponent } from './components/content/unauthorised/unauthorised.component';
+
 
 
 @NgModule({
@@ -180,6 +187,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
       ReservationFormComponent,
       ReservationDetailsComponent,
       ErrorPageComponent,
+      UnauthorisedComponent,
 
 
   ],

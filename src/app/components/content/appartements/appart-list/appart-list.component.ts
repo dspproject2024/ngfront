@@ -8,102 +8,89 @@ import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-appart-list',
   templateUrl: './appart-list.component.html',
-  styleUrls: ['./appart-list.component.css'] // Fixes: Corrected 'styleUrl' to 'styleUrls'
+  styleUrls: ['./appart-list.component.css']
 })
 export class AppartListComponent implements OnInit {
-  habitats: any[] = []; // All habitats
-  filteredThreeHabitats: Habitat[] = []; // Store the first three habitats
+  habitats: Habitat[] = []; // Tous les habitats
+  filteredHabitats: Habitat[] = []; // Habitats filtrés pour la recherche
+  searchTerm: string = ''; // Variable de recherche
   loading = false;
   errorMessage: string | null = null;
-  filteredHabitats: Habitat[] = []; // Filtered habitats
-  searchTerm: string = ''; // Variable to hold the search term
 
 
+  imageUrls: { [key: number]: string } = {}; // Associer l'ID de l'habitat à l'URL de l'image
 
   constructor(
     private habitatService: HabitatService,
     private router: Router,
-    private stripeService: StripeService, 
+    private stripeService: StripeService,
     private http: HttpClient
   ) {}
 
   ngOnInit(): void {
-    this.fetchHabitats();
-    this.habitatService.getHabitats().subscribe((data: any) => {
-      this.habitats = data['hydra:member'];
-    
-      // Trier les habitats par date de création (descendant) et limiter à 6
-      this.habitats.sort((a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-      this.habitats = this.habitats.slice(0, 6);  // Limiter à 6 éléments
-    
-      console.log('Habitats chargés (limités à 6 derniers ajoutés):', this.habitats);
-    
-      // Parcours des habitats pour gérer les images
-      this.habitats.forEach(habitat => {
-        if (habitat.images && habitat.images.length > 0) {
-          let imageApiUrl = habitat.images[0];  // Utilisez l'URL de la première image directement
-    
-          // Vérifier si l'URL contient déjà "https://localhost:8000"
-          if (!imageApiUrl.startsWith('http')) {
-            imageApiUrl = `https://localhost:8000${imageApiUrl}`; // Ajouter le domaine si nécessaire
-          }
-    
-          console.log('Image API URL:', imageApiUrl);  // Vérifier l'URL de l'image API
-    
-          // Faire la requête pour récupérer les détails de l'image
-          this.http.get<any>(imageApiUrl).subscribe(
-            (response) => {
-              // Utiliser l'URL de l'image depuis la réponse
-              habitat.firstImageUrl = response.url.startsWith('http') ? response.url : `https://localhost:8000${response.url}`;
-              console.log('Image URL:', habitat.firstImageUrl);
-            },
-            (error) => {
-              console.error('Erreur lors du chargement de l\'image:', error);
-              habitat.firstImageUrl = 'assets/images/placeholder-image7@2x.png';  // Image par défaut en cas d'erreur
-            }
-          );
-        } else {
-          // Image par défaut si aucune image n'est associée à l'habitat
-          habitat.firstImageUrl = 'assets/images/placeholder-image7@2x.png';
-        }
-      });
-    }, (error) => {
-      console.error('Erreur lors de la récupération des habitats:', error);
-    });
-    
+    this.fetchHabitats();  // Appeler la méthode pour récupérer les habitats au chargement
   }
-    // Méthode pour charger l'URL de l'image depuis l'API
-    loadImageUrl(imageApiUrl: string) {
-      return this.http.get<any>('https://localhost:8000' + imageApiUrl);
-    }
 
-  // Fetch all habitats
+  // Récupérer tous les habitats et les limiter aux 6 plus récents
   fetchHabitats(): void {
     this.habitatService.getHabitats().subscribe(
       (data: any) => {
-        // Assuming the API returns habitats in 'hydra:member'
-        const habitats = data['hydra:member'] || [];
-        this.habitats = habitats.sort((a: Habitat, b: Habitat) => b.id - a.id);  // Tri décroissant par id
-        this.filteredHabitats = [...this.habitats]; // Initialize filtered habitats
+        this.habitats = (data['hydra:member'] || [])
+          .sort((a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()) // Trier par date de création (descendant)
+          .slice(0, 6);  // Limiter à 6 éléments
+
+        // Charger les images pour chaque habitat
+        this.habitats.forEach(habitat => {
+          if (habitat.images && habitat.images.length > 0) {
+            let imageObject = `https://localhost:8000${habitat.images[0]}`  // Accéder au premier objet image
+            let imageApiUrl = imageObject;  // Récupérer l'URL de l'image
+
+            console.log(imageApiUrl);
+            // Requête pour récupérer les détails de l'image
+            this.http.get<any>(imageApiUrl).subscribe(
+              (response) => {
+                const imageUrl = response.url.startsWith('http') ? response.url : `https://localhost:8000${response.url}`;
+                this.imageUrls[habitat.id] = imageUrl;  // Associer l'image à l'ID de l'habitat
+              },
+              (error) => {
+                console.error(`Erreur lors du chargement de l'image pour l'habitat ${habitat.title}:`, error);
+                this.imageUrls[habitat.id] = 'assets/images/placeholder-image7@2x.png';  // Image par défaut en cas d'erreur
+              }
+            );
+          } else {
+            // Image par défaut si aucune image n'est associée à l'habitat
+            this.imageUrls[habitat.id] = 'assets/images/placeholder-image7@2x.png';
+          }
+        });
+
+        // Initialement, les habitats filtrés sont les mêmes que tous les habitats
+        this.filteredHabitats = this.habitats;
       },
       (error) => {
-        console.error('Error fetching habitats:', error);
+        console.error('Erreur lors de la récupération des habitats:', error);
       }
     );
   }
-  
-  
-  // View habitat details
+
+  // Filtrer les habitats en fonction du terme de recherche
+  filterHabitats(): void {
+    this.filteredHabitats = this.habitats.filter(habitat =>
+      habitat.title.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+      habitat.description.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+  }
+
+  // Afficher les détails d'un habitat
   viewHabitat(habitatId: number): void {
     this.router.navigate(['/id-appart', habitatId]);
   }
 
-  // View comments for a habitat
+  // Afficher les commentaires pour un habitat
   viewComments(habitatId: number): void {
     this.router.navigate(['/comments', habitatId]);
   }
 
-  // Method to initiate the Stripe Checkout
+  // Démarrer la procédure de paiement Stripe
   startCheckout(title: string, amount: number): void {
     this.loading = true;
     this.errorMessage = null;
@@ -111,49 +98,32 @@ export class AppartListComponent implements OnInit {
     const lineItems = [
       {
         price_data: {
-          currency: 'eur', // Stripe expects lowercase currency codes
+          currency: 'eur',  // Stripe attend les codes de devise en minuscules
           product_data: {
             name: title,
           },
-          unit_amount: amount * 100, // Amount is in cents, multiply euros by 100
+          unit_amount: amount * 100,  // Convertir en cents pour Stripe
         },
         quantity: 1,
       },
     ];
 
-    // Define URLs for redirect after success or cancel
-    const successUrl = `${window.location.origin}/success`; // Redirect URL after success
-    const cancelUrl = `${window.location.origin}/cancel`; // Redirect URL after cancel
+    const successUrl = `${window.location.origin}/success`;  // URL de redirection après succès
+    const cancelUrl = `${window.location.origin}/cancel`;  // URL de redirection après annulation
 
     this.stripeService.createCheckoutSession(lineItems, successUrl, cancelUrl).subscribe(
       (response: { url: string }) => {
         this.loading = false;
         if (response && response.url) {
-          // Redirect to Stripe Checkout page using the URL provided by the server
           window.location.href = response.url;
         } else {
-          this.errorMessage = 'Failed to create a Stripe Checkout session.';
+          this.errorMessage = 'La création de la session Stripe a échoué.';
         }
       },
       (error) => {
         this.loading = false;
-        this.errorMessage = 'Error creating checkout session. Please try again later.';
-        console.error('Error:', error);
+        this.errorMessage = 'Erreur lors de la création de la session Stripe. Veuillez réessayer plus tard.';
       }
     );
   }
-
-  onSearch(): void {
-    const searchTermLower = this.searchTerm.toLowerCase();
-
-    this.filteredHabitats = this.habitats.filter(habitat =>
-      habitat.title.toLowerCase().includes(searchTermLower) ||
-      (habitat.description && habitat.description.toLowerCase().includes(searchTermLower)) ||
-      (habitat.pricePerNight && habitat.pricePerNight.toString().toLowerCase().includes(searchTermLower)) ||
-      (habitat.city && habitat.city.toString().toLowerCase().includes(searchTermLower)) ||
-      (habitat.country && habitat.country.toString().toLowerCase().includes(searchTermLower))
-     // (habitat.startDate && this.formatDate(habitat.startDate).startsWith(searchTermLower)) // Convert startDate to a formatted string
-    );
-  }
-
 }
