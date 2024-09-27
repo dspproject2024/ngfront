@@ -90,6 +90,7 @@ input {
   background: transparent;
   outline: none;
   font-family: Poppins;
+  color: whitesmoke;
 }
 
 input::placeholder {

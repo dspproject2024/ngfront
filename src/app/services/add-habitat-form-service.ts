@@ -7,7 +7,7 @@ import { Habitat } from './../models/habitat.model';
   providedIn: 'root'
 })
 export class HabitatService {
-  private apiUrl = 'https://localhost:8000/api';  // Définit l'URL de base de ton API
+  private apiUrl = 'https://dsp-devo22b-jg-sr-ml-my.net/api/habitats';  // Définit l'URL de base de ton API
 
   constructor(private http: HttpClient) {}
 

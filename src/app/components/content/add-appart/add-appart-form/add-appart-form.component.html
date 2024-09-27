@@ -2,8 +2,11 @@
 <!-- add-appart-form.component.html -->
 <div class="popup" *ngIf="showPopup">
   <div class="popup-content">
-    <p>L'appartement a bien été ajouté avec succès !</p>
-    <button (click)="closePopup()">OK</button>
+    <p>L'appartement a bien été publié!</p>
+  </div>
+  <div class="btns">
+    <button class="styleprimary-smallfalse-da14" (click)="closePopup()">OK</button>
+    <button class="styleprimary-smallfalse-da14" (click)="closePopup()" routerLink="/list-appart">Voir</button>
   </div>
 </div>
 
@@ -47,7 +50,7 @@
           </div>          
           <div class="input13">
             <label for="disponibilite" class="name">Disponibilité</label>
-            <input type="text" id="disponibilite" class="typedefault12" name="disponibilite" [(ngModel)]="habitat.availability" placeholder="Séparez les dates par des virgules" />
+            <input type="text" id="disponibilite" class="typedefault12" name="disponibilite" [(ngModel)]="habitat.availability"/>
           </div>
           <div class="input13">
             <label for="prix" class="name">Prix par nuit</label>

@@ -6,7 +6,7 @@
 .profile-popup {
     position: absolute;
     top: 60px;
-    right: -20px;
+    right: 50px;
     width: 200px;
     z-index: 2000;  /* S'assurer que le popup est au-dessus de tout */
     transition: ease-in-out 0.3s;

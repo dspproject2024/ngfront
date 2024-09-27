@@ -25,6 +25,7 @@ import { CatHeaderComponent } from './components/content/categories/cat-header/c
 import { CatListComponent } from './components/content/categories/cat-list/cat-list.component';
 import { CatItemComponent } from './components/content/categories/cat-item/cat-item.component';
 import { CatMoreCategoriesComponent } from './components/content/categories/cat-more-categories/cat-more-categories.component';
+import { CatAllCategoriesComponent } from './components/content/categories/cat-all-categories/cat-all-categories.component';
 import { AdministrateurComponent } from './components/content/administrateur/administrateur.component';
 import { AdminProfileDropdownComponent } from './components/content/administrateur/admin-profile-dropdown/admin-profile-dropdown.component';
 import { AdminDashboardHeaderComponent } from './components/content/administrateur/admin-dashboard-header/admin-dashboard-header.component';
@@ -96,6 +97,7 @@ import { OurServicesComponent } from './components/content/our-services/our-serv
 import { ErrorPageComponent } from './components/content/error-page/error-page.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { UnauthorisedComponent } from './components/content/unauthorised/unauthorised.component';
+
 
 
 
@@ -188,6 +190,7 @@ import { UnauthorisedComponent } from './components/content/unauthorised/unautho
       ReservationDetailsComponent,
       ErrorPageComponent,
       UnauthorisedComponent,
+      CatAllCategoriesComponent,
 
 
   ],

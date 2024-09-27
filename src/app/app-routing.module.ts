@@ -40,12 +40,14 @@ import { DashboardAdminRoleComponent } from './components/content/dashboard/dash
 import { OurServicesComponent } from './components/content/our-services/our-services.component';
 import { ErrorPageComponent } from './components/content/error-page/error-page.component';
 import { UnauthorisedComponent } from './components/content/unauthorised/unauthorised.component';
+import { CatAllCategoriesComponent } from './components/content/categories/cat-all-categories/cat-all-categories.component';
 
 let routes: Routes;
 routes = [
   {path: '', component: HomeComponent},
   {path: 'cat', component: CategoriesComponent},
-  {path: 'admin', component: AdministrateurComponent,  canActivate: [AuthGuard]},
+  {path: 'cat/all', component: CatAllCategoriesComponent},
+  {path: 'admin', component: AdministrateurComponent,  canActivate: [AuthGuard], data: {roles : ['ROLE_ADMIN']}},
   {path: 'dashboard-admin', component: DashboardAdminComponent,  canActivate: [AuthGuard]},
   {path: 'dashboard-admin-role', component: DashboardAdminRoleComponent,  canActivate: [AuthGuard]},
   {path: 'add-appart', component: AddAppartComponent,  canActivate: [AuthGuard], data: { roles: ['ROLE_ADMIN', 'ROLE_OWNER'] }},
@@ -75,6 +77,7 @@ routes = [
   { path: 'create-reservation', component: ReservationFormComponent,  canActivate: [AuthGuard] },
   { path: 'error-page', component: ErrorPageComponent },
   { path: 'unauthorized', component: UnauthorisedComponent },
+ 
 
 
  // {path: '', redirectTo: '/HomeComponent', pathMatch: 'full'}

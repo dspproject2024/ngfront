@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {jwtDecode} from 'jwt-decode';  // Import direct de jwt-decode
+import { AuthService } from '../../services/auth.service';
 
 // Interface pour représenter le payload du JWT
 interface DecodedToken {
   username: string;  // Ou 'username', selon ce qui est stocké dans ton token
   email: string;
   exp: number;
+  roles: string[];
 }
 
 @Component({
@@ -16,8 +18,9 @@ interface DecodedToken {
 })
 export class ProfileComponent implements OnInit {
   userName: string = '';  // Variable pour stocker le nom de l'utilisateur
+  isAdmin: boolean = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit(): void {
     // Récupérer le token directement depuis le localStorage
@@ -29,6 +32,7 @@ export class ProfileComponent implements OnInit {
       console.log(decodedToken);
       if (decodedToken && decodedToken.username) {
         this.userName = decodedToken.username;  // Assigner le nom d'utilisateur
+        this.isAdmin = this.authService.isAdmin(); // Vérification du rôle
       }
     }
   }

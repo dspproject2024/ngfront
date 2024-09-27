@@ -9,7 +9,7 @@
     border:none; 
     border-radius: 14px;
     padding: 20px;
-    width: auto;
+    width: 300px;
     z-index: 1000;  /* Mettre un z-index élevé pour s'assurer que le popup est bien visible */
     color: black !important;  /* Forcer la couleur du texte */
     visibility: visible !important;  /* Forcer la visibilité */

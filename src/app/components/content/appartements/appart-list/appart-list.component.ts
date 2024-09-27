@@ -42,14 +42,15 @@ export class AppartListComponent implements OnInit {
         // Charger les images pour chaque habitat
         this.habitats.forEach(habitat => {
           if (habitat.images && habitat.images.length > 0) {
-            let imageObject = `https://localhost:8000${habitat.images[0]}`  // Accéder au premier objet image
+            let imageObject = `https://dsp-devo22b-jg-sr-ml-my.net/${habitat.images[0]}`
+              // Accéder au premier objet image
             let imageApiUrl = imageObject;  // Récupérer l'URL de l'image
 
             console.log(imageApiUrl);
             // Requête pour récupérer les détails de l'image
             this.http.get<any>(imageApiUrl).subscribe(
               (response) => {
-                const imageUrl = response.url.startsWith('http') ? response.url : `https://localhost:8000${response.url}`;
+                const imageUrl = response.url.startsWith('http') ? response.url : `https://dsp-devo22b-jg-sr-ml-my.net/${response.url}`;
                 this.imageUrls[habitat.id] = imageUrl;  // Associer l'image à l'ID de l'habitat
               },
               (error) => {

@@ -6,6 +6,14 @@ import { jwtDecode } from 'jwt-decode';
 import { GetApiService } from './get-api.service';
 import { User } from '../models/user.model';  
 
+interface DecodedToken {
+  username: string;  // Ou 'username', selon ce qui est stocké dans ton token
+  email: string;
+  exp: number;
+  roles: string[];
+}
+
+
 @Injectable({
   providedIn: 'root',
 })
@@ -81,5 +89,13 @@ export class AuthService {
       return decodedToken.roles || []; // Retourne les rôles de l'utilisateur ou un tableau vide
     }
     return [];
+  }
+
+  isAdmin(): boolean {
+    const decodedToken: any = this.getDecodedToken();
+    if (decodedToken && decodedToken.roles) {
+      return decodedToken.roles.includes('ROLE_ADMIN');
+    }
+    return false;
   }
 }

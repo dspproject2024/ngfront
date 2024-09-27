@@ -113,6 +113,7 @@ export class AddHabitatFormComponent {
 
     this.habitatService.createHabitat(habitatData).subscribe(response => {
       console.log('Habitat créé avec succès', response);
+      this.showPopup = true;  // Afficher le popup
       const habitatId = response.id;  // Récupérer l'ID de l'habitat créé
 
       // Étape 2 : Uploader les images avec l'ID de l'habitat
@@ -120,6 +121,8 @@ export class AddHabitatFormComponent {
     }, (error: HttpErrorResponse) => {
       console.error('Erreur lors de l\'ajout de l\'habitat', error);
     });
+    
+    this.showPopup = true;
   }
 
   closePopup() {

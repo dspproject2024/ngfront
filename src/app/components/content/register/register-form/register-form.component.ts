@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
 import { User } from '../../../../models/user.model'; // Import the User model
 import { AuthService } from '../../../../services/auth.service';
 import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-register-form',
@@ -24,16 +25,30 @@ export class RegisterFormComponent {
   };
 
   errorMessage: string | null = null;
+  selectedRole: string = 'ROLE_USER';  // Variable pour stocker le rôle sélectionné temporairement
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  onSubmit() {
+  onSubmit(form: NgForm) {
+    if (!form.valid) {
+      this.errorMessage = 'Veuillez remplir correctement tous les champs du formulaire.';
+      return;
+    }
+    
+    if (this.user.password !== this.user.reTypePassword) {
+      this.errorMessage = 'Les mots de passe ne correspondent pas.';
+      return;
+    }
+
+    // Mettre à jour le rôle de l'utilisateur avant d'envoyer les données
+    this.user.roles = [this.selectedRole];  // Associer le rôle sélectionné à l'utilisateur
+
     this.authService.register(this.user).subscribe(
       (response) => {
         this.router.navigate(['/login']);
       },
       (error) => {
-        this.errorMessage = 'An error occurred during registration. Please try again.';
+        this.errorMessage = 'Une erreur est survenue lors de votre inscription, veuillez réessayer.';
       }
     );
   }
