@@ -42,7 +42,7 @@ export class AppartListComponent implements OnInit {
         // Charger les images pour chaque habitat
         this.habitats.forEach(habitat => {
           if (habitat.images && habitat.images.length > 0) {
-            let imageObject = `https://dsp-devo22b-jg-sr-ml-my.net/${habitat.images[0]}`
+            let imageObject = `https://localhost:8000${habitat.images[0]}`
               // Accéder au premier objet image
             let imageApiUrl = imageObject;  // Récupérer l'URL de l'image
 
@@ -50,7 +50,7 @@ export class AppartListComponent implements OnInit {
             // Requête pour récupérer les détails de l'image
             this.http.get<any>(imageApiUrl).subscribe(
               (response) => {
-                const imageUrl = response.url.startsWith('http') ? response.url : `https://dsp-devo22b-jg-sr-ml-my.net/${response.url}`;
+                const imageUrl = response.url.startsWith('http') ? response.url : `https://localhost:8000${response.url}`;
                 this.imageUrls[habitat.id] = imageUrl;  // Associer l'image à l'ID de l'habitat
               },
               (error) => {
@@ -75,9 +75,13 @@ export class AppartListComponent implements OnInit {
 
   // Filtrer les habitats en fonction du terme de recherche
   filterHabitats(): void {
-    this.filteredHabitats = this.habitats.filter(habitat =>
-      habitat.title.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-      habitat.description.toLowerCase().includes(this.searchTerm.toLowerCase())
+    this.filteredHabitats = this.habitats.filter(
+      habitat =>
+        habitat.title.toLowerCase().includes(this.searchTerm) ||
+        (habitat.description && habitat.description.toLowerCase().includes(this.searchTerm)) ||
+        (habitat.pricePerNight && habitat.pricePerNight.toString().toLowerCase().includes(this.searchTerm)) ||
+        (habitat.city && habitat.city.toString().toLowerCase().includes(this.searchTerm)) ||
+        (habitat.country && habitat.country.toString().toLowerCase().includes(this.searchTerm))
     );
   }
 

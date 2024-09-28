@@ -8,7 +8,7 @@ import { Habitat } from '../models/habitat.model';  // Assuming you have a Habit
   providedIn: 'root'
 })
 export class HabitatService {
-  private apiUrl = 'https://dsp-devo22b-jg-sr-ml-my.net/api/habitats';  // Replace with your actual API URL
+  private apiUrl = 'https://localhost:8000/api/habitats';  // Replace with your actual API URL
 
   constructor(private http: HttpClient) {}
 
