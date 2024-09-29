@@ -8,7 +8,7 @@ import { Avis } from '../models/avis.model';
   providedIn: 'root'
 })
 export class AvisService {
-  private apiUrl = 'https://localhost:8000/api/aviss'; // Replace with your actual API URL
+  private apiUrl = 'https://dsp-devo22b-jg-sr-ml-my.net/api/aviss'; // Replace with your actual API URL
 
   constructor(private http: HttpClient) {}
 

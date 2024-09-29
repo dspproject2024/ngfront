@@ -4,10 +4,10 @@ import { Observable } from 'rxjs';
 import { Appartement } from '../models/appartement.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AppartementService {
-  private apiUrl = 'https://localhost:8000/api/habitats'; // Adjust to your API URL
+  private apiUrl = 'https://dsp-devo22b-jg-sr-ml-my.net/api/habitats'; // Adjust to your API URL
 
   constructor(private http: HttpClient) {}
 
@@ -15,4 +15,3 @@ export class AppartementService {
     return this.http.get<Appartement[]>(this.apiUrl);
   }
 }
-

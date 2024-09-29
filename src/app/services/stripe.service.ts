@@ -14,10 +14,13 @@ export class StripeService {
     successUrl: string,
     cancelUrl: string
   ): Observable<{ url: string }> {
-    return this.http.post<{ url: string }>('https://localhost:8000/api/stripe/checkout', {
-      line_items: lineItems,
-      success_url: successUrl,
-      cancel_url: cancelUrl,
-    });
+    return this.http.post<{ url: string }>(
+      'https://dsp-devo22b-jg-sr-ml-my.net/api/stripe/checkout',
+      {
+        line_items: lineItems,
+        success_url: successUrl,
+        cancel_url: cancelUrl,
+      }
+    );
   }
 }

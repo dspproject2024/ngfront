@@ -4,10 +4,10 @@ import { Observable } from 'rxjs';
 import { Role } from '../models/role.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RoleService {
-  private apiUrl = 'https://localhost:8000/api/roles'; // Lien vers ton API
+  private apiUrl = 'https://dsp-devo22b-jg-sr-ml-my.net/api/roles'; // Lien vers ton API
 
   constructor(private http: HttpClient) {}
 
@@ -25,7 +25,7 @@ export class RoleService {
   // Créer un nouveau rôle
   createRole(role: Role): Observable<Role> {
     return this.http.post<Role>(this.apiUrl, role, {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     });
   }
 
@@ -33,7 +33,7 @@ export class RoleService {
   updateRole(role: Role): Observable<Role> {
     const url = `${this.apiUrl}/${role.id}`;
     return this.http.put<Role>(url, role, {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     });
   }
 
