@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-appart-list',
   templateUrl: './appart-list.component.html',
-  styleUrls: ['./appart-list.component.css']
+  styleUrls: ['./appart-list.component.css'],
 })
 export class AppartListComponent implements OnInit {
   habitats: Habitat[] = []; // Tous les habitats
@@ -16,7 +16,6 @@ export class AppartListComponent implements OnInit {
   searchTerm: string = ''; // Variable de recherche
   loading = false;
   errorMessage: string | null = null;
-
 
   imageUrls: { [key: number]: string } = {}; // Associer l'ID de l'habitat à l'URL de l'image
 
@@ -28,7 +27,7 @@ export class AppartListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.fetchHabitats();  // Appeler la méthode pour récupérer les habitats au chargement
+    this.fetchHabitats(); // Appeler la méthode pour récupérer les habitats au chargement
   }
 
   // Récupérer tous les habitats et les limiter aux 6 plus récents
@@ -36,31 +35,41 @@ export class AppartListComponent implements OnInit {
     this.habitatService.getHabitats().subscribe(
       (data: any) => {
         this.habitats = (data['hydra:member'] || [])
-          .sort((a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()) // Trier par date de création (descendant)
-          .slice(0, 6);  // Limiter à 6 éléments
+          .sort(
+            (a: any, b: any) =>
+              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          ) // Trier par date de création (descendant)
+          .slice(0, 6); // Limiter à 6 éléments
 
         // Charger les images pour chaque habitat
-        this.habitats.forEach(habitat => {
+        this.habitats.forEach((habitat) => {
           if (habitat.images && habitat.images.length > 0) {
-            let imageObject = `https://localhost:8000${habitat.images[0]}`
-              // Accéder au premier objet image
-            let imageApiUrl = imageObject;  // Récupérer l'URL de l'image
+            let imageObject = `https://dsp-devo22b-jg-sr-ml-my.net${habitat.images[0]}`;
+            // Accéder au premier objet image
+            let imageApiUrl = imageObject; // Récupérer l'URL de l'image
 
             console.log(imageApiUrl);
             // Requête pour récupérer les détails de l'image
             this.http.get<any>(imageApiUrl).subscribe(
               (response) => {
-                const imageUrl = response.url.startsWith('http') ? response.url : `https://localhost:8000${response.url}`;
-                this.imageUrls[habitat.id] = imageUrl;  // Associer l'image à l'ID de l'habitat
+                const imageUrl = response.url.startsWith('http')
+                  ? response.url
+                  : `https://dsp-devo22b-jg-sr-ml-my.net/${response.url}`;
+                this.imageUrls[habitat.id] = imageUrl; // Associer l'image à l'ID de l'habitat
               },
               (error) => {
-                console.error(`Erreur lors du chargement de l'image pour l'habitat ${habitat.title}:`, error);
-                this.imageUrls[habitat.id] = 'assets/images/placeholder-image7@2x.png';  // Image par défaut en cas d'erreur
+                console.error(
+                  `Erreur lors du chargement de l'image pour l'habitat ${habitat.title}:`,
+                  error
+                );
+                this.imageUrls[habitat.id] =
+                  'assets/images/placeholder-image7@2x.png'; // Image par défaut en cas d'erreur
               }
             );
           } else {
             // Image par défaut si aucune image n'est associée à l'habitat
-            this.imageUrls[habitat.id] = 'assets/images/placeholder-image7@2x.png';
+            this.imageUrls[habitat.id] =
+              'assets/images/placeholder-image7@2x.png';
           }
         });
 
@@ -76,12 +85,19 @@ export class AppartListComponent implements OnInit {
   // Filtrer les habitats en fonction du terme de recherche
   filterHabitats(): void {
     this.filteredHabitats = this.habitats.filter(
-      habitat =>
+      (habitat) =>
         habitat.title.toLowerCase().includes(this.searchTerm) ||
-        (habitat.description && habitat.description.toLowerCase().includes(this.searchTerm)) ||
-        (habitat.pricePerNight && habitat.pricePerNight.toString().toLowerCase().includes(this.searchTerm)) ||
-        (habitat.city && habitat.city.toString().toLowerCase().includes(this.searchTerm)) ||
-        (habitat.country && habitat.country.toString().toLowerCase().includes(this.searchTerm))
+        (habitat.description &&
+          habitat.description.toLowerCase().includes(this.searchTerm)) ||
+        (habitat.pricePerNight &&
+          habitat.pricePerNight
+            .toString()
+            .toLowerCase()
+            .includes(this.searchTerm)) ||
+        (habitat.city &&
+          habitat.city.toString().toLowerCase().includes(this.searchTerm)) ||
+        (habitat.country &&
+          habitat.country.toString().toLowerCase().includes(this.searchTerm))
     );
   }
 
@@ -103,32 +119,35 @@ export class AppartListComponent implements OnInit {
     const lineItems = [
       {
         price_data: {
-          currency: 'eur',  // Stripe attend les codes de devise en minuscules
+          currency: 'eur', // Stripe attend les codes de devise en minuscules
           product_data: {
             name: title,
           },
-          unit_amount: amount * 100,  // Convertir en cents pour Stripe
+          unit_amount: amount * 100, // Convertir en cents pour Stripe
         },
         quantity: 1,
       },
     ];
 
-    const successUrl = `${window.location.origin}/success`;  // URL de redirection après succès
-    const cancelUrl = `${window.location.origin}/cancel`;  // URL de redirection après annulation
+    const successUrl = `${window.location.origin}/success`; // URL de redirection après succès
+    const cancelUrl = `${window.location.origin}/cancel`; // URL de redirection après annulation
 
-    this.stripeService.createCheckoutSession(lineItems, successUrl, cancelUrl).subscribe(
-      (response: { url: string }) => {
-        this.loading = false;
-        if (response && response.url) {
-          window.location.href = response.url;
-        } else {
-          this.errorMessage = 'La création de la session Stripe a échoué.';
+    this.stripeService
+      .createCheckoutSession(lineItems, successUrl, cancelUrl)
+      .subscribe(
+        (response: { url: string }) => {
+          this.loading = false;
+          if (response && response.url) {
+            window.location.href = response.url;
+          } else {
+            this.errorMessage = 'La création de la session Stripe a échoué.';
+          }
+        },
+        (error) => {
+          this.loading = false;
+          this.errorMessage =
+            'Erreur lors de la création de la session Stripe. Veuillez réessayer plus tard.';
         }
-      },
-      (error) => {
-        this.loading = false;
-        this.errorMessage = 'Erreur lors de la création de la session Stripe. Veuillez réessayer plus tard.';
-      }
-    );
+      );
   }
 }
