@@ -54,7 +54,7 @@ export class AppartListComponent implements OnInit {
               (response) => {
                 const imageUrl = response.url.startsWith('http')
                   ? response.url
-                  : `https://dsp-devo22b-jg-sr-ml-my.net/${response.url}`;
+                  : `https://dsp-devo22b-jg-sr-ml-my.net${response.url}`;
                 this.imageUrls[habitat.id] = imageUrl; // Associer l'image à l'ID de l'habitat
               },
               (error) => {
