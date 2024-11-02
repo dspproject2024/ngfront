@@ -147,7 +147,7 @@
   background-image: url("../../assets/images/header--501@3x.png");
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: top;
+  background-position: center;
   color: var(--background-color-primary);
 }
 .subheading {

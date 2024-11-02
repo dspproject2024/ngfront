@@ -41,6 +41,8 @@ import { OurServicesComponent } from './components/content/our-services/our-serv
 import { ErrorPageComponent } from './components/content/error-page/error-page.component';
 import { UnauthorisedComponent } from './components/content/unauthorised/unauthorised.component';
 import { CatAllCategoriesComponent } from './components/content/categories/cat-all-categories/cat-all-categories.component';
+import { ReservationComponent } from './components/content/reservation/reservation.component';
+import { ReservationConfirmComponent } from './components/content/reservation/reservation-confirmation/reservation-confirm/reservation-confirm.component';
 
 let routes: Routes;
 routes = [
@@ -75,6 +77,8 @@ routes = [
   { path: 'reservation/:id', component: ReservationDetailsComponent,  canActivate: [AuthGuard] },
   { path: 'edit-reservation/:id', component: ReservationFormComponent,  canActivate: [AuthGuard] },
   { path: 'create-reservation', component: ReservationFormComponent,  canActivate: [AuthGuard] },
+  { path: 'reservation', component: ReservationComponent,  canActivate: [AuthGuard] },
+  { path: 'reservation-confirmation', component: ReservationConfirmationComponent,  canActivate: [AuthGuard] },
   { path: 'error-page', component: ErrorPageComponent },
   { path: 'unauthorized', component: UnauthorisedComponent },
  

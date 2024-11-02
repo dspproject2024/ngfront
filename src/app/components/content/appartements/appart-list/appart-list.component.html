@@ -1,11 +1,44 @@
 <div class="input-margin"></div>
 
 <!-- Barre de recherche -->
-<div class="search">
-  <input class="searchInput" type="text" [(ngModel)]="searchTerm" (input)="filterHabitats()" placeholder="Rechercher un appartement">
+
+<div class="search-form">
+  <div class="search-field">
+    <label for="destination">Destination</label>
+    <input
+      id="destination"
+      type="text"
+      [(ngModel)]="searchData.destination"
+      placeholder="Rechercher une destination"
+    />
+  </div>
+
+  <div class="search-field">
+    <label for="arrival">Arrivée</label>
+    <input
+      id="arrival"
+      type="date"
+      [(ngModel)]="searchData.arrival"
+    />
+  </div>
+
+  <div class="search-field">
+    <label for="departure">Départ</label>
+    <input
+      id="departure"
+      type="date"
+      [(ngModel)]="searchData.departure"
+    />
+  </div>
+
+  <button class="search-button" (click)="onSearch()"><i class="fa fa-search"></i></button>
 </div>
 
 <div class="input-margin"></div>
+
+<div class="search">
+  <input class="searchInput" type="text" [(ngModel)]="searchTerm" (input)="filterHabitats()" placeholder="mot clé de votre habitat...">
+</div> 
 
 <!-- Liste des habitats -->
 <div class="habitat-list">
@@ -24,7 +57,7 @@
       <p><span class="features">Personne max</span> {{ habitat.maxGuests }}</p>
       <p>
         <span class="features">Période :</span>
-        {{ habitat.startDate | date:'shortDate':'fr' }} - {{ habitat.endDate | date:'shortDate':'fr' }}
+        {{ habitat.startDate | date:'shortDate' }} - {{ habitat.endDate | date:'shortDate' }}
       </p>
     </div>
 

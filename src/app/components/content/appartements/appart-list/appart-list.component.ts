@@ -1,22 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, LOCALE_ID } from '@angular/core';
 import { HabitatService } from '../../../../services/habitat.service';
 import { Habitat } from '../../../../models/habitat.model';
 import { Router } from '@angular/router';
 import { StripeService } from '../../../../services/stripe.service';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../../environments/environment';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-appart-list',
   templateUrl: './appart-list.component.html',
-  styleUrls: ['./appart-list.component.css']
+  styleUrls: ['./appart-list.component.css'],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'fr' }  // Définit la localisation en français
+  ]
 })
+
 export class AppartListComponent implements OnInit {
   habitats: Habitat[] = []; // Tous les habitats
   filteredHabitats: Habitat[] = []; // Habitats filtrés pour la recherche
   searchTerm: string = ''; // Variable de recherche
   loading = false;
   errorMessage: string | null = null;
+  apiUrl = environment.apiUrl;
 
+  searchData = {
+    destination: '',
+    arrival: '',
+    departure: ''
+  };
 
   imageUrls: { [key: number]: string } = {}; // Associer l'ID de l'habitat à l'URL de l'image
 
@@ -24,48 +36,65 @@ export class AppartListComponent implements OnInit {
     private habitatService: HabitatService,
     private router: Router,
     private stripeService: StripeService,
-    private http: HttpClient
+    private http: HttpClient, 
+    private route: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
-    this.fetchHabitats();  // Appeler la méthode pour récupérer les habitats au chargement
+    // Récupérer la catégorie depuis les paramètres de l'URL
+    this.route.queryParams.subscribe(params => {
+      const category = params['category'];
+      this.fetchHabitats(category); // Passe la catégorie pour filtrer les habitats
+    });
   }
 
-  // Récupérer tous les habitats et les limiter aux 6 plus récents
-  fetchHabitats(): void {
+  onSearch() {
+    this.filteredHabitats = this.habitats.filter(habitat =>
+      (!this.searchData.destination || habitat.city.includes(this.searchData.destination)) &&
+      (!this.searchData.arrival || new Date(habitat.startDate) <= new Date(this.searchData.arrival)) &&
+      (!this.searchData.departure || new Date(habitat.endDate) >= new Date(this.searchData.departure))
+    );
+  }
+
+  // Récupérer tous les habitats et les filtrer par catégorie si nécessaire
+  fetchHabitats(category?: string): void {
     this.habitatService.getHabitats().subscribe(
       (data: any) => {
         this.habitats = (data['hydra:member'] || [])
-          .sort((a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()) // Trier par date de création (descendant)
-          .slice(0, 6);  // Limiter à 6 éléments
+          .sort((a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+          .slice(0, 6);
+
+        // Filtrer les habitats si une catégorie est spécifiée
+        if (category) {
+          this.filteredHabitats = this.habitats.filter(habitat => habitat.category === category);
+        } else {
+          this.filteredHabitats = this.habitats;
+        }
+
+        console.log("Liste des habitats", this.habitats);
 
         // Charger les images pour chaque habitat
         this.habitats.forEach(habitat => {
           if (habitat.images && habitat.images.length > 0) {
-            let imageObject = `https://dsp-devo22b-jg-sr-ml-my.net/${habitat.images[0]}`
-              // Accéder au premier objet image
-            let imageApiUrl = imageObject;  // Récupérer l'URL de l'image
+            let imageObject = `${this.apiUrl}${habitat.images[0]}`
+            let imageApiUrl = imageObject.replace("/api", "");
 
             console.log(imageApiUrl);
             // Requête pour récupérer les détails de l'image
             this.http.get<any>(imageApiUrl).subscribe(
               (response) => {
-                const imageUrl = response.url.startsWith('http') ? response.url : `https://dsp-devo22b-jg-sr-ml-my.net/${response.url}`;
-                this.imageUrls[habitat.id] = imageUrl;  // Associer l'image à l'ID de l'habitat
+                const imageUrl = response.url.startsWith('http') ? response.url : `${this.apiUrl}${response.url}`;
+                this.imageUrls[habitat.id] = imageUrl;
               },
               (error) => {
                 console.error(`Erreur lors du chargement de l'image pour l'habitat ${habitat.title}:`, error);
-                this.imageUrls[habitat.id] = 'assets/images/placeholder-image7@2x.png';  // Image par défaut en cas d'erreur
+                this.imageUrls[habitat.id] = 'assets/images/placeholder-image7@2x.png';
               }
             );
           } else {
-            // Image par défaut si aucune image n'est associée à l'habitat
             this.imageUrls[habitat.id] = 'assets/images/placeholder-image7@2x.png';
           }
         });
-
-        // Initialement, les habitats filtrés sont les mêmes que tous les habitats
-        this.filteredHabitats = this.habitats;
       },
       (error) => {
         console.error('Erreur lors de la récupération des habitats:', error);
@@ -99,18 +128,18 @@ export class AppartListComponent implements OnInit {
     const lineItems = [
       {
         price_data: {
-          currency: 'eur',  // Stripe attend les codes de devise en minuscules
+          currency: 'eur',
           product_data: {
             name: title,
           },
-          unit_amount: amount * 100,  // Convertir en cents pour Stripe
+          unit_amount: amount * 100,
         },
         quantity: 1,
       },
     ];
 
-    const successUrl = `${window.location.origin}/success`;  // URL de redirection après succès
-    const cancelUrl = `${window.location.origin}/cancel`;  // URL de redirection après annulation
+    const successUrl = `${window.location.origin}/success`;
+    const cancelUrl = `${window.location.origin}/cancel`;
 
     this.stripeService.createCheckoutSession(lineItems, successUrl, cancelUrl).subscribe(
       (response: { url: string }) => {

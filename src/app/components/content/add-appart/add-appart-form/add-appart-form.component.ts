@@ -5,7 +5,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Category } from '../../../../models/category.model';
 import { CategoryService } from '../../../../services/category.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { environment } from './../../../../../../src/environments/environment';  // Assurez-vous d'avoir un fichier d'environnement avec l'URL de l'API
 
 @Component({

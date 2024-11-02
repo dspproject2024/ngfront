@@ -116,7 +116,7 @@
   background-image: url("../../assets/images/header--54@3x.png");
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: top;
+  background-position: center;
   font-size: var(--heading-desktop-h1-size);
   color: var(--background-color-primary);
 }

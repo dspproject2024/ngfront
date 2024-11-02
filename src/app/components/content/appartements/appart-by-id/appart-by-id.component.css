@@ -134,7 +134,7 @@
   .habitat-title {
     font-size: 1.5rem;
     font-weight: bold;
-    margin: 4rem 0px 3rem 0rem;
+    margin: 2rem 0px 2rem 0rem;
   }
   
   .detailAditionnel {
@@ -146,8 +146,15 @@
   .habitat-description {
     color: #4b5563;
     font-size: 1rem;
-    margin: 0rem 0px 3rem 0rem;
+    margin: 0rem 0px 2rem 0rem;
   }
+ 
+  .habitat-title, .habitat-description,
+   .habitat-price-label, .habitat-max-guests-label,
+    .habitat-amenities-label, .habitat-availability-label,
+     .habitat-location-label, .habitat-country-label {
+      font-weight: 600;
+     }
   
   .carousel-navigation {
   position: absolute;

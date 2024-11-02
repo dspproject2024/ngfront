@@ -1,59 +1,71 @@
 // src/app/components/stripe-checkout/stripe-checkout.component.ts
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { StripeService } from '../../services/stripe.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-stripe-checkout',
   templateUrl: './stripe-checkout.component.html',
   styleUrls: ['./stripe-checkout.component.css'],
 })
-export class StripeCheckoutComponent {
+export class StripeCheckoutComponent implements OnInit {
   loading = false;
   errorMessage: string | null = null;
+  amount: number = 0;
+  habitatName: string = 'Réservation'; // Nom par défaut en cas d'absence de données
 
-  constructor(private stripeService: StripeService, private router: Router) {}
+  constructor(
+    private stripeService: StripeService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
-  // Method to initiate the Stripe Checkout
+  ngOnInit(): void {
+    // Récupérer le montant et le nom de l'habitat depuis les paramètres de requête
+    this.route.queryParams.subscribe(params => {
+      this.amount = +params['amount'] || 0; // Montant en dollars (ou devise choisie)
+      this.habitatName = params['habitatName'] || this.habitatName; // Utiliser le nom de l'habitat s'il est fourni
+    });
+  }
+
+  // Méthode pour initier le paiement Stripe
   startCheckout(): void {
     this.loading = true;
     this.errorMessage = null;
 
+    // Définir les articles de ligne pour Stripe Checkout
     const lineItems = [
       {
         price_data: {
-          currency: 'usd',
+          currency: 'usd', // Adapter la devise si nécessaire
           product_data: {
-            name: 'Product Name',
+            name: this.habitatName,
           },
-          unit_amount: 2000, // Amount in cents (e.g., 2000 = $20.00)
+          unit_amount: this.amount * 100, // Montant en cents
         },
         quantity: 1,
       },
     ];
 
-    // Define URLs for redirect after success or cancel
-    const successUrl = `${window.location.origin}/success`; // Redirect URL after success
-    const cancelUrl = `${window.location.origin}/cancel`; // Redirect URL after cancel
+    // Définir les URL de redirection en cas de succès ou d'annulation
+    const successUrl = `${window.location.origin}/reservation-confirmation`; // URL après succès
+    const cancelUrl = `${window.location.origin}/cancel`; // URL après annulation
 
-    this.stripeService
-      .createCheckoutSession(lineItems, successUrl, cancelUrl)
-      .subscribe(
-        (response: { url: string }) => { // Ensure the response contains a string 'url'
-          this.loading = false;
-          if (response && response.url) {
-            // Redirect to Stripe Checkout page using the URL provided by the server
-            window.location.href = response.url;
-          } else {
-            this.errorMessage = 'Failed to create a Stripe Checkout session.';
-          }
-        },
-        (error) => {
-          this.loading = false;
-          this.errorMessage =
-            'Error creating checkout session. Please try again later.';
-          console.error('Error:', error);
+    this.stripeService.createCheckoutSession(lineItems, successUrl, cancelUrl).subscribe(
+      (response: { url: string }) => {
+        this.loading = false;
+        if (response && response.url) {
+          // Rediriger vers la page Stripe Checkout avec l'URL fournie
+          window.location.href = response.url;
+        } else {
+          this.errorMessage = 'Échec de la création de la session de paiement Stripe.';
         }
-      );
+      },
+      (error) => {
+        this.loading = false;
+        this.errorMessage = 'Erreur lors de la création de la session de paiement.';
+        console.error('Erreur:', error);
+      }
+    );
   }
 }

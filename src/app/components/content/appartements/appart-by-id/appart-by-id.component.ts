@@ -1,12 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, LOCALE_ID } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HabitatService } from '../../../../services/habitat.service';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-appart-by-id',
   templateUrl: './appart-by-id.component.html',
-  styleUrls: ['./appart-by-id.component.css']
+  styleUrls: ['./appart-by-id.component.css'], 
+    providers: [
+    { provide: LOCALE_ID, useValue: 'fr' }  // Définit la localisation en français
+  ]
 })
 export class AppartByIdComponent implements OnInit {
   habitat: any;
@@ -16,7 +19,8 @@ export class AppartByIdComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private habitatService: HabitatService,
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -77,5 +81,11 @@ export class AppartByIdComponent implements OnInit {
       this.currentImageIndex = (this.currentImageIndex - 1 + this.images.length) % this.images.length;
     }
     console.log('Image précédente, index:', this.currentImageIndex);
+  }
+
+  goToReservation(): void {
+    if (this.habitat && this.habitat.id) {
+      this.router.navigate(['/reservation'], { queryParams: { habitatId: this.habitat.id } });
+    }
   }
 }

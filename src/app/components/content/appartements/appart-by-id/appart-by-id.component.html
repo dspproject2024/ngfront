@@ -18,7 +18,8 @@
         </div>
         <div class="habitat-buttons">
           <div class="button-container">
-            <button class="btn-primary styleprimary-smallfalse-da14 btn" routerLink="/checkout">Réserver</button>
+            <!-- <button class="btn-primary styleprimary-smallfalse-da14 btn" routerLink="/checkout">Réserver</button> -->
+            <button class="btn-primary styleprimary-smallfalse-da14 btn" (click)="goToReservation()">Réserver</button>
           </div>
           <div class="button-container">
             <button class="btn-commenter btn-secondary btn " routerLink="/comments/:id">Commenter</button>
@@ -51,8 +52,8 @@
              <span   class="habitat-amenities-list"> {{ habitat.amenities.join(', ') }} </span>
            </div>
            <div class="habitat-availability">
-             <span class="habitat-availability-label">Disponibilité: </span>
-             <span class="habitat-availability-value">{{ habitat.startDate | date:'shortDate':'fr' }} - {{ habitat.endDate | date:'shortDate':'fr' }}</span>
+             <span class="habitat-availability-label">Dates de disponibilité: </span>
+             <span class="habitat-availability-value"> {{ habitat.startDate | date:'shortDate' }} - {{ habitat.endDate | date:'shortDate' }}</span>
            </div>
 
            <!-- Location -->

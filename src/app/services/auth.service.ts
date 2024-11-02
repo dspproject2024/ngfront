@@ -40,6 +40,21 @@ export class AuthService {
     );
   }
 
+  storeUserId(token: string): void {
+    try {
+      // Décoder le token pour obtenir l'ID de l'utilisateur
+      const decodedToken: any = jwtDecode(token);
+      
+      // Supposons que l'ID de l'utilisateur se trouve dans `decodedToken.userId`
+      const userId = decodedToken.userId;
+      
+      // Stocker l'ID de l'utilisateur dans le localStorage
+      localStorage.setItem('userId', userId);
+    } catch (error) {
+      console.error("Erreur lors du décodage du token", error);
+    }
+  }
+
   // Récupérer le token depuis le localStorage
   getToken(): string | null {
     return localStorage.getItem('token');

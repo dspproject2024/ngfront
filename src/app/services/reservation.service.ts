@@ -49,4 +49,8 @@ export class ReservationService {
     const headers = this.getAuthHeaders();
     return this.http.delete<void>(`${this.apiUrl}/${id}`, { headers });
   }
+
+  makeReservation(reservation: Reservation): Observable<any> {
+    return this.http.post(this.apiUrl, reservation);
+  }
 }
