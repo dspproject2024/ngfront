@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {catchError, Observable, throwError} from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { User } from '../models/user.model';
 import { GetApiService } from './get-api.service';
 
@@ -15,7 +15,9 @@ export class UserService {
   }
 
   // Helper method to get the headers with the authorization token and correct Content-Type
-  private getAuthHeaders(contentType: string = 'application/json'): HttpHeaders {
+  private getAuthHeaders(
+    contentType: string = 'application/json'
+  ): HttpHeaders {
     const token = localStorage.getItem('token'); // Ensure you are storing the token here
     return new HttpHeaders({
       'Content-Type': contentType,
@@ -32,13 +34,16 @@ export class UserService {
   // Create a new user
   createUser(user: User): Observable<any> {
     const headers = this.getAuthHeaders();
-    return this.http.post(`${this.apiUrl}/users`, JSON.stringify(user), { headers });
+    return this.http.post(`${this.apiUrl}/users`, JSON.stringify(user), {
+      headers,
+    });
   }
 
   // Update an existing user
   updateUser(id: number, user: User): Observable<any> {
     const headers = this.getAuthHeaders('application/ld+json');
-    return this.http.put(`${this.apiUrl}/users/${id}`, JSON.stringify(user), { headers })
+    return this.http
+      .put(`${this.apiUrl}/users/${id}`, JSON.stringify(user), { headers })
       .pipe(
         catchError((error) => {
           console.error('Error updating user', error.error);
@@ -46,7 +51,6 @@ export class UserService {
         })
       );
   }
-
 
   // Delete a user
   deleteUser(id: number): Observable<any> {

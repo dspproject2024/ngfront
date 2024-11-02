@@ -39,7 +39,7 @@ export class AppartByIdComponent implements OnInit {
         // Charger les images de l'habitat
         if (this.habitat.images && this.habitat.images.length > 0) {
           this.habitat.images.forEach((imageId: string) => {
-            const imageApiUrl = `https://localhost:8000${imageId}`;
+            const imageApiUrl = `https://dsp-devo22b-jg-sr-ml-my.net${imageId}`;
             console.log('Appel API pour récupérer l\'image:', imageApiUrl); // Vérifier l'URL API
 
             this.http.get<any>(imageApiUrl).subscribe(

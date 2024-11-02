@@ -6,7 +6,7 @@ import { Habitat } from '../models/habitat.model';  // Assuming you have a Habit
 import { environment } from '../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class HabitatService {
   // private apiUrl = 'https://dsp-devo22b-jg-sr-ml-my.net/api/habitats';  // Replace with your actual API URL
@@ -16,7 +16,7 @@ export class HabitatService {
 
   // Fetch all habitats
   getHabitats(): Observable<Habitat[]> {
-    return this.http.get<Habitat[]>(this.apiUrl)  ;
+    return this.http.get<Habitat[]>(this.apiUrl);
   }
   // getHabitats(): Observable<any> {
   //   return this.http.get(`${this.apiUrl}/habitats?order[createdAt]=desc&limit=6`);
@@ -34,9 +34,8 @@ export class HabitatService {
     return this.http.get<Habitat>(url);
   }
 
-     // Nouvelle méthode pour récupérer une image via son @id
-     getImage(imageId: string): Observable<any> {
-      return this.http.get(`${this.apiUrl}${imageId}`);
-    }
-
+  // Nouvelle méthode pour récupérer une image via son @id
+  getImage(imageId: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}${imageId}`);
+  }
 }

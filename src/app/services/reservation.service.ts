@@ -7,7 +7,7 @@ import { Reservation } from '../models/reservation.model';
   providedIn: 'root',
 })
 export class ReservationService {
-  private apiUrl = 'https://localhost:8000/api/reservations'; // Your API URL
+  private apiUrl = 'https://dsp-devo22b-jg-sr-ml-my.net/api/reservations'; // Your API URL
 
   constructor(private http: HttpClient) {}
 
@@ -16,7 +16,7 @@ export class ReservationService {
     const token = localStorage.getItem('token'); // Assuming JWT token is stored here
     return new HttpHeaders({
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}` // Add JWT token to headers
+      Authorization: `Bearer ${token}`, // Add JWT token to headers
     });
   }
 
@@ -39,9 +39,14 @@ export class ReservationService {
   }
 
   // Update an existing reservation
-  updateReservation(id: number, reservation: Reservation): Observable<Reservation> {
+  updateReservation(
+    id: number,
+    reservation: Reservation
+  ): Observable<Reservation> {
     const headers = this.getAuthHeaders();
-    return this.http.put<Reservation>(`${this.apiUrl}/${id}`, reservation, { headers });
+    return this.http.put<Reservation>(`${this.apiUrl}/${id}`, reservation, {
+      headers,
+    });
   }
 
   // Delete a reservation

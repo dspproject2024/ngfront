@@ -74,7 +74,7 @@ export class AppartListComponent implements OnInit {
         console.log("Liste des habitats", this.habitats);
 
         // Charger les images pour chaque habitat
-        this.habitats.forEach(habitat => {
+        this.habitats.forEach((habitat) => {
           if (habitat.images && habitat.images.length > 0) {
             let imageObject = `${this.apiUrl}${habitat.images[0]}`
             let imageApiUrl = imageObject.replace("/api", "");
@@ -104,9 +104,20 @@ export class AppartListComponent implements OnInit {
 
   // Filtrer les habitats en fonction du terme de recherche
   filterHabitats(): void {
-    this.filteredHabitats = this.habitats.filter(habitat =>
-      habitat.title.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-      habitat.description.toLowerCase().includes(this.searchTerm.toLowerCase())
+    this.filteredHabitats = this.habitats.filter(
+      (habitat) =>
+        habitat.title.toLowerCase().includes(this.searchTerm) ||
+        (habitat.description &&
+          habitat.description.toLowerCase().includes(this.searchTerm)) ||
+        (habitat.pricePerNight &&
+          habitat.pricePerNight
+            .toString()
+            .toLowerCase()
+            .includes(this.searchTerm)) ||
+        (habitat.city &&
+          habitat.city.toString().toLowerCase().includes(this.searchTerm)) ||
+        (habitat.country &&
+          habitat.country.toString().toLowerCase().includes(this.searchTerm))
     );
   }
 
@@ -141,19 +152,22 @@ export class AppartListComponent implements OnInit {
     const successUrl = `${window.location.origin}/success`;
     const cancelUrl = `${window.location.origin}/cancel`;
 
-    this.stripeService.createCheckoutSession(lineItems, successUrl, cancelUrl).subscribe(
-      (response: { url: string }) => {
-        this.loading = false;
-        if (response && response.url) {
-          window.location.href = response.url;
-        } else {
-          this.errorMessage = 'La création de la session Stripe a échoué.';
+    this.stripeService
+      .createCheckoutSession(lineItems, successUrl, cancelUrl)
+      .subscribe(
+        (response: { url: string }) => {
+          this.loading = false;
+          if (response && response.url) {
+            window.location.href = response.url;
+          } else {
+            this.errorMessage = 'La création de la session Stripe a échoué.';
+          }
+        },
+        (error) => {
+          this.loading = false;
+          this.errorMessage =
+            'Erreur lors de la création de la session Stripe. Veuillez réessayer plus tard.';
         }
-      },
-      (error) => {
-        this.loading = false;
-        this.errorMessage = 'Erreur lors de la création de la session Stripe. Veuillez réessayer plus tard.';
-      }
-    );
+      );
   }
 }
