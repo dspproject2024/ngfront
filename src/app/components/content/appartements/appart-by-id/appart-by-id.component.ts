@@ -2,11 +2,12 @@ import { Component, OnInit, LOCALE_ID } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HabitatService } from '../../../../services/habitat.service';
 import { HttpClient } from '@angular/common/http';
+import {environment} from "../../../../../environments/environment";
 
 @Component({
   selector: 'app-appart-by-id',
   templateUrl: './appart-by-id.component.html',
-  styleUrls: ['./appart-by-id.component.css'], 
+  styleUrls: ['./appart-by-id.component.css'],
     providers: [
     { provide: LOCALE_ID, useValue: 'fr' }  // Définit la localisation en français
   ]
@@ -48,7 +49,8 @@ export class AppartByIdComponent implements OnInit {
 
                 // Vérifier si l'URL commence déjà par "http"
                 if (!imageUrl.startsWith('http')) {
-                  imageUrl = `https://localhost:8000${response.url}`;
+                //  imageUrl = `https://localhost:8000${response.url}`;
+                  imageUrl =environment.apiUrl+"/"+`${response.url}`;
                 }
 
                 this.images.push(imageUrl);
