@@ -3,6 +3,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { CategoryService } from './category.service';
 import { GetApiService } from './get-api.service';
 import { Category } from '../models/category.model';
+import {environment} from "../../environments/environment";
 
 describe('CategoryService', () => {
   let service: CategoryService;
@@ -12,7 +13,7 @@ describe('CategoryService', () => {
   beforeEach(() => {
     // Create a mock for the GetApiService
     getApiServiceStub = {
-      getApi: () => 'https://localhost:8000/api'
+      getApi: () => environment.apiUrl+"/api"
     };
 
     TestBed.configureTestingModule({
@@ -54,7 +55,7 @@ describe('CategoryService', () => {
       expect(categories).toEqual(mockCategories);
     });
 
-    const req = httpMock.expectOne('https://localhost:8000/api/categories');
+    const req = httpMock.expectOne(environment.apiUrl+"/api/categories");
     expect(req.request.method).toBe('GET');
     req.flush(mockCategories);
   });
