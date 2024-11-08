@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Reservation } from '../models/reservation.model';
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root',
 })
 export class ReservationService {
-  private apiUrl = 'https://dsp-devo22b-jg-sr-ml-my.net/api/reservations'; // Your API URL
+  private apiUrl = environment.apiUrl+"/reservations"; // Your API URL
 
   constructor(private http: HttpClient) {}
 

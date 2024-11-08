@@ -7,12 +7,13 @@ import {
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Status } from '../models/status.model';
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root',
 })
 export class StatusService {
-  private apiUrl = 'https://dsp-devo22b-jg-sr-ml-my.net/api/statuses'; // Replace with your actual API URL
+  private apiUrl = environment.apiUrl+"/statuses"; // Replace with your actual API URL
 
   constructor(private http: HttpClient) {}
 

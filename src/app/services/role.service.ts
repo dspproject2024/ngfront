@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Role } from '../models/role.model';
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root',
 })
 export class RoleService {
-  private apiUrl = 'https://dsp-devo22b-jg-sr-ml-my.net/api/roles'; // Lien vers ton API
+  private apiUrl = environment.apiUrl+"/roles"; // Lien vers ton API
 
   constructor(private http: HttpClient) {}
 
