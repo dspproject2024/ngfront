@@ -15,7 +15,10 @@
 }
 
 .placeholder-image-icon22 {
-    max-width: 40%;
-    height: auto;
-    object-fit: cover;
+    width: 500px;
+    height: 500px;
+    object-fit: cover; /* Pour conserver les proportions de l'image */
+    max-width: 100%; /* Pour s'adapter aux petits écrans */
+    max-height: 100%; /* Pour éviter les débordements */
+    margin: auto; /* Centrer les images si nécessaire */
 }

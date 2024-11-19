@@ -8,25 +8,23 @@ import { Category } from '../../../../models/category.model'; // Import the mode
   styleUrl: './cat-all-categories.component.css'
 })
 export class CatAllCategoriesComponent {
-  moreCategories: Category[] = []; // To store more categories dynamically
+  moreCategories: Category[] = []; // Les catégories filtrées à afficher
+
+  // Liste des titres de catégories que vous voulez afficher
+  selectedTitles = ['Forêt', 'Eau', 'Avion', 'Bateaux', 'Yourtes', 'Vans'];
 
   constructor(private categoryService: CategoryService) {}
 
   ngOnInit(): void {
-    this.fetchMoreCategories();
-  }
-
-  // Fetch all categories and store the remaining ones as "more categories"
-  fetchMoreCategories(): void {
-    this.categoryService.getCategories().subscribe(
-      (data: any) => {
-        this.moreCategories = data['hydra:member'] || []; // Assigner toutes les catégories sans utiliser slice
+    this.categoryService.getCategories().subscribe({
+      next: (data) => {
+        // Filtrer les catégories pour n'afficher que celles avec les titres souhaités
+        this.moreCategories = data.filter(category => this.selectedTitles.includes(category.title));
       },
-      (error) => {
-        console.error('Error fetching categories:', error);
+      error: (error) => {
+        console.error('Erreur lors de la récupération des catégories :', error);
       }
-    );
+    });
   }
-  
   
 }
