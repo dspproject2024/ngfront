@@ -5,12 +5,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Category } from '../../../../models/category.model';
 import { CategoryService } from '../../../../services/category.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from './../../../../../../src/environments/environment';  // Assurez-vous d'avoir un fichier d'environnement avec l'URL de l'API
+import { environment } from './../../../../../../src/environments/environment';
 
 @Component({
   selector: 'app-add-appart-form',
   templateUrl: './add-appart-form.component.html',
-  styleUrls: ['./add-appart-form.component.css']
+  styleUrls: ['./add-appart-form.component.css'],
 })
 export class AddHabitatFormComponent {
   habitat: Habitat = {
@@ -24,73 +24,76 @@ export class AddHabitatFormComponent {
     maxGuests: 0,
     amenities: [],
     availability: [],
-    category: "", // Initialisation à null
+    category: '', // Initialisation à vide
     images: [],
-    id: 0,
-    createdAt: '',
-    updatedAt: '',
+    id: undefined,
+    createdAt: undefined,
+    updatedAt: undefined,
     owner: undefined,
-    startDate:new Date(),
-    endDate:new Date()
+    startDate: new Date(),
+    endDate: new Date(),
   };
-  
-  showPopup = false; // Variable pour gérer l'affichage du popup
-  categories: Category[] = [];  // Pour stocker la liste des catégories
-  selectedFiles: File[] = [];  // Pour stocker les fichiers sélectionnés
-  imageUrls: string[] = [];  // Pour stocker les URLs des images uploadées
-  apiUrl = environment.apiUrl;  // Utilisation de l'URL de l'API depuis l'environnement
-  conditionsAccepted: boolean = false;
-  // token = localStorage.getItem('token');
-  // headers = new HttpHeaders({
-  //   'Authorization': `Bearer ${this.token}`,
-  //   'Content-Type': 'multipart/form-data'
-  //   });
 
+  showPopup = false; // Gère l'affichage du popup
+  categories: Category[] = []; // Stocke les catégories disponibles
+  selectedFiles: File[] = []; // Stocke les fichiers d'images sélectionnés
+  apiUrl = environment.apiUrl; // URL de l'API depuis l'environnement
+  conditionsAccepted = false;
 
-  constructor(private habitatService: HabitatService, private categoryService: CategoryService, private http: HttpClient) {}
+  constructor(
+    private habitatService: HabitatService,
+    private categoryService: CategoryService,
+    private http: HttpClient
+  ) {}
 
   ngOnInit(): void {
-    this.categoryService.getCategories().subscribe((data: any) => {
-      this.categories = data['hydra:member'];
-    }, error => {
-      console.error('Erreur lors de la récupération des catégories', error);
-    });
+    this.categoryService.getCategories().subscribe(
+      (data: Category[]) => {
+        this.categories = data; // Assurez-vous que les données correspondent au type Category[]
+      },
+      (error: HttpErrorResponse) => {
+        console.error('Erreur lors de la récupération des catégories', error);
+      }
+    );
   }
 
   // Méthode appelée lors de la sélection des fichiers
-  onFileSelected(event: any) {
+  onFileSelected(event: any): void {
     if (event.target.files) {
-      this.selectedFiles = Array.from(event.target.files);  // Convertit les fichiers en un tableau
-      console.log(this.selectedFiles);  // Vérification
+      this.selectedFiles = Array.from(event.target.files); // Convertit les fichiers en tableau
+      console.log('Fichiers sélectionnés :', this.selectedFiles);
     }
   }
 
+  // Méthode pour uploader les images
   uploadImages(habitatId: number): void {
     const formData = new FormData();
 
-    // Ajout des fichiers images
+    // Ajout des fichiers d'images
     this.selectedFiles.forEach((file: File) => {
       formData.append('images[]', file, file.name);
     });
 
-    // Ajouter l'ID de l'habitat
-    formData.append('habitat_id', habitatId.toString());
-
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     });
 
-    this.http.post(`${this.apiUrl}/upload-images`, formData, { headers }).subscribe(response => {
-      console.log('Images uploadées avec succès', response);
-    }, (error: HttpErrorResponse) => {
-      console.error('Erreur lors de l\'upload des images', error);
-    });
+    this.http
+      .post(`${this.apiUrl}/upload-images`, formData, { headers })
+      .subscribe(
+        (response) => {
+          console.log('Images uploadées avec succès', response);
+        },
+        (error: HttpErrorResponse) => {
+          console.error("Erreur lors de l'upload des images", error);
+        }
+      );
   }
 
   // Soumettre le formulaire pour créer l'habitat
-  onSubmit() {
-    // Étape 1 : Créer l'habitat
+  onSubmit(): void {
+    // Préparer les données pour l'habitat
     const habitatData = {
       title: this.habitat.title,
       description: this.habitat.description,
@@ -100,32 +103,44 @@ export class AddHabitatFormComponent {
       country: this.habitat.country,
       pricePerNight: this.habitat.pricePerNight,
       maxGuests: this.habitat.maxGuests,
-      amenities: Array.isArray(this.habitat.amenities) ? this.habitat.amenities : [this.habitat.amenities],
-      availability: Array.isArray(this.habitat.availability) ? this.habitat.availability : [this.habitat.availability],
-      category: typeof this.habitat.category === 'string'
-        ? this.habitat.category
-        : this.habitat.category['@id'],
-      startDate: this.habitat.startDate,  // Ajout de startDate
-      endDate: this.habitat.endDate,      // Ajout de endDate
-      images: []  // On ajoutera les images plus tard
+      amenities: Array.isArray(this.habitat.amenities)
+        ? this.habitat.amenities
+        : [this.habitat.amenities],
+      availability: Array.isArray(this.habitat.availability)
+        ? this.habitat.availability
+        : [this.habitat.availability],
+      category:
+        typeof this.habitat.category === 'string'
+          ? this.habitat.category
+          : (this.habitat.category as Category)?.id?.toString(), // Convertit en chaîne
+      startDate: this.habitat.startDate,
+      endDate: this.habitat.endDate,
+      images: [],
     };
 
-    this.habitatService.createHabitat(habitatData).subscribe(response => {
-      console.log('Habitat créé avec succès', response);
-      this.showPopup = true;  // Afficher le popup
-      const habitatId = response.id;  // Récupérer l'ID de l'habitat créé
+    this.habitatService.createHabitat(habitatData).subscribe(
+      (response) => {
+        console.log('Habitat créé avec succès', response);
+        this.showPopup = true; // Afficher le popup
+        const habitatId = response.id;
 
-      // Étape 2 : Uploader les images avec l'ID de l'habitat
-      this.uploadImages(habitatId);
-    }, (error: HttpErrorResponse) => {
-      console.error('Erreur lors de l\'ajout de l\'habitat', error);
-    });
-    
-    this.showPopup = true;
+        // Vérifier si habitatId est défini
+        if (habitatId !== undefined) {
+          this.uploadImages(habitatId);
+        } else {
+          console.error(
+            "Erreur : ID de l'habitat manquant pour l'upload des images."
+          );
+        }
+      },
+      (error: HttpErrorResponse) => {
+        console.error("Erreur lors de l'ajout de l'habitat", error);
+      }
+    );
   }
 
-  closePopup() {
-    this.showPopup = false; // Fermer le popup
+  // Fermer le popup
+  closePopup(): void {
+    this.showPopup = false;
   }
-
 }

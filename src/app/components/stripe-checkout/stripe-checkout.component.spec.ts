@@ -11,7 +11,7 @@ describe('StripeCheckoutComponent', () => {
       declarations: [StripeCheckoutComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(StripeCheckoutComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -12,10 +12,9 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './appart-list.component.html',
   styleUrls: ['./appart-list.component.css'],
   providers: [
-    { provide: LOCALE_ID, useValue: 'fr' }  // Définit la localisation en français
-  ]
+    { provide: LOCALE_ID, useValue: 'fr' }, // Définit la localisation en français
+  ],
 })
-
 export class AppartListComponent implements OnInit {
   habitats: Habitat[] = []; // Tous les habitats
   filteredHabitats: Habitat[] = []; // Habitats filtrés pour la recherche
@@ -27,7 +26,7 @@ export class AppartListComponent implements OnInit {
   searchData = {
     destination: '',
     arrival: '',
-    departure: ''
+    departure: '',
   };
 
   imageUrls: { [key: number]: string } = {}; // Associer l'ID de l'habitat à l'URL de l'image
@@ -36,23 +35,29 @@ export class AppartListComponent implements OnInit {
     private habitatService: HabitatService,
     private router: Router,
     private stripeService: StripeService,
-    private http: HttpClient, 
-    private route: ActivatedRoute,
+    private http: HttpClient,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     // Récupérer la catégorie depuis les paramètres de l'URL
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       const category = params['category'];
       this.fetchHabitats(category); // Passe la catégorie pour filtrer les habitats
     });
   }
 
   onSearch() {
-    this.filteredHabitats = this.habitats.filter(habitat =>
-      (!this.searchData.destination || habitat.city.includes(this.searchData.destination)) &&
-      (!this.searchData.arrival || new Date(habitat.startDate) <= new Date(this.searchData.arrival)) &&
-      (!this.searchData.departure || new Date(habitat.endDate) >= new Date(this.searchData.departure))
+    this.filteredHabitats = this.habitats.filter(
+      (habitat) =>
+        (!this.searchData.destination ||
+          habitat.city
+            ?.toLowerCase()
+            .includes(this.searchData.destination.toLowerCase())) &&
+        (!this.searchData.arrival ||
+          new Date(habitat.startDate) <= new Date(this.searchData.arrival)) &&
+        (!this.searchData.departure ||
+          new Date(habitat.endDate) >= new Date(this.searchData.departure))
     );
   }
 
@@ -61,38 +66,48 @@ export class AppartListComponent implements OnInit {
     this.habitatService.getHabitats().subscribe(
       (data: any) => {
         this.habitats = (data['hydra:member'] || [])
-          .sort((a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+          .sort(
+            (a: Habitat, b: Habitat) =>
+              new Date(b.createdAt || '').getTime() -
+              new Date(a.createdAt || '').getTime()
+          )
           .slice(0, 6);
 
         // Filtrer les habitats si une catégorie est spécifiée
-        if (category) {
-          this.filteredHabitats = this.habitats.filter(habitat => habitat.category === category);
-        } else {
-          this.filteredHabitats = this.habitats;
-        }
+        this.filteredHabitats = category
+          ? this.habitats.filter((habitat) => habitat.category === category)
+          : this.habitats;
 
-        console.log("Liste des habitats", this.habitats);
+        console.log('Liste des habitats', this.habitats);
 
         // Charger les images pour chaque habitat
         this.habitats.forEach((habitat) => {
           if (habitat.images && habitat.images.length > 0) {
-            let imageObject = `${this.apiUrl}${habitat.images[0]}`
-            let imageApiUrl = imageObject.replace("/api", "");
+            const imageObject = `${this.apiUrl}${habitat.images[0]}`;
+            const imageApiUrl = imageObject.replace('/api', '');
 
-            console.log(imageApiUrl);
             // Requête pour récupérer les détails de l'image
             this.http.get<any>(imageApiUrl).subscribe(
               (response) => {
-                const imageUrl = response.url.startsWith('http') ? response.url : `${this.apiUrl}${response.url}`;
-                this.imageUrls[habitat.id] = imageUrl;
+                const imageUrl = response.url.startsWith('http')
+                  ? response.url
+                  : `${this.apiUrl}${response.url}`;
+                this.imageUrls[habitat.id || -1] = imageUrl; // Handle undefined habitat.id
               },
               (error) => {
-                console.error(`Erreur lors du chargement de l'image pour l'habitat ${habitat.title}:`, error);
-                this.imageUrls[habitat.id] = 'assets/images/placeholder-image7@2x.png';
+                console.error(
+                  `Erreur lors du chargement de l'image pour l'habitat ${
+                    habitat.title || 'sans titre'
+                  }:`,
+                  error
+                );
+                this.imageUrls[habitat.id || -1] =
+                  'assets/images/placeholder-image7@2x.png'; // Handle undefined habitat.id
               }
             );
           } else {
-            this.imageUrls[habitat.id] = 'assets/images/placeholder-image7@2x.png';
+            this.imageUrls[habitat.id || -1] =
+              'assets/images/placeholder-image7@2x.png'; // Handle undefined habitat.id
           }
         });
       },
@@ -104,31 +119,37 @@ export class AppartListComponent implements OnInit {
 
   // Filtrer les habitats en fonction du terme de recherche
   filterHabitats(): void {
-    this.filteredHabitats = this.habitats.filter(
-      (habitat) =>
-        habitat.title.toLowerCase().includes(this.searchTerm) ||
-        (habitat.description &&
-          habitat.description.toLowerCase().includes(this.searchTerm)) ||
-        (habitat.pricePerNight &&
-          habitat.pricePerNight
-            .toString()
-            .toLowerCase()
-            .includes(this.searchTerm)) ||
-        (habitat.city &&
-          habitat.city.toString().toLowerCase().includes(this.searchTerm)) ||
-        (habitat.country &&
-          habitat.country.toString().toLowerCase().includes(this.searchTerm))
+    this.filteredHabitats = this.habitats.filter((habitat) =>
+      [
+        habitat.title,
+        habitat.description,
+        habitat.pricePerNight?.toString(),
+        habitat.city,
+        habitat.country,
+      ]
+        .filter(Boolean)
+        .some((field) =>
+          field?.toLowerCase().includes(this.searchTerm.toLowerCase())
+        )
     );
   }
 
   // Afficher les détails d'un habitat
-  viewHabitat(habitatId: number): void {
-    this.router.navigate(['/id-appart', habitatId]);
+  viewHabitat(habitatId: number | undefined): void {
+    if (habitatId !== undefined) {
+      this.router.navigate(['/id-appart', habitatId]);
+    } else {
+      console.error("ID de l'habitat est manquant");
+    }
   }
 
   // Afficher les commentaires pour un habitat
-  viewComments(habitatId: number): void {
-    this.router.navigate(['/comments', habitatId]);
+  viewComments(habitatId: number | undefined): void {
+    if (habitatId !== undefined) {
+      this.router.navigate(['/comments', habitatId]);
+    } else {
+      console.error("ID de l'habitat est manquant pour les commentaires");
+    }
   }
 
   // Démarrer la procédure de paiement Stripe

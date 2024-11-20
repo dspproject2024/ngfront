@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { CategoriesComponent } from './categories.component';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('CategoriesComponent', () => {
   let component: CategoriesComponent;
@@ -8,16 +8,16 @@ describe('CategoriesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CategoriesComponent]
-    })
-    .compileComponents();
-    
+      declarations: [CategoriesComponent], // Declare the component
+      schemas: [CUSTOM_ELEMENTS_SCHEMA], // Allow usage of custom elements if present in the template
+    }).compileComponents(); // Compile the component and its template
+
     fixture = TestBed.createComponent(CategoriesComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    fixture.detectChanges(); // Trigger change detection
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(component).toBeTruthy(); // Verify component creation
   });
 });

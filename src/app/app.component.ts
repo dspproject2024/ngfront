@@ -10,6 +10,7 @@ import { AuthService } from '././services/auth.service';  // Import du service d
 export class AppComponent {
   showHeaderFooter = true;
   isLoggedIn = false;  // Variable pour gérer l'état de connexion
+  title:string="ngfront";
 
   constructor(private router: Router, private authService: AuthService) {  // Ajout du service d'authentification
     this.router.events.subscribe(() => {

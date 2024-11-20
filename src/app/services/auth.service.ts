@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { jwtDecode } from 'jwt-decode';  
+import { jwtDecode } from 'jwt-decode';
 import { GetApiService } from './get-api.service';
-import { User } from '../models/user.model';  
+import { User } from '../models/user.model';
 
 interface DecodedToken {
   username: string;  // Ou 'username', selon ce qui est stocké dans ton token
@@ -44,10 +44,10 @@ export class AuthService {
     try {
       // Décoder le token pour obtenir l'ID de l'utilisateur
       const decodedToken: any = jwtDecode(token);
-      
+
       // Supposons que l'ID de l'utilisateur se trouve dans `decodedToken.userId`
       const userId = decodedToken.userId;
-      
+
       // Stocker l'ID de l'utilisateur dans le localStorage
       localStorage.setItem('userId', userId);
     } catch (error) {

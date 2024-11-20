@@ -5,7 +5,7 @@ import { Reservation } from '../../../../models/reservation.model';
 @Component({
   selector: 'app-reservation-list',
   templateUrl: './reservation-list.component.html',
-  styleUrls: ['./reservation-list.component.css'], // Corrected "styleUrl" to "styleUrls"
+  styleUrls: ['./reservation-list.component.css'],
 })
 export class ReservationListComponent implements OnInit {
   reservations: Reservation[] = [];
@@ -33,11 +33,12 @@ export class ReservationListComponent implements OnInit {
   deleteReservation(id: number): void {
     this.reservationService.deleteReservation(id).subscribe(
       () => {
+        console.log(`Reservation with ID ${id} deleted successfully.`);
         // Reload the reservations after a successful delete
         this.loadReservations();
       },
       (error) => {
-        console.error('Error deleting reservation', error);
+        console.error(`Error deleting reservation with ID ${id}`, error);
       }
     );
   }

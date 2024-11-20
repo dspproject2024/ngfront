@@ -11,11 +11,12 @@ export class AuthGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot): boolean {
     const expectedRoles = route.data['roles']; // Récupère les rôles autorisés depuis les données de la route
 
-    if (this.authService.isAuthenticated()) { // Vérifie si l'utilisateur est authentifié
+    if (this.authService.isAuthenticated()) {
+      // Vérifie si l'utilisateur est authentifié
       const userRoles = this.authService.getUserRoles(); // Récupère les rôles de l'utilisateur depuis le service d'authentification
       if (expectedRoles) {
         // Vérifie si l'utilisateur a un des rôles attendus
-        const hasRole = userRoles.some(role => expectedRoles.includes(role));
+        const hasRole = userRoles.some((role) => expectedRoles.includes(role));
         if (hasRole) {
           return true; // Autorise l'accès si l'utilisateur a le rôle attendu
         } else {
@@ -29,5 +30,4 @@ export class AuthGuard implements CanActivate {
       return false;
     }
   }
-
 }
