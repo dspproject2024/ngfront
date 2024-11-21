@@ -89,14 +89,14 @@
       <button
         class="btn btn-primary styleprimary-smallfalse-da14"
         (click)="viewHabitat(habitat.id)"
-        aria-label="Voir plus d'informations sur {{ habitat.title }}"
+        [attr.aria-label]="'Voir plus d\'informations sur ' + habitat.title"
       >
         Voir +
       </button>
       <button
         class="btn btn-commenter"
         (click)="viewComments(habitat.id)"
-        aria-label="Ajouter un commentaire sur {{ habitat.title }}"
+        [attr.aria-label]="'Ajouter un commentaire sur ' + habitat.title"
       >
         Commenter
       </button>

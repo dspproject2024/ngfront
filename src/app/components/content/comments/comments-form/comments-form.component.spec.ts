@@ -39,7 +39,7 @@ describe('CommentsFormComponent', () => {
   });
 
   it('should submit the form', () => {
-    spyOn(component, 'onSubmit'); // Spy on the onSubmit method if defined in the component logic
+    spyOn(component, 'onSubmit'); // Spy on the onSubmit method
 
     const form = fixture.nativeElement.querySelector('form');
     form.dispatchEvent(new Event('submit'));
