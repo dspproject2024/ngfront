@@ -40,7 +40,6 @@ export class DashboardAdminUserComponent implements OnInit {
         console.error('Error loading users', error);
       }
     );
-
   }
 
   // Create or update a user
@@ -48,10 +47,12 @@ export class DashboardAdminUserComponent implements OnInit {
     if (this.editingUser) {
       if (this.editMode) {
         // Update existing user
-        this.userService.updateUser(this.editingUser.id!, this.editingUser).subscribe(
-          () => this.loadUsers(),
-          (error) => console.error('Error updating user', error)
-        );
+        this.userService
+          .updateUser(this.editingUser.id!, this.editingUser)
+          .subscribe(
+            () => this.loadUsers(),
+            (error) => console.error('Error updating user', error)
+          );
       } else {
         // Create new user
         this.userService.createUser(this.editingUser).subscribe(
