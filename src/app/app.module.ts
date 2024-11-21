@@ -101,6 +101,7 @@ import { OurServicesComponent } from './components/content/our-services/our-serv
 import { ErrorPageComponent } from './components/content/error-page/error-page.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { UnauthorisedComponent } from './components/content/unauthorised/unauthorised.component';
+import { MatButtonModule } from '@angular/material/button';
 
 
 
@@ -207,6 +208,7 @@ import { UnauthorisedComponent } from './components/content/unauthorised/unautho
     MatDatepickerModule,
     MatNativeDateModule,
     MatFormFieldModule,
+    MatButtonModule,
     MatInputModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
