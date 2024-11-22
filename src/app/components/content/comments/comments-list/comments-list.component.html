@@ -14,7 +14,11 @@
     </div>
 
     <div class="w-full flex justify-end px-3">
-      <input type="submit" class="px-2.5 py-1.5 rounded-md text-white text-sm bg-indigo-500" value="Post Comment" />
+      <input
+        type="submit"
+        class="px-2.5 py-1.5 rounded-md text-white text-sm bg-indigo-500"
+        value="Post Comment"
+      />
     </div>
   </form>
 
@@ -29,17 +33,22 @@
         />
 
         <h3 class="font-bold">
-          {{ comment?.user?.username || 'Anonymous' }}
+          {{ comment?.user?.username || "Anonymous" }}
         </h3>
       </div>
 
-      <p class="text-gray-600 mt-2">{{ comment?.comment || 'No comment available' }}</p>
+      <p class="text-gray-600 mt-2">
+        {{ comment?.comment || "No comment available" }}
+      </p>
     </div>
   </div>
 
   <!-- No comments message -->
-  <div *ngIf="!comments || comments.length === 0" class="text-center text-gray-500 dark:text-gray-400">
-    No comments yet.
+  <div
+    *ngIf="!comments || comments.length === 0"
+    class="text-center text-gray-500 dark:text-gray-400"
+    data-testid="no-comments-message"
+  >
+    Aucun commentaire pour l'instant.
   </div>
-
 </div>

@@ -23,6 +23,8 @@ export class CommentsListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log('Component initialized');
+    console.log('Comments:', this.comments);
     // Get habitat ID from route
     const habitatId = Number(this.route.snapshot.paramMap.get('id'));
 
@@ -50,6 +52,7 @@ export class CommentsListComponent implements OnInit {
         this.comments = data['hydra:member'] || [];
       },
       (error) => {
+        const noCommentYet: String = "Au"
         console.error('Error fetching comments:', error);
       }
     );

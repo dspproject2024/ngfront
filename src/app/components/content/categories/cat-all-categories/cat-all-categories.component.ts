@@ -20,15 +20,16 @@ export class CatAllCategoriesComponent {
   // Fetch all categories and filter by the selected titles
   fetchMoreCategories(): void {
     this.categoryService.getCategories().subscribe(
-      (data: any) => {
-        const categories = data['hydra:member'] || []; // Get all categories
-        this.moreCategories = categories.filter((category: Category) =>
+      (data: Category[]) => {
+        this.moreCategories = data.filter((category: Category) =>
           this.selectedTitles.includes(category.title)
         );
       },
       (error) => {
-        console.log(error);
+        console.error('Error fetching categories:', error); // Utilisation explicite de `console.error`
+        this.moreCategories = []; // Réinitialisation en cas d'erreur
       }
     );
   }
+  
 }
