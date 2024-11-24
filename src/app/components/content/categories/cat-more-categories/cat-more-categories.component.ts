@@ -19,9 +19,14 @@ export class CatMoreCategoriesComponent implements OnInit {
   // Fetch all categories and store the remaining ones as "more categories"
   fetchMoreCategories(): void {
     this.categoryService.getCategories().subscribe(
-      (data: any) => {
-        const categories = data['hydra:member'] || [];
-        this.moreCategories = categories.slice(3, 6); // Get the categories after the first three
+      (categories: Category[]) => {
+        // Vérifie que `categories` contient bien un tableau avant d'utiliser `slice`
+        if (Array.isArray(categories)) {
+          this.moreCategories = categories.slice(3, 5);
+        } else {
+          console.error('Categories data is not an array:', categories);
+          this.moreCategories = [];
+        }
       },
       (error) => {
         console.error('Error fetching categories:', error);

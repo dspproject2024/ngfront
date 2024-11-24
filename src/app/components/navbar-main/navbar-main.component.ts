@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar-main',
@@ -10,18 +11,16 @@ export class NavbarMainComponent implements OnInit {
   isLoggedIn: boolean = false;
   isMenuActive = false;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    // Vérifie si l'utilisateur est connecté
     this.isLoggedIn = this.authService.isLoggedIn();
   }
 
-  // Méthode pour se déconnecter
   logout() {
     this.authService.logout();
     this.isLoggedIn = false;
-    window.location.href = '/login'; // Redirection après la déconnexion
+    this.router.navigate(['/login']);
   }
 
   toggleMenu() {

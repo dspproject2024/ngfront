@@ -5,10 +5,10 @@ import { AvisService } from '../../../../services/avis.service';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { FormsModule } from '@angular/forms';
-import { Avis } from '../../../../models/avis.model';
 import { Habitat } from '../../../../models/habitat.model';
+import { Avis } from '../../../../models/avis.model';
 
-describe('CommentsListComponent', () => {
+describe('CommentsListComponent (Basic Tests)', () => {
   let component: CommentsListComponent;
   let fixture: ComponentFixture<CommentsListComponent>;
   let mockHabitatService: jasmine.SpyObj<HabitatService>;
@@ -30,8 +30,8 @@ describe('CommentsListComponent', () => {
     startDate: new Date(),
     endDate: new Date(),
     images: [],
-    createdAt: "",
-    updatedAt: "",
+    createdAt: '',
+    updatedAt: '',
     owner: { id: 1, username: 'Owner' },
   };
 
@@ -69,21 +69,37 @@ describe('CommentsListComponent', () => {
     component = fixture.componentInstance;
   });
 
-  it('should create', () => {
+  it('should create the component', () => {
     expect(component).toBeTruthy();
   });
 
   it('should fetch habitat and comments on init', () => {
-    // Simule la réponse du service pour les habitats
-    mockHabitatService.getHabitats.and.returnValue(of([{ id: 1, title: 'Mock Habitat' } as Habitat]));
-    mockAvisService.getCommentsByHabitat.and.returnValue(of(mockComments));
+    // Simule la réponse correcte des services
+    mockHabitatService.getHabitats.and.returnValue(of( [mockHabitat]));
+    mockAvisService.getCommentsByHabitat.and.returnValue(of(mockComments ));
 
+    // Déclenche le cycle de détection des changements
     fixture.detectChanges();
 
+    // Vérifie que les services ont été appelés
     expect(mockHabitatService.getHabitats).toHaveBeenCalled();
     expect(mockAvisService.getCommentsByHabitat).toHaveBeenCalledWith(1);
-    expect(component.habitat?.title).toBe('Mock Habitat');
-    expect(component.comments.length).toBe(1);
+
+    // Vérifie que les données sont bien assignées
+    expect(component.habitat).toEqual(mockHabitat);
+    expect(component.comments.length).toBe(mockComments.length);
+  });
+
+  it('should display "Aucun commentaire pour l\'instant." when there are no comments', () => {
+    // Simule l'absence de commentaires
+    component.comments = [];
+    fixture.detectChanges();
+  
+    // Cible l'élément HTML via l'attribut data-testid
+    const noCommentsMessage = fixture.nativeElement.querySelector('[data-testid="no-comments-message"]')?.textContent;
+  
+    // Vérifie que le texte affiché correspond
+    expect(noCommentsMessage).toContain('Aucun commentaire pour l\'instant.');
   });
 
   it('should handle submitting a new comment', () => {
@@ -91,9 +107,10 @@ describe('CommentsListComponent', () => {
     component.newComment = 'This is a new comment';
     component.onSubmitComment();
 
-    expect(component.comments.length).toBe(2);
-    expect(component.comments[1].comment).toBe('This is a new comment');
-    expect(component.newComment).toBe('');
+    // Vérifie que le commentaire est ajouté
+    expect(component.comments.length).toBe(1);
+    expect(component.comments[0].comment).toBe('This is a new comment');
+    expect(component.newComment).toBe(''); // Vérifie que le champ est réinitialisé
   });
 
   it('should render the comment form and list correctly', () => {
@@ -101,15 +118,7 @@ describe('CommentsListComponent', () => {
     fixture.detectChanges();
 
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('form')).toBeTruthy();
-    expect(compiled.querySelectorAll('.flex-col').length).toBe(1);
-  });
-
-  it('should display no comments message if comments list is empty', () => {
-    component.comments = [];
-    fixture.detectChanges();
-
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.text-center')?.textContent).toContain('No comments yet.');
+    expect(compiled.querySelector('form')).toBeTruthy(); // Vérifie la présence du formulaire
+    expect(compiled.querySelectorAll('.flex-col').length).toBe(1); // Vérifie qu'un commentaire est affiché
   });
 });

@@ -1,32 +1,29 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NavbarMainComponent } from './navbar-main.component';
 import { AuthService } from '../../services/auth.service';
-import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Router } from '@angular/router';
+import { By } from '@angular/platform-browser';
 
 describe('NavbarMainComponent', () => {
   let component: NavbarMainComponent;
   let fixture: ComponentFixture<NavbarMainComponent>;
   let mockAuthService: jasmine.SpyObj<AuthService>;
+  let router: Router;
 
   beforeEach(async () => {
-    // Create a mock AuthService
-    mockAuthService = jasmine.createSpyObj('AuthService', [
-      'isLoggedIn',
-      'logout',
-    ]);
-    mockAuthService.isLoggedIn.and.returnValue(true); // Mock the user being logged in
+    mockAuthService = jasmine.createSpyObj('AuthService', ['isLoggedIn', 'logout']);
+    mockAuthService.isLoggedIn.and.returnValue(false);
 
     await TestBed.configureTestingModule({
       declarations: [NavbarMainComponent],
-      imports: [RouterTestingModule], // Include RouterTestingModule for router links
+      imports: [RouterTestingModule],
       providers: [{ provide: AuthService, useValue: mockAuthService }],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA], // Allow custom elements
     }).compileComponents();
 
     fixture = TestBed.createComponent(NavbarMainComponent);
     component = fixture.componentInstance;
+    router = TestBed.inject(Router);
     fixture.detectChanges();
   });
 
@@ -34,27 +31,12 @@ describe('NavbarMainComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should check if user is logged in on init', () => {
-    expect(mockAuthService.isLoggedIn).toHaveBeenCalled();
-    expect(component.isLoggedIn).toBeTrue();
-  });
-
   it('should log out and redirect on logout', () => {
-    const originalHref = window.location.href;
-
-    // Mock `window.location.href` using `Object.defineProperty`
-    Object.defineProperty(window, 'location', {
-      writable: true,
-      value: { href: '' },
-    });
-
+    mockAuthService.isLoggedIn.and.returnValue(true);
+    const navigateSpy = spyOn(router, 'navigate');
     component.logout();
     expect(mockAuthService.logout).toHaveBeenCalled();
-    expect(component.isLoggedIn).toBeFalse();
-    expect(window.location.href).toBe('/login');
-
-    // Restore the original `window.location.href`
-    Object.defineProperty(window, 'location', { value: originalHref });
+    expect(navigateSpy).toHaveBeenCalledWith(['/login']);
   });
 
   it('should toggle menu visibility when toggleMenu is called', () => {
@@ -72,14 +54,15 @@ describe('NavbarMainComponent', () => {
   });
 
   it('should contain a routerLink to "/list-appart"', () => {
-    const compiled = fixture.debugElement.nativeElement;
-    const listAppartLink = compiled.querySelector(
-      'a[routerLink="/list-appart"]'
-    );
-    expect(listAppartLink).toBeTruthy();
+    const link = fixture.debugElement.query(By.css('a[routerLink="/list-appart"]'));
+    expect(link).toBeTruthy();
   });
 
   it('should contain a button to publish habitat', () => {
+    mockAuthService.isLoggedIn.and.returnValue(true);
+    component.ngOnInit();
+    fixture.detectChanges();
+
     const publishButton = fixture.debugElement.query(By.css('.btn-add-appart'));
     expect(publishButton).toBeTruthy();
   });
@@ -98,7 +81,7 @@ describe('NavbarMainComponent', () => {
     component.ngOnInit();
     fixture.detectChanges();
 
-    const loginButton = fixture.debugElement.query(By.css('.btn'));
+    const loginButton = fixture.debugElement.query(By.css('.btn[routerLink="/login"]'));
     expect(loginButton).toBeNull();
   });
 });

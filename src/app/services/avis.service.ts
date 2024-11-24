@@ -3,12 +3,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Avis } from '../models/avis.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AvisService {
-  private apiUrl = 'https://dsp-devo22b-jg-sr-ml-my.net/api/aviss'; // Replace with your actual API URL
+  private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 

@@ -68,7 +68,14 @@ export class AuthService {
   // Méthode pour déconnecter l'utilisateur
   logout(): void {
     localStorage.removeItem('token');
+    localStorage.removeItem('userId'); // Nettoyer aussi l'ID utilisateur
   }
+  
+  logoutAndRedirect(redirectUrl: string = '/login'): void {
+    this.logout();
+    window.location.href = redirectUrl;
+  }
+  
 
   // Méthode pour vérifier si l'utilisateur est authentifié (basée sur le JWT)
   isAuthenticated(): boolean {
