@@ -68,7 +68,7 @@ describe('CatAllCategoriesComponent', () => {
   it('should handle errors when fetching categories', () => {
     // Espionnez `console.error`
     spyOn(console, 'error');
-<<<<<<< HEAD
+
     const error = new Error('Error fetching');
     categoryServiceSpy.getCategories.and.returnValue(throwError(() => error));
 
@@ -79,30 +79,30 @@ describe('CatAllCategoriesComponent', () => {
     //   error
     // );
     expect(component.moreCategories).toEqual(component.moreCategories);
-=======
-    
+
+
     // Simulez une erreur dans le service
     categoryServiceSpy.getCategories.and.returnValue(
       throwError(() => new Error('Error fetching')) // Création d'une erreur cohérente
     );
-  
+
     // Appelez la méthode `ngOnInit` pour déclencher `fetchMoreCategories`
     component.ngOnInit();
     fixture.detectChanges();
-  
+
     // Vérifiez que le service a été appelé
     expect(categoryServiceSpy.getCategories).toHaveBeenCalled();
-  
+
     // Vérifiez que `console.error` a été appelé avec le bon message
     expect(console.error).toHaveBeenCalledWith(
       'Error fetching categories:',
       jasmine.any(Error) // Vérifie que le second argument est une erreur
     );
-  
+
     // Vérifiez que `moreCategories` est réinitialisé
     expect(component.moreCategories).toEqual([]);
->>>>>>> 0dca9df62c360a96819581d4ba22a6b19b7855fe
+
   });
-  
-  
+
+
 });
