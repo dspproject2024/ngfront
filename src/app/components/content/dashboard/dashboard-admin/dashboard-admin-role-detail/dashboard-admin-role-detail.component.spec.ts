@@ -53,9 +53,12 @@ describe('DashboardAdminRoleDetailComponent', () => {
     const compiled = fixture.nativeElement as HTMLElement;
 
     const idElement = compiled.querySelector('p:nth-of-type(1)')?.textContent;
-    const roleNameElement = compiled.querySelector('p:nth-of-type(2)')?.textContent;
-    const createdAtElement = compiled.querySelector('p:nth-of-type(3)')?.textContent;
-    const updatedAtElement = compiled.querySelector('p:nth-of-type(4)')?.textContent;
+    const roleNameElement =
+      compiled.querySelector('p:nth-of-type(2)')?.textContent;
+    const createdAtElement =
+      compiled.querySelector('p:nth-of-type(3)')?.textContent;
+    const updatedAtElement =
+      compiled.querySelector('p:nth-of-type(4)')?.textContent;
 
     expect(idElement).toContain('ID: 1');
     expect(roleNameElement).toContain('Nom: Admin');
