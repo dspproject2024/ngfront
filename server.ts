@@ -4,7 +4,8 @@ import { CommonEngine } from '@angular/ssr';
 import express from 'express';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
- import AppServerModule from './src/main.server';
+// import AppServerModule from './src/main.server';
+import { AppServerModule } from './src/main.server';
 
 const server = express();
 const serverDistFolder = dirname(fileURLToPath(import.meta.url));

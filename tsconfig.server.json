@@ -1,0 +1,19 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist/out-tsc/server",
+    "target": "es2022",
+    "module": "commonjs", // Utilisez "commonjs" pour Node.js si vous rencontrez des problèmes avec "es2022"
+    "types": ["node"],
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true, // Recommandé pour les modules Node.js
+    "esModuleInterop": true // Recommandé pour interopérer avec les modules CommonJS
+  },
+  "angularCompilerOptions": {
+    "entryModule": "./src/app/app.server.module#AppServerModule",
+    "strictInjectionParameters": true, // Renforce la vérification d'injection
+    "strictTemplates": true // Active les vérifications strictes pour les templates Angular
+  },
+  "include": ["src/**/*.ts"], // Inclut tous les fichiers TypeScript dans le dossier src
+  "exclude": ["src/test.ts", "**/*.spec.ts"]
+}
