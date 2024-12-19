@@ -14,6 +14,6 @@ export class AppartementService {
   constructor(private http: HttpClient) {}
 
   getAppartements(): Observable<Appartement[]> {
-    return this.http.get<Appartement[]>(this.apiUrl);
+    return this.http.get<Appartement[]>(`${this.apiUrl}/habitats`);
   }
 }

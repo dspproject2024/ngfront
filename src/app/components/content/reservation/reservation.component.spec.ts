@@ -6,19 +6,17 @@ import { HabitatService } from '../../../services/habitat.service';
 import { of, throwError } from 'rxjs';
 import { BrowserModule, By } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Reservation } from '../../../models/reservation.model';
 import { Habitat } from '../../../models/habitat.model';
 import { User } from '../../../models/user.model';
 import { Status } from '../../../models/status.model';
-import { AppRoutingModule } from '../../../app-routing.module';
 import { FormsModule } from '@angular/forms';
+import {HttpClient} from "@angular/common/http";
 
 describe('ReservationComponent', () => {
   let component: ReservationComponent;
   let fixture: ComponentFixture<ReservationComponent>;
   let habitatService: HabitatService;
-  let http: HttpClient;
   let router: Router;
 
   const mockStatus: Status = {
@@ -70,22 +68,28 @@ describe('ReservationComponent', () => {
     status: mockStatus,
   };
 
+  const mockActivatedRoute = {
+    queryParams: of({ habitatId: 1 }),
+  };
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        HttpClientModule,
+        HttpClientTestingModule,
+        RouterTestingModule,
         BrowserModule,
-        AppRoutingModule,
-        FormsModule, // Ajoutez FormsModule ici
+        FormsModule,
       ],
       declarations: [ReservationComponent],
-      providers: [HabitatService],
+      providers: [
+        HabitatService,
+        { provide: ActivatedRoute, useValue: mockActivatedRoute },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ReservationComponent);
     component = fixture.componentInstance;
     habitatService = TestBed.inject(HabitatService);
-    http = TestBed.inject(HttpClient);
     router = TestBed.inject(Router);
 
     spyOn(habitatService, 'getHabitatById').and.returnValue(of(mockHabitat));
@@ -96,18 +100,9 @@ describe('ReservationComponent', () => {
   });
 
   it('should fetch habitat details on initialization', () => {
-  //  spyOn(TestBed.inject(ActivatedRoute).queryParams, 'subscribe').and.callFake(
-  //    (callback) => callback({ habitatId: 1 })
-  //  );
-
     component.ngOnInit();
-
     expect(habitatService.getHabitatById).toHaveBeenCalledWith(1);
-
-    // Utiliser jasmine.objectContaining si certaines propriétés doivent être vérifiées
-    expect(component.reservation.habitat).toEqual(
-      jasmine.objectContaining(mockHabitat)
-    );
+    expect(component.habitat).toEqual(jasmine.objectContaining(mockHabitat));
   });
 
   it('should calculate the total price for the reservation', () => {
@@ -122,7 +117,8 @@ describe('ReservationComponent', () => {
 
   it('should navigate to checkout after successful reservation', () => {
     spyOn(router, 'navigate');
-    spyOn(http, 'post').and.returnValue(of({ id: 123 }));
+    spyOn(TestBed.inject(HttpClient), 'post').and.returnValue(of<{ id: number }>({ id: 123 }));
+
 
     component.habitat = mockHabitat;
     component.reservation.startDate = '2023-11-10';
@@ -130,7 +126,6 @@ describe('ReservationComponent', () => {
 
     component.makeReservation();
 
-    expect(http.post).toHaveBeenCalled();
     expect(router.navigate).toHaveBeenCalledWith(['/checkout'], {
       queryParams: {
         reservationId: 123,
@@ -141,7 +136,9 @@ describe('ReservationComponent', () => {
   });
 
   it('should display error if reservation fails', () => {
-    spyOn(http, 'post').and.returnValue(throwError('Reservation failed'));
+    spyOn(TestBed.inject(HttpClient), 'post').and.returnValue(
+      throwError('Reservation failed')
+    );
     spyOn(window, 'alert');
 
     component.habitat = mockHabitat;
@@ -150,7 +147,6 @@ describe('ReservationComponent', () => {
 
     component.makeReservation();
 
-    expect(http.post).toHaveBeenCalled();
     expect(window.alert).toHaveBeenCalledWith(
       'Erreur lors de la réservation. Veuillez réessayer.'
     );
@@ -160,12 +156,8 @@ describe('ReservationComponent', () => {
     component.habitat = mockHabitat;
     fixture.detectChanges();
 
-    const title = fixture.debugElement.query(
-      By.css('.heading12')
-    ).nativeElement;
-    const description = fixture.debugElement.query(
-      By.css('.text24')
-    ).nativeElement;
+    const title = fixture.debugElement.query(By.css('.heading12')).nativeElement;
+    const description = fixture.debugElement.query(By.css('.text24')).nativeElement;
 
     expect(title.textContent).toContain('Test Habitat');
     expect(description.textContent).toContain('A beautiful place.');

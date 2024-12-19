@@ -15,26 +15,26 @@ export class AvisService {
 
   // Get all comments for a habitat
   getCommentsByHabitat(id: number): Observable<Avis[]> {
-    return this.http.get<Avis[]>(`${this.apiUrl}?id=${id}`);
+    return this.http.get<Avis[]>(`${this.apiUrl}/aviss?id=${id}`);
   }
 
   // Get a specific comment by ID
   getCommentById(id: number): Observable<Avis> {
-    return this.http.get<Avis>(`${this.apiUrl}/${id}`);
+    return this.http.get<Avis>(`${this.apiUrl}/aviss/${id}`);
   }
 
   // Post a new comment
   createComment(avis: Avis): Observable<Avis> {
-    return this.http.post<Avis>(this.apiUrl, avis);
+    return this.http.post<Avis>(`${this.apiUrl}/aviss`, avis);
   }
 
   // Update an existing comment
   updateComment(id: number, avis: Avis): Observable<Avis> {
-    return this.http.put<Avis>(`${this.apiUrl}/${id}`, avis);
+    return this.http.put<Avis>(`${this.apiUrl}/aviss/${id}`, avis);
   }
 
   // Delete a comment
   deleteComment(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    return this.http.delete<void>(`${this.apiUrl}/aviss/${id}`);
   }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {catchError, Observable, of} from 'rxjs';
 import { Role } from '../models/role.model';
 import {environment} from "../../environments/environment";
 
@@ -18,21 +18,23 @@ export class RoleService {
   }
 
   // Récupérer un rôle par ID
-  getRole(id: number): Observable<Role> {
-    const url = `${this.apiUrl}/${id}`;
-    return this.http.get<Role>(url);
+  getRole(id: number): Observable<Role | undefined> {
+    return this.http.get<Role>(`${this.apiUrl}/${id}`).pipe(
+      catchError(() => of(undefined)) // Si une erreur survient, retourne undefined
+    );
   }
 
+
   // Créer un nouveau rôle
-  createRole(role: Role): Observable<Role> {
+  createRole(role: Role | undefined): Observable<Role> {
     return this.http.post<Role>(this.apiUrl, role, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     });
   }
 
   // Mettre à jour un rôle
-  updateRole(role: Role): Observable<Role> {
-    const url = `${this.apiUrl}/${role.id}`;
+  updateRole(role: Role | undefined): Observable<Role | undefined> {
+    const url = `${this.apiUrl}/${role?.id}`;
     return this.http.put<Role>(url, role, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     });

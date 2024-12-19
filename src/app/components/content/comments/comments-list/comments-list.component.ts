@@ -23,18 +23,15 @@ export class CommentsListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log('Component initialized');
-    console.log('Comments:', this.comments);
-    // Get habitat ID from route
     const habitatId = Number(this.route.snapshot.paramMap.get('id'));
 
-    // Fetch all habitats and find the one by ID
+    // Fetch all habitats
     this.habitatService.getHabitats().subscribe(
       (data: any) => {
-        const habitats = data['hydra:member'] || [];
+        const habitats = data['hydra:member'] || data;
         this.habitat = habitats.find((habitat: Habitat) => habitat.id === habitatId);
 
-        // Alternatively, fetch the habitat directly by ID if not found in the list
+        // Fetch habitat by ID if not found in the list
         if (!this.habitat) {
           this.habitatService.getHabitatById(habitatId).subscribe((habitat) => {
             this.habitat = habitat;
@@ -49,14 +46,14 @@ export class CommentsListComponent implements OnInit {
     // Fetch comments for the habitat
     this.avisService.getCommentsByHabitat(habitatId).subscribe(
       (data: any) => {
-        this.comments = data['hydra:member'] || [];
+        this.comments = data['hydra:member'] || data;
       },
       (error) => {
-        const noCommentYet: String = "Au"
         console.error('Error fetching comments:', error);
       }
     );
   }
+
 
   // Method to handle submitting a new comment
   onSubmitComment(): void {

@@ -7,6 +7,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { LOCALE_ID } from '@angular/core';
 
 registerLocaleData(localeFr, 'fr');
 
@@ -220,6 +221,7 @@ import { MatButtonModule } from '@angular/material/button';
   providers: [
     provideClientHydration(),
     provideHttpClient(withFetch()),
+    { provide: LOCALE_ID, useValue: 'fr' },
   ],
   bootstrap: [AppComponent]
 })

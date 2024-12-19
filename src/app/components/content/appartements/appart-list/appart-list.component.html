@@ -79,8 +79,8 @@
       <p><span class="features">Personne max:</span> {{ habitat.maxGuests }}</p>
       <p>
         <span class="features">Période :</span>
-        {{ habitat.startDate | date : "shortDate" }} -
-        {{ habitat.endDate | date : "shortDate" }}
+        {{ habitat.startDate | date: 'fullDate' }}-
+        {{ habitat.endDate | date: 'fullDate' }}
       </p>
     </div>
 

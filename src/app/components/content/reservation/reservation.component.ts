@@ -135,7 +135,7 @@ export class ReservationComponent implements OnInit {
             (response: any) => {
                 alert('Réservation temporaire effectuée avec succès ! Vous allez être redirigé vers la page de paiement.');
                 const reservationId = response.id;
-                this.router.navigate(['/checkout'], { queryParams: { reservationId, amount: this.reservation.totalPrice, habitatName: this.habitat.name } });
+                this.router.navigate(['/checkout'], { queryParams: { reservationId, amount: this.reservation.totalPrice, habitatName: this.habitat.title } });
             },
             (error) => {
                 console.error('Erreur lors de la réservation:', error);

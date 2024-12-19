@@ -67,58 +67,80 @@ describe('CommentsListComponent (Basic Tests)', () => {
 
     fixture = TestBed.createComponent(CommentsListComponent);
     component = fixture.componentInstance;
+
+    // Mock return values
+    mockHabitatService.getHabitats.and.returnValue(of([mockHabitat]));
+    mockAvisService.getCommentsByHabitat.and.returnValue(of(mockComments));
   });
+
 
   it('should create the component', () => {
     expect(component).toBeTruthy();
   });
 
   it('should fetch habitat and comments on init', () => {
-    // Simule la réponse correcte des services
-    mockHabitatService.getHabitats.and.returnValue(of( [mockHabitat]));
-    mockAvisService.getCommentsByHabitat.and.returnValue(of(mockComments ));
+    // Configure mocks
+    mockHabitatService.getHabitats.and.returnValue(of([mockHabitat]));
+    mockAvisService.getCommentsByHabitat.and.returnValue(of(mockComments));
 
-    // Déclenche le cycle de détection des changements
+    // Trigger ngOnInit
+    component.ngOnInit();
     fixture.detectChanges();
 
-    // Vérifie que les services ont été appelés
+    // Verify service calls
     expect(mockHabitatService.getHabitats).toHaveBeenCalled();
     expect(mockAvisService.getCommentsByHabitat).toHaveBeenCalledWith(1);
 
-    // Vérifie que les données sont bien assignées
+    // Verify data assignment
     expect(component.habitat).toEqual(mockHabitat);
     expect(component.comments.length).toBe(mockComments.length);
   });
 
+
   it('should display "Aucun commentaire pour l\'instant." when there are no comments', () => {
-    // Simule l'absence de commentaires
-    component.comments = [];
+    // Simulate no comments
+    mockAvisService.getCommentsByHabitat.and.returnValue(of([]));
+    component.ngOnInit();
     fixture.detectChanges();
-  
-    // Cible l'élément HTML via l'attribut data-testid
-    const noCommentsMessage = fixture.nativeElement.querySelector('[data-testid="no-comments-message"]')?.textContent;
-  
-    // Vérifie que le texte affiché correspond
-    expect(noCommentsMessage).toContain('Aucun commentaire pour l\'instant.');
+
+    // Check message visibility
+    const noCommentsMessage = fixture.nativeElement.querySelector(
+      '[data-testid="no-comments-message"]'
+    );
+    expect(noCommentsMessage).toBeTruthy();
+    expect(noCommentsMessage.textContent).toContain(
+      "Aucun commentaire pour l'instant."
+    );
   });
+
 
   it('should handle submitting a new comment', () => {
     component.habitat = mockHabitat;
     component.newComment = 'This is a new comment';
+
     component.onSubmitComment();
 
-    // Vérifie que le commentaire est ajouté
     expect(component.comments.length).toBe(1);
     expect(component.comments[0].comment).toBe('This is a new comment');
-    expect(component.newComment).toBe(''); // Vérifie que le champ est réinitialisé
+    expect(component.newComment).toBe(''); // Reset check
   });
 
+
   it('should render the comment form and list correctly', () => {
+    // Mock comments
+    mockAvisService.getCommentsByHabitat.and.returnValue(of(mockComments));
     component.comments = mockComments;
+
+    // Trigger change detection
     fixture.detectChanges();
 
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('form')).toBeTruthy(); // Vérifie la présence du formulaire
-    expect(compiled.querySelectorAll('.flex-col').length).toBe(1); // Vérifie qu'un commentaire est affiché
+
+    // Vérifie la présence du formulaire
+    expect(compiled.querySelector('form')).toBeTruthy();
+
+    // Vérifie qu'un commentaire est affiché
+    expect(compiled.querySelectorAll('.flex-col').length).toBe(mockComments.length);
   });
+
 });

@@ -70,6 +70,8 @@ describe('HabitatService', () => {
   });
 
   it('should fetch all habitats', () => {
+    const apiResponse = { 'hydra:member': mockHabitats };
+
     service.getHabitats().subscribe((habitats) => {
       expect(habitats.length).toBe(2);
       expect(habitats).toEqual(mockHabitats);
@@ -77,7 +79,7 @@ describe('HabitatService', () => {
 
     const req = httpMock.expectOne(`${environment.apiUrl}/habitats`);
     expect(req.request.method).toBe('GET');
-    req.flush(mockHabitats);
+    req.flush(apiResponse);
   });
 
   it('should fetch a specific habitat by ID', () => {
@@ -97,13 +99,13 @@ describe('HabitatService', () => {
 
   it('should fetch an image by ID', () => {
     const imageId = 'image123';
-    const mockImage = { url: 'https://example.com/image123.jpg' };
+    const mockImage = new Blob(['mock image content'], { type: 'image/jpeg' });
 
     service.getImage(imageId).subscribe((image) => {
       expect(image).toEqual(mockImage);
     });
 
-    const req = httpMock.expectOne(`${environment.apiUrl}/habitatsimage123`);
+    const req = httpMock.expectOne(`${environment.apiUrl}/habitats${imageId}`);
     expect(req.request.method).toBe('GET');
     req.flush(mockImage);
   });

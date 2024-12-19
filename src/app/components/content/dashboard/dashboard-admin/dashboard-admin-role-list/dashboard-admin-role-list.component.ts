@@ -16,7 +16,7 @@ export class DashboardAdminRoleListComponent implements OnInit {
     this.loadRoles();
   }
 
-  loadRoles() { 
+  loadRoles() {
     this.roleService.getRoles().subscribe(
       (response) => {
         if (Array.isArray(response)) {
@@ -37,7 +37,7 @@ export class DashboardAdminRoleListComponent implements OnInit {
       }
     );
   }
-  
+
 
   editRole(role: Role): void {
     // Rediriger vers le formulaire d'édition
@@ -45,6 +45,7 @@ export class DashboardAdminRoleListComponent implements OnInit {
 
   deleteRole(id: number): void {
     this.roleService.deleteRole(id).subscribe(() => {
+      // Met à jour la liste des rôles après suppression
       this.roles = this.roles.filter(role => role.id !== id);
     });
   }

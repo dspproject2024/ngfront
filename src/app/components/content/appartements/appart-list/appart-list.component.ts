@@ -65,8 +65,13 @@ export class AppartListComponent implements OnInit {
   // Récupérer tous les habitats et les filtrer par catégorie si nécessaire
   fetchHabitats(category?: string): void {
     this.habitatService.getHabitats().subscribe(
-      (data: any) => {
-        this.habitats = (data['hydra:member'] || [])
+      (response: any) => {
+        // Extraction de la clé 'hydra:member'
+        const habitatsData: Habitat[] = response['hydra:member'] || [];
+
+        // Assignation et traitement des données
+        this.habitats = habitatsData
+          .filter((habitat: Habitat) => habitat.title && habitat.city) // Vérifie que les données sont valides
           .sort(
             (a: Habitat, b: Habitat) =>
               new Date(b.createdAt || '').getTime() -
@@ -78,8 +83,6 @@ export class AppartListComponent implements OnInit {
         this.filteredHabitats = category
           ? this.habitats.filter((habitat) => habitat.category === category)
           : this.habitats;
-
-        console.log('Liste des habitats', this.habitats);
 
         // Charger les images pour chaque habitat
         this.habitats.forEach((habitat) => {
@@ -95,20 +98,14 @@ export class AppartListComponent implements OnInit {
                   : `${this.apiUrl}${response.url}`;
                 this.imageUrls[habitat.id || -1] = imageUrl; // Handle undefined habitat.id
               },
-              (error) => {
-                console.error(
-                  `Erreur lors du chargement de l'image pour l'habitat ${
-                    habitat.title || 'sans titre'
-                  }:`,
-                  error
-                );
+              () => {
                 this.imageUrls[habitat.id || -1] =
-                  'assets/images/placeholder-image7@2x.png'; // Handle undefined habitat.id
+                  'assets/images/placeholder-image7@2x.png';
               }
             );
           } else {
             this.imageUrls[habitat.id || -1] =
-              'assets/images/placeholder-image7@2x.png'; // Handle undefined habitat.id
+              'assets/images/placeholder-image7@2x.png';
           }
         });
       },
@@ -117,6 +114,8 @@ export class AppartListComponent implements OnInit {
       }
     );
   }
+
+
 
   // Filtrer les habitats en fonction du terme de recherche
   filterHabitats(): void {
