@@ -6,9 +6,12 @@
     </div>
     <div class="text1">{{ apartment.description }}</div>
     <div class="actions1">
-      <div class="stylesecondary-smalltrue-d btn-secondary-admin">
-        <div class="link-one">Gérer</div>
-      </div>
+      <button
+        class="stylesecondary-smalltrue-d btn-secondary-admin link-one"
+        (click)="manageApartment()"
+      >
+        Gérer
+      </button>
     </div>
   </div>
 </div>
