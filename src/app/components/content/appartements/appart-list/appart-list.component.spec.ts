@@ -149,6 +149,9 @@ describe('AppartListComponent', () => {
     expect(navigateSpy).toHaveBeenCalledWith(['/id-appart', 1]);
   });
 
+//ceci est un commentaire
+
+
   it('should handle missing habitat ID in viewHabitat', () => {
     const consoleSpy = spyOn(console, 'error');
     component.viewHabitat(undefined);
