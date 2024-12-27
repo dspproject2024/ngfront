@@ -78,6 +78,7 @@ export class AppartListComponent implements OnInit {
               new Date(a.createdAt || '').getTime()
           )
           .slice(0, 6);
+        console.log(this.habitats);
 
         // Filtrer les habitats si une catégorie est spécifiée
         this.filteredHabitats = category
