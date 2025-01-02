@@ -65,12 +65,8 @@ export class AppartListComponent implements OnInit {
   // Récupérer tous les habitats et les filtrer par catégorie si nécessaire
   fetchHabitats(category?: string): void {
     this.habitatService.getHabitats().subscribe(
-      (response: any) => {
-        // Extraction de la clé 'hydra:member'
-        const habitatsData: Habitat[] = response['hydra:member'] || [];
-
-        // Assignation et traitement des données
-        this.habitats = habitatsData
+      (data: any) => {
+        this.habitats = (data['hydra:member'] || [])
           .filter((habitat: Habitat) => habitat.title && habitat.city) // Vérifie que les données sont valides
           .sort(
             (a: Habitat, b: Habitat) =>
@@ -100,12 +96,12 @@ export class AppartListComponent implements OnInit {
               },
               () => {
                 this.imageUrls[habitat.id || -1] =
-                  'assets/images/placeholder-image7@2x.png';
+                  'assets/images/placeholder-image7@2x.png'; // Handle undefined habitat.id
               }
             );
           } else {
             this.imageUrls[habitat.id || -1] =
-              'assets/images/placeholder-image7@2x.png';
+              'assets/images/placeholder-image7@2x.png'; // Handle undefined habitat.id
           }
         });
       },
