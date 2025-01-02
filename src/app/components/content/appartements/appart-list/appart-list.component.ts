@@ -22,7 +22,7 @@ export class AppartListComponent implements OnInit {
   searchTerm: string = ''; // Variable de recherche
   loading = false;
   errorMessage: string | null = null;
-  apiUrl = environment.apiUrl;
+  apiUrl: string = environment.apiUrl;
 
   searchData = {
     destination: '',
@@ -43,29 +43,20 @@ export class AppartListComponent implements OnInit {
   ngOnInit(): void {
     // Récupérer la catégorie depuis les paramètres de l'URL
     this.route.queryParams.subscribe((params) => {
-      const category = params['category'];
-      this.fetchHabitats(category); // Passe la catégorie pour filtrer les habitats
+      const category = params['category']; // Récupérer la catégorie
+      this.fetchHabitats(category); // Passer la catégorie, même si elle est undefined
     });
-  }
-
-  onSearch() {
-    this.filteredHabitats = this.habitats.filter(
-      (habitat) =>
-        (!this.searchData.destination ||
-          habitat.city
-            ?.toLowerCase()
-            .includes(this.searchData.destination.toLowerCase())) &&
-        (!this.searchData.arrival ||
-          new Date(habitat.startDate) <= new Date(this.searchData.arrival)) &&
-        (!this.searchData.departure ||
-          new Date(habitat.endDate) >= new Date(this.searchData.departure))
-    );
   }
 
   // Récupérer tous les habitats et les filtrer par catégorie si nécessaire
   fetchHabitats(category?: string): void {
     this.habitatService.getHabitats().subscribe(
       (data: any) => {
+
+        console.log('Hydra member:', data['hydra:member']); // Vérifie si 'hydra:member' est accessible
+        this.habitats = data['hydra:member'] || []; // Assigne directement la liste des habitats
+        console.log('Habitats après attribution :', this.habitats); // Vérifie après attribution
+
         this.habitats = (data['hydra:member'] || [])
           .filter((habitat: Habitat) => habitat.title && habitat.city) // Vérifie que les données sont valides
           .sort(
@@ -75,10 +66,11 @@ export class AppartListComponent implements OnInit {
           )
           .slice(0, 6);
 
-        // Filtrer les habitats si une catégorie est spécifiée
+
+        // Si aucune catégorie n'est fournie, afficher tous les habitats
         this.filteredHabitats = category
           ? this.habitats.filter((habitat) => habitat.category === category)
-          : this.habitats;
+          : this.habitats; // Tous les habitats si category est undefined
 
         // Charger les images pour chaque habitat
         this.habitats.forEach((habitat) => {
@@ -111,7 +103,19 @@ export class AppartListComponent implements OnInit {
     );
   }
 
-
+  onSearch() {
+    this.filteredHabitats = this.habitats.filter(
+      (habitat) =>
+        (!this.searchData.destination ||
+          habitat.city
+            ?.toLowerCase()
+            .includes(this.searchData.destination.toLowerCase())) &&
+        (!this.searchData.arrival ||
+          new Date(habitat.startDate) <= new Date(this.searchData.arrival)) &&
+        (!this.searchData.departure ||
+          new Date(habitat.endDate) >= new Date(this.searchData.departure))
+    );
+  }
 
   // Filtrer les habitats en fonction du terme de recherche
   filterHabitats(): void {

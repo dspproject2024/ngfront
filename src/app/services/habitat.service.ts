@@ -14,15 +14,15 @@ export class HabitatService {
   constructor(private http: HttpClient) {}
 
   // Fetch all habitats
-  getHabitats(): Observable<Habitat[]> {
-    return this.http.get<{ 'hydra:member': Habitat[] }>(this.apiUrl).pipe(
-      map((response) => response['hydra:member']),
+  getHabitats(): Observable<any> {
+    return this.http.get<any>(this.apiUrl).pipe(
       catchError((error) => {
         console.error('Erreur lors de la récupération des habitats :', error);
         return throwError(() => error);
       })
     );
   }
+
 
   // Fetch a habitat by ID
   getHabitatById(id: number): Observable<Habitat> {

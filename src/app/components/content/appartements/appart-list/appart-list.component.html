@@ -52,6 +52,11 @@
   />
 </div>
 
+<!-- Message en cas d'absence de résultats -->
+<div *ngIf="filteredHabitats.length === 0" class="no-results">
+  <p>Aucun habitat trouvé pour votre recherche.</p>
+</div>
+
 <!-- Liste des habitats -->
 <div class="habitat-list">
   <div
@@ -103,8 +108,5 @@
     </div>
   </div>
 
-  <!-- Message en cas d'absence de résultats -->
-  <div *ngIf="filteredHabitats.length === 0" class="no-results">
-    <p>Aucun habitat trouvé pour votre recherche.</p>
-  </div>
+
 </div>
