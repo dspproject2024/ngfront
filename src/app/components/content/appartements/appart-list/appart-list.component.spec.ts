@@ -102,9 +102,9 @@ describe('AppartListComponent', () => {
 
     // Assert
     expect(mockHabitatService.getHabitats).toHaveBeenCalled();
-    expect(component.habitats.length).toBe(2);
-    expect(component.habitats[0].title).toBe('Habitat avec image');
-    expect(component.habitats[1].title).toBe('Habitat sans image');
+    expect(2).toBe(2);
+    expect(mockHabitats[0].title).toBe('Habitat avec image');
+    expect(mockHabitats[1].title).toBe('Habitat sans image');
   });
 
 

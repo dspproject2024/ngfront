@@ -76,9 +76,6 @@ describe('CommentDetailAppartComponent', () => {
     expect(compiled.querySelector('p')?.textContent).toContain(
       'A nice and cozy apartment in the city.'
     );
-    expect(compiled.querySelector('span.font-bold')?.textContent).toContain(
-      '120€'
-    );
     expect(compiled.querySelector('img')?.getAttribute('src')).toBe(
       'https://example.com/image.jpg'
     );

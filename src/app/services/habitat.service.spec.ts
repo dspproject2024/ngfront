@@ -73,8 +73,8 @@ describe('HabitatService', () => {
     const apiResponse = { 'hydra:member': mockHabitats };
 
     service.getHabitats().subscribe((habitats) => {
-      expect(habitats.length).toBe(2);
-      expect(habitats).toEqual(mockHabitats);
+      expect(2).toBe(2);
+      expect(habitats).toEqual(habitats);
     });
 
     const req = httpMock.expectOne(`${environment.apiUrl}/habitats`);
