@@ -45,6 +45,7 @@
   flex-flow : column wrap;
   gap: 5px;
   justify-content: space-evenly;
+  font-size: medium;
 }
 
 .habitat-details h2 {
@@ -179,7 +180,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     height: 100%;
 
   }
-  
+
   .habitat-buttons {
     flex-flow: column-reverse wrap;
     justify-content: space-evenly;
@@ -220,7 +221,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     gap: 12px;
     width: 98%;
   }
-  
+
 .search-field, .search-field label, .search-field input  {
  width: 100%;
 }
