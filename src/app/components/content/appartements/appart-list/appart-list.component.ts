@@ -53,12 +53,6 @@ export class AppartListComponent implements OnInit {
     this.habitatService.getHabitats().subscribe(
       (data: any) => {
 
-        /*
-        console.log('Hydra member:', data['hydra:member']); // Vérifie si 'hydra:member' est accessible
-        this.habitats = data['hydra:member'] || []; // Assigne directement la liste des habitats
-        console.log('Habitats après attribution :', this.habitats); // Vérifie après attribution
-         */
-
         this.habitats = (data['hydra:member'] || [])
           .filter((habitat: Habitat) => habitat.title && habitat.city) // Vérifie que les données sont valides
           .sort(
